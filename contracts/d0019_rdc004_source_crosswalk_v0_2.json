@@ -54,10 +54,10 @@
     {
       "field": "Source_Row_Locator",
       "source": "Rawdata!row(original Excel row) + Figshare v1/file SHA",
-      "status": "APPROVED_DERIVATION_RULE",
+      "status": "APPROVED_CANONICAL_EVENT_PROVENANCE",
       "normalized_rule": "figshare:9192509.v1/file:16741928/sheet:Rawdata/row:<original_row>",
       "use": "provenance_only",
-      "notes": "Never regenerated from a sorted or filtered frame."
+      "notes": "Canonical Event_ID derives from exact source SHA + Rawdata + original Excel row. Source event is secondary provenance because PR14 showed event alone repeats; Dataset+event is unique in Group 2."
     },
     {
       "field": "Group_ID",
@@ -86,10 +86,10 @@
     },
     {
       "field": "Dyad_ID",
-      "source": "dyad plus deterministic Initiator_ID→Recipient_ID audit",
-      "status": "HELD_EQUIVALENCE_AUDIT",
-      "use": "grouping_only",
-      "notes": "Primary grouped validation only after Group-2 source dyad is shown compatible with frozen deterministic pair rule."
+      "source": "derived from Initiator_ID + Recipient_ID under PD-PR0005-001",
+      "status": "APPROVED_UNORDERED_DYAD_DERIVATION_PRE_OUTCOME_AMENDMENT",
+      "use": "primary_grouping_only",
+      "notes": "Runtime-HMAC pseudonymize both identities, sort the pair, then hash. Raw source dyad remains provenance only because PR14 showed it is not a stable pair key."
     },
     {
       "field": "Initiator_Sex",
@@ -214,7 +214,7 @@
     {
       "field": "Source_Record_Provenance",
       "source": "Figshare v1/file 16741928/SHA-256/sheet/original row",
-      "status": "APPROVED_PROVENANCE_SCHEMA_ROW_MATERIALIZATION_PENDING",
+      "status": "APPROVED_PROVENANCE_SCHEMA",
       "use": "provenance_only"
     }
   ],
@@ -247,8 +247,8 @@
   "nonmodel_source_columns": [
     {
       "source": "event",
-      "status": "PROVENANCE_CANDIDATE_ID_AUDIT_PENDING",
-      "reason": "May supplement source-row provenance; never predictor."
+      "status": "SECONDARY_PROVENANCE_YEAR_SCOPED_UNIQUE_IN_GROUP2",
+      "reason": "Preserve source event plus Collection_Year; canonical Event_ID remains exact source-row based."
     },
     {
       "source": "clip_old",
@@ -267,7 +267,7 @@
     }
   ],
   "remaining_gates": [
-    "Group-2-only event/source-row uniqueness and initiator/recipient/dyad consistency audit without exposing Group-1 signal/outcome values",
+    "Group-2-only eligibility/missingness ledger under crosswalk v0.2 and PD-PR0005-001; no outcome-frequency or performance inspection",
     "Group-2-only eligibility/missingness ledger using frozen substantive vs NA rules",
     "Grouped-fold support and nuisance/leakage checks on eligible Group 2",
     "Freeze normalized Group 2 development corpus and separately sealed Group 1 normalization procedure before any Group 1 outcome access"
@@ -278,5 +278,6 @@
     "Mapping NA to neutral, affiliative, non-affiliative, pos, neg, rank direction, or any other substantive state",
     "Changing B0/B1/B2 or eligibility after examining outcome performance",
     "Assigning signal meaning, compositional semantics, or CRG-C credit from software/source-mapping work"
-  ]
+  ],
+  "grouping_amendment_ref": "contracts/pr0005_pd_001_grouping_amendment.json"
 }
