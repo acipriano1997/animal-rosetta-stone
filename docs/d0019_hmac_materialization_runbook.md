@@ -22,6 +22,31 @@ Requirements:
 
 Only a non-secret namespace fingerprint is written to the materialization manifest.
 
+## Readiness check before materialization
+
+Use the repository readiness checker before the first empirical materialization:
+
+`scripts/check_d0019_materialization_readiness.py`
+
+The checker reads `ARS_D0019_HMAC_KEY` only from the process environment. It never prints or writes the secret. It may emit the non-secret identity-namespace fingerprint.
+
+Example pattern:
+
+```bash
+export ARS_D0019_HMAC_KEY='<provided by your approved secret facility>'
+python scripts/check_d0019_materialization_readiness.py \
+  --output-dir /path/outside/the/repository/ars-d0019-restricted \
+  --expected-head <REVIEWED_COMMIT_SHA>
+```
+
+Do not paste the secret into chat, GitHub, Drive, a notebook, a shell script, a command-line argument, or a CI artifact. Prefer a protected OS/runtime secret store that injects the environment variable into the materialization process.
+
+The readiness checker must report:
+
+`READY_FOR_SECRET_BACKED_MATERIALIZATION`
+
+It also requires the restricted output path to be outside the Git repository and rejects common cloud-sync folder names. If the repository is dirty, the secret is missing/short/obviously placeholder-like, the frozen source/row-digest contracts drift, or `--expected-head` does not match the reviewed Git commit, stop without materializing.
+
 ## Canonical materialization
 
 The executable owner is:
