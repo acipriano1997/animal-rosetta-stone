@@ -40,6 +40,9 @@ jobs:
       - name: Inventory D0025 Excel headers only (codebook still held)
         if: github.head_ref == 'ars/d0025-header-inventory-v0.1' || github.head_ref == 'ars/d0025-structured-header-localization-v0.1'
         run: python scripts/inspect_d0025_headers.py --out build/d0025_header_inventory.json
+      - name: Inspect D0025 supplementary document cues (no source files published)
+        if: github.head_ref == 'ars/d0025-supplementary-codebook-review-v0.1'
+        run: python scripts/review_d0025_supplementary_docs.py --out build/d0025_supplementary_doc_cues.json
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:
