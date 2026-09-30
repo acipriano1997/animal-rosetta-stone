@@ -61,6 +61,9 @@ jobs:
       - name: Audit D0019 frozen grouped split support
         if: github.head_ref == 'ars/d0019-split-support-v0.1'
         run: python scripts/audit_d0019_split_support.py --out build/d0019_group2_split_support.json
+      - name: Final D0019 RDC-004 pre-model admission (aggregate receipt only)
+        if: github.head_ref == 'ars/d0019-final-admission-v0.1'
+        run: python scripts/admit_d0019_rdc004.py --out build/d0019_final_admission.json
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:
