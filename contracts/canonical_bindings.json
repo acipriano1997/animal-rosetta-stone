@@ -1,0 +1,45 @@
+{
+  "binding_status": "CANONICAL_EXECUTABLE_CONSUMER_BINDING",
+  "captured_at_utc": "2026-09-30T04:35:00Z",
+  "drive_authority": {
+    "receiver_harness_contract": {
+      "document_id": "1WF06NnazfPceg8TFPSnbt5P8CU6oNpRake-ovkuEIIY",
+      "revision_id": "ANLCKQk7BPulP9wz5bKsOCfyiryLWRipu4VK7dLIHQVvJtXg21ROCyPoIBPLfKFLJYQ85F36ZImxCmFIqIsRd8eDg1mLyTcE0etlrr8zD_0"
+    },
+    "pr0006": {
+      "document_id": "1UcKKgG32fpwXHiYkMDLqiwrcb19Ix8sr47aAsz0GYno",
+      "revision_id": "ANLCKQkQcQYCvD7GQzedkF-WkiW0_r2QO228SuV3VD5_N_IZ33Rzt0_aIGDvUlebiKWSJDf2OhxH7osGNbeCGleORYnMOqxrg-L7nJ5WmXY"
+    },
+    "comparison_gate": {
+      "document_id": "1a7tBCV6OODbJ5mx6v0qwzarISlEu38c67MSSxgQ5tuo",
+      "revision_id": "ANLCKQkjjdF83gZ0kV_CxGbDhbxLT5LueOQu89C3rYI7xFk4Br8gQESHEO3EFbacxcAXoeLxKbIQdKT-5fUotbol_fB37RXjS0I_vjpCvoE"
+    },
+    "scientific_governance": {
+      "document_id": "1lwcL2E7JTghZG8CrX2qzbMgFY9-ubov3fk6RTHHbefM",
+      "revision_id": "ANLCKQni_OO2FvRgP0cI915Dgh6BLxRvGHIscwGPcenLA63Py9nUqN0_bXSjbC2RG5xTSAKkrGjkPLrWwtSmOLWxoOlejwWdkX83de9kZAg"
+    },
+    "aceb": {
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "observed_modified_time": "2026-09-30T04:21:34.553Z",
+      "state_machine_range": "Receiver Harness State Machine!A1:H21",
+      "fixtures_range": "Receiver Harness Fixtures!A1:H36",
+      "artifacts_range": "Receiver Harness Artifacts!A1:I17",
+      "rdc005_range": "Receiver Minimal Data Contracts!A97:S114"
+    }
+  },
+  "expected_fixture_ids": [
+    "RHF-001","RHF-002","RHF-003","RHF-004","RHF-005","RHF-006","RHF-007","RHF-008","RHF-009","RHF-010",
+    "RHF-011","RHF-012","RHF-013","RHF-014","RHF-015","RHF-016","RHF-017","RHF-018","RHF-019","RHF-020",
+    "RHF-021","RHF-022","RHF-023","RHF-024","RHF-025","RHF-026","RHF-027","RHF-028","RHF-029","RHF-030",
+    "RHF-031","RHF-032","RHF-033","RHF-034","RHF-035"
+  ],
+  "expected_artifact_ids": [
+    "HA-001","HA-002","HA-003","HA-004","HA-005","HA-006","HA-007","HA-008",
+    "HA-009","HA-010","HA-011","HA-012","HA-013","HA-014","HA-015","HA-016"
+  ],
+  "covered_receiver_contracts": ["RDC-001","RDC-002","RDC-003","RDC-004","RDC-005"],
+  "fail_closed_states": [
+    "HELD_RIGHTS","HELD_SCHEMA","HELD_GROUPING","HELD_SPLIT","HELD_SANITY",
+    "QUARANTINED_PROVENANCE","QUARANTINED_SEMANTIC_ESCALATION","QUARANTINED_OUTCOME_LEAKAGE"
+  ]
+}
