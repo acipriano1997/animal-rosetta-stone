@@ -10,7 +10,7 @@ HEADERS=[
 ]
 
 
-def synthetic_workbook(invalid_gesture=False):
+def synthetic_workbook(invalid_gesture=False, missing_recipient=False):
     header="".join(
         f'<c r="{chr(65+i)}1" t="inlineStr"><is><t>{name}</t></is></c>'
         for i,name in enumerate(HEADERS)
@@ -33,7 +33,7 @@ def synthetic_workbook(invalid_gesture=False):
                 f'<c r="A{n}"><v>{2015 if local%2==0 else 2016}</v></c>',
                 f'<c r="E{n}" t="inlineStr"><is><t>I{local%13}</t></is></c>',
                 f'<c r="G{n}" t="inlineStr"><is><t>{"female" if local%2==0 else "male"}</t></is></c>',
-                f'<c r="I{n}" t="inlineStr"><is><t>R{local%17}</t></is></c>',
+                ('' if (missing_recipient and local==0) else f'<c r="I{n}" t="inlineStr"><is><t>R{local%17}</t></is></c>'),
                 f'<c r="J{n}" t="inlineStr"><is><t>{"male" if local%2==0 else "female"}</t></is></c>',
                 f'<c r="K{n}" t="inlineStr"><is><t>D{local%23}</t></is></c>',
                 f'<c r="L{n}" t="inlineStr"><is><t>{rank}</t></is></c>',
@@ -106,6 +106,7 @@ def test_frozen_na_rules_create_aggregate_only_eligibility():
     assert summary["all_tokens_within_frozen_domains"] is True
     assert summary["outcome_class_frequencies_computed"] is False
     assert summary["row_level_records_emitted"] is False
+    assert summary["canonical_group2_source_rows_unique"] is True
     assert summary["group1_holdout_opened"] is False
     assert "SECRET_HOLDOUT" not in str(summary)
 
@@ -133,3 +134,13 @@ def test_rule_or_source_drift_holds_closed():
     r["source_sha256"]="0"*64
     result=audit(item,pins,crosswalk,amendment,r,lambda url,size:raw)
     assert result["state"]=="HELD_SOURCE_OR_RULE_MISMATCH"
+
+
+def test_missing_required_recipient_holds_structural_admission():
+    raw=synthetic_workbook(missing_recipient=True)
+    item,pins,crosswalk,amendment,r=wrapper_case(raw)
+    result=audit(item,pins,crosswalk,amendment,r,lambda url,size:raw)
+    assert result["state"]=="HELD_ELIGIBILITY_OR_DOMAIN"
+    assert result["eligibility"]["exclusion_reason_counts"]["MISSING_RECIPIENT"]==1
+    assert result["rdc004_empirical_admission"] is False
+    assert result["pr0005_executed"] is False
