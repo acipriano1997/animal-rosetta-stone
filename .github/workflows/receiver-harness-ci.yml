@@ -64,6 +64,9 @@ jobs:
       - name: Final D0019 RDC-004 pre-model admission (aggregate receipt only)
         if: github.head_ref == 'ars/d0019-final-admission-v0.1'
         run: python scripts/admit_d0019_rdc004.py --out build/d0019_final_admission.json
+      - name: Verify PR0005 RUN-005 on ZERO_SYNTHETIC normalized data
+        if: github.head_ref == 'ars/pr0005-run005-runner-v0.1'
+        run: python scripts/run_pr0005_synthetic_verification.py --out build/pr0005_synthetic_verification.json
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:
