@@ -1,0 +1,61 @@
+{
+  "dataset_id": "D0019",
+  "protocol_id": "PR0005",
+  "contract_id": "RDC-004",
+  "admission_version": "v0.1",
+  "freeze_date": "2026-09-30",
+  "status": "FROZEN_FINAL_PRE_MODEL_ADMISSION",
+  "source_sha256": "26f69ee04f5d017d46f72430c0e18e5be960dd77432542644688acd88317075e",
+  "dependencies": {
+    "source_pin": "contracts/d0019_v1_verified_source_snapshot.json",
+    "crosswalk": "contracts/d0019_rdc004_source_crosswalk_v0_2.json",
+    "grouping_amendment": "contracts/pr0005_pd_001_grouping_amendment.json",
+    "eligibility_rules": "contracts/d0019_group2_eligibility_rules_v0_1.json",
+    "split_policy": "contracts/pr0005_pd_002_split_policy.json",
+    "eligible_source_row_set_sha256": "d6d004eb5a685eed1875e5a430cfb7bb0b6638bb315cf5bf2e2b998588c2be63",
+    "eligible_rows": 104,
+    "primary_unordered_dyads": 69
+  },
+  "admission_requirements": [
+    "Exact source identity, version, item-level CC BY metadata and SHA-256 match",
+    "RDC-004 crosswalk v0.2 and PD-PR0005-001/002 are frozen",
+    "H4 eligibility recomputes exactly 104 rows and the frozen row-set digest",
+    "H5 split support passes for leave-unordered-dyad-out and leave-initiator-out",
+    "No Group-1 nonpartition field is decoded before RUN-006",
+    "No invalid source token or semantic fallback is introduced",
+    "Normalized row-level materialization uses a persistent runtime HMAC key and never writes raw source identities into the research table"
+  ],
+  "materialization": {
+    "required_environment_secret": "ARS_D0019_HMAC_KEY",
+    "minimum_secret_bytes": 32,
+    "normalized_group2_filename": "d0019_group2_normalized.csv",
+    "restricted_provenance_filename": "d0019_group2_restricted_provenance.jsonl",
+    "manifest_filename": "d0019_group2_materialization_manifest.json",
+    "public_ci_behavior": "If the persistent HMAC key is unavailable, produce only an aggregate READY_FOR_SECRET_BACKED_MATERIALIZATION receipt; do not emit row-level data.",
+    "normalized_identity": "HMAC-SHA256 source ID pseudonyms",
+    "primary_grouping": "PD-PR0005-001 unordered pseudonym pair hash",
+    "event_identity": "SHA-256 exact source file + Rawdata + original source row"
+  },
+  "normalized_primary_fields": [
+    "Event_ID",
+    "Source_Row_Locator",
+    "Group_ID",
+    "Initiator_ID",
+    "Recipient_ID",
+    "Dyad_ID",
+    "Initiator_Sex",
+    "Recipient_Sex",
+    "Rank_Relationship",
+    "Collection_Year",
+    "Gesture_Class",
+    "Facial_Expression_Class",
+    "Social_Context",
+    "Recipient_Response",
+    "Signal_Configuration",
+    "Coding_Visibility_or_Quality",
+    "Rights_and_Reuse_State",
+    "Source_Record_Provenance"
+  ],
+  "group1_policy": "No Group-1 nonpartition fields or outcomes are materialized by this gate. The Group-1 procedure must be frozen separately and executed only after RUN-005 is finalized.",
+  "scientific_boundary": "Final admission/materialization is provenance and analysis-readiness evidence only. It is not a PR0005 result and cannot alter CRG-C or biological claims."
+}
