@@ -55,6 +55,9 @@ jobs:
       - name: Audit D0019 Group 2 event and dyad identities only
         if: github.head_ref == 'ars/d0019-paper-backed-crosswalk-v0.2'
         run: python scripts/audit_d0019_group2_identity_dyad.py --out build/d0019_group2_identity_dyad_audit.json
+      - name: Audit D0019 Group 2 eligibility and missingness only
+        if: github.head_ref == 'ars/d0019-group2-eligibility-v0.1'
+        run: python scripts/audit_d0019_group2_eligibility.py --out build/d0019_group2_eligibility_audit.json
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:
