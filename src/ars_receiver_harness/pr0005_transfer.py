@@ -58,7 +58,14 @@ def _verify_frozen_model_artifacts(
     freeze_manifest: dict[str, Any],
     freeze_dir: Path,
 ) -> None:
-    _verify_frozen_model_artifacts(freeze_manifest,freeze_dir)
+    artifact_hashes=freeze_manifest.get("artifacts_sha256")
+    if not isinstance(artifact_hashes,dict):
+        raise ValueError("RUN-005 artifact checksum map missing")
+    for name in ("run005_full_group2_b1.pkl","run005_full_group2_b2.pkl"):
+        expected=artifact_hashes.get(name)
+        path=freeze_dir/name
+        if not isinstance(expected,str) or not path.is_file() or _sha256_file(path)!=expected:
+            raise ValueError(f"Frozen RUN-005 model artifact mismatch: {name}")
 
 
 def validate_run005_freeze_before_group1(
@@ -101,14 +108,7 @@ def validate_run005_freeze_before_group1(
     else:
         raise ValueError("Unsupported RUN-006 evidence weight")
 
-    artifact_hashes=freeze_manifest.get("artifacts_sha256")
-    if not isinstance(artifact_hashes,dict):
-        raise ValueError("RUN-005 artifact checksum map missing")
-    for name in ("run005_full_group2_b1.pkl","run005_full_group2_b2.pkl"):
-        expected=artifact_hashes.get(name)
-        path=freeze_dir/name
-        if not isinstance(expected,str) or not path.is_file() or _sha256_file(path)!=expected:
-            raise ValueError(f"Frozen RUN-005 model artifact mismatch: {name}")
+    _verify_frozen_model_artifacts(freeze_manifest,freeze_dir)
 
 
 def _decoder(book: ZipFile):
