@@ -267,10 +267,8 @@
     }
   ],
   "remaining_gates": [
-    "Group-2-only eligibility/missingness ledger under crosswalk v0.2 and PD-PR0005-001; no outcome-frequency or performance inspection",
-    "Group-2-only eligibility/missingness ledger using frozen substantive vs NA rules",
-    "Grouped-fold support and nuisance/leakage checks on eligible Group 2",
-    "Freeze normalized Group 2 development corpus and separately sealed Group 1 normalization procedure before any Group 1 outcome access"
+    "H6 final pre-model RDC-004 admission recomputes exact H4 eligibility and H5 grouped split support",
+    "Secret-backed deterministic Group-2 normalized materialization using persistent ARS_D0019_HMAC_KEY"
   ],
   "prohibited": [
     "Opening Group 1 outcomes or signal categories before RUN-006",
