@@ -54,6 +54,13 @@ def _crosswalk_field(crosswalk: dict, name: str) -> dict:
     return matches[0]
 
 
+def _verify_frozen_model_artifacts(
+    freeze_manifest: dict[str, Any],
+    freeze_dir: Path,
+) -> None:
+    _verify_frozen_model_artifacts(freeze_manifest,freeze_dir)
+
+
 def validate_run005_freeze_before_group1(
     freeze_manifest: dict[str, Any],
     freeze_dir: Path,
@@ -266,6 +273,7 @@ def evaluate_locked_group1(
     freeze_manifest: dict[str,Any],
     freeze_dir: Path,
 ) -> tuple[dict[str,Any],pd.DataFrame]:
+    _verify_frozen_model_artifacts(freeze_manifest,freeze_dir)
     if set(group1["Group_ID"].astype(str).unique())!={"Group 1"}:
         raise ValueError("RUN-006 accepts Group 1 rows only")
     if group1["Event_ID"].isna().any() or group1["Event_ID"].duplicated().any():
@@ -283,8 +291,8 @@ def evaluate_locked_group1(
 
     work=_add_interactions(group1)
     y=work["Recipient_Response"].map({"affiliative":1,"non_affiliative":0})
-    if y.isna().any() or set(y.unique())!={0,1}:
-        raise ValueError("RUN-006 requires both registered response classes for metrics")
+    if y.isna().any() or not set(y.unique()).issubset({0,1}) or len(y)==0:
+        raise ValueError("RUN-006 contains an invalid registered response code")
     yv=y.to_numpy(dtype=int)
     p1=b1.predict_proba(work)[:,1]
     p2=b2.predict_proba(work)[:,1]
