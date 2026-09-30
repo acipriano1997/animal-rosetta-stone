@@ -104,6 +104,8 @@ def test_undeclared_intercept_only_baseline_is_blocked(tmp_path):
 def test_signaller_only_fallback_requires_recorded_approval(tmp_path):
     df, csv, raw, manifest, cfg = _admission_case(tmp_path)
     df = df.drop(columns=["Dyad_ID"])
+    df.to_csv(csv, index=False)
+    manifest["normalization"]["normalized_sha256"] = hashlib.sha256(csv.read_bytes()).hexdigest()
     with pytest.raises(AdmissionError, match="HELD_GROUPING"):
         validate_admission(df, csv, raw, manifest, cfg)
     manifest["grouping"]["fallback_activated"] = True
