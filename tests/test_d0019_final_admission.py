@@ -81,7 +81,7 @@ def objects(raw):
         "sheets":[{"source_header_candidates":HEADERS}],
     }
     crosswalk={
-        "version":"source-crosswalk-v0.2","empirical_admission":False,
+        "version":"source-crosswalk-v0.2","empirical_admission":False,"source_sha256":sha,
         "fields":[
             {"field":"Group_ID","status":"APPROVED_SOURCE_MAPPING","native_mapping":{"1":"Group 1","2":"Group 2"}},
             {"field":"Dyad_ID","status":"APPROVED_UNORDERED_DYAD_DERIVATION_PRE_OUTCOME_AMENDMENT"},
@@ -98,7 +98,7 @@ def objects(raw):
             {"field":"Source_Record_Provenance","status":"APPROVED_PROVENANCE_SCHEMA"},
         ]
     }
-    amendment1={"status":"FROZEN_PRE_OUTCOME_SOURCE_SCHEMA_AMENDMENT"}
+    amendment1={"status":"FROZEN_PRE_OUTCOME_SOURCE_SCHEMA_AMENDMENT","evidence":{"source_sha256":sha}}
     eligibility={
         "status":"FROZEN_PRE_MODEL_GROUP2_ELIGIBILITY","eligibility_version":"v0.1","source_sha256":sha,
         "rules":{
@@ -187,6 +187,19 @@ def test_source_drift_holds_final_admission():
     pins["file"]["sha256"]="0"*64
     admission["source_sha256"]=pins["file"]["sha256"]
     eligibility["source_sha256"]=pins["file"]["sha256"]
+    group1["source_sha256"]=pins["file"]["sha256"]
+    crosswalk["source_sha256"]=pins["file"]["sha256"]
+    amendment1["evidence"]["source_sha256"]=pins["file"]["sha256"]
     receipt,_=final_admission(item,pins,crosswalk,amendment1,eligibility,split_policy,admission,group1,lambda url,size:raw)
     assert receipt["state"] in {"HELD_RECOMPUTED_H4_H5_MISMATCH","HELD_FINAL_ADMISSION_SOURCE"}
+    assert receipt["rdc004_empirical_admission"] is False
+
+
+def test_contract_hash_mismatch_returns_held_receipt():
+    raw=synthetic_workbook()
+    item,pins,crosswalk,amendment1,eligibility,split_policy,admission,group1=objects(raw)
+    group1["source_sha256"]="0"*64
+    receipt,_=final_admission(item,pins,crosswalk,amendment1,eligibility,split_policy,admission,group1,
+                              lambda url,size:(_ for _ in ()).throw(AssertionError("no source fetch")))
+    assert receipt["state"]=="HELD_CONTRACT_MISMATCH"
     assert receipt["rdc004_empirical_admission"] is False
