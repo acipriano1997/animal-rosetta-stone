@@ -58,6 +58,9 @@ jobs:
       - name: Audit D0019 Group 2 eligibility and missingness only
         if: github.head_ref == 'ars/d0019-group2-eligibility-v0.1'
         run: python scripts/audit_d0019_group2_eligibility.py --out build/d0019_group2_eligibility_audit.json
+      - name: Audit D0019 frozen grouped split support
+        if: github.head_ref == 'ars/d0019-split-support-v0.1'
+        run: python scripts/audit_d0019_split_support.py --out build/d0019_group2_split_support.json
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:
