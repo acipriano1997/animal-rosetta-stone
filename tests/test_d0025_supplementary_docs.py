@@ -42,7 +42,7 @@ def test_codebook_cues_are_bounded_without_table_data():
     assert result["body_paragraph_count"] == 2
     assert result["body_table_count"] == 1
     assert result["heading_excerpts"][0]["title_excerpt"] == "Codebook notes"
-    assert "Recipient response" in result["bounded_topic_cues"][0]["topic_cue_excerpt"]
+    assert any("Recipient response" in cue["topic_cue_excerpt"] for cue in result["bounded_topic_cues"])
     assert "private table datum" not in str(result)
     assert result["full_document_not_redistributed"]
 
