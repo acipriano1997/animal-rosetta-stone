@@ -49,6 +49,9 @@ jobs:
       - name: Audit D0019 partition keys without examining outcomes
         if: github.head_ref == 'ars/d0019-partition-key-audit-v0.1'
         run: python scripts/audit_d0019_partition_keys.py --out build/d0019_partition_key_audit.json
+      - name: Inspect D0019 Group 2 categorical vocabulary only
+        if: github.head_ref == 'ars/d0019-rdc004-source-crosswalk-v0.1'
+        run: python scripts/audit_d0019_group2_vocabulary.py --out build/d0019_group2_label_vocabulary.json
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:

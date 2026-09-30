@@ -1,0 +1,189 @@
+{
+  "contract_id": "RDC-004",
+  "protocol_id": "PR0005",
+  "dataset_id": "D0019",
+  "version": "source-crosswalk-v0.1",
+  "source_pin": "contracts/d0019_v1_verified_source_snapshot.json",
+  "source_sha256": "26f69ee04f5d017d46f72430c0e18e5be960dd77432542644688acd88317075e",
+  "source_sheet": "Rawdata",
+  "frozen_contract_date": "2026-09-29",
+  "review_date": "2026-09-30",
+  "mapping_state": "SOURCE_BACKED_CANDIDATES_NOT_APPROVED",
+  "empirical_admission": false,
+  "group1_outcomes_accessed": false,
+  "citations": [
+    {
+      "paper_doi": "10.7717/peerj.7623",
+      "role": "original operational definitions; binary affiliative/non-affiliative outcome; gesture, face, context, sex, rank, group and year controls"
+    },
+    {
+      "paper_doi": "10.7717/peerj.16800",
+      "role": "methodological challenge to claims of non-compositionality; does not establish source-code mapping"
+    }
+  ],
+  "partition_policy": {
+    "source_group_column": "group",
+    "candidate_group2_source_token": "2",
+    "group2_published_n": 149,
+    "candidate_group1_source_token": "1",
+    "group1_published_n": 103,
+    "source_year_candidate": "Dataset",
+    "year_candidates": [
+      2015,
+      2016
+    ],
+    "evidence": "PR12 outcome-blind group counts and published paper",
+    "approved": false
+  },
+  "fields": [
+    {
+      "field": "Source_Row_Locator",
+      "source": "Figshare v1 + Rawdata + original Excel source row",
+      "status": "DERIVATION_CANDIDATE",
+      "use": "provenance_only",
+      "gate": "Confirm original row numbering and immutable hash; never derive from sorted or filtered frame."
+    },
+    {
+      "field": "Group_ID",
+      "source": "group",
+      "status": "PAPER_AND_COUNT_CORROBORATED_CANDIDATE",
+      "use": "partition_only",
+      "gate": "Confirm source code 1=Group 1 and 2=Group 2 from paper or codebook; preserve Group 1 sealed."
+    },
+    {
+      "field": "Initiator_ID",
+      "source": "initiator",
+      "status": "HEADER_CANDIDATE",
+      "use": "grouping_only",
+      "gate": "Verify identifier scope and pseudonymization; never use as predictor."
+    },
+    {
+      "field": "Recipient_ID",
+      "source": "recipient",
+      "status": "HEADER_CANDIDATE",
+      "use": "grouping_only",
+      "gate": "Verify addressee coding, missingness and identifier scope; never use as predictor."
+    },
+    {
+      "field": "Dyad_ID",
+      "source": "dyad",
+      "status": "SOURCE_AND_DERIVED_CANDIDATE",
+      "use": "grouping_only",
+      "gate": "Compare source dyad grouping with frozen ordered initiator→recipient derivation; hold if scope/orientation differs."
+    },
+    {
+      "field": "Initiator_Sex",
+      "source": "sex_init",
+      "status": "PAPER_AND_HEADER_CORROBORATED_CANDIDATE",
+      "use": "b0_covariate_if_verified",
+      "gate": "Verify literal codebook values; keep unknown distinct."
+    },
+    {
+      "field": "Recipient_Sex",
+      "source": "sex_rec",
+      "status": "PAPER_AND_HEADER_CORROBORATED_CANDIDATE",
+      "use": "b0_covariate_if_verified",
+      "gate": "Verify literal codebook values; keep unknown distinct."
+    },
+    {
+      "field": "Rank_Relationship",
+      "source": "rel_dom",
+      "status": "PAPER_AND_HEADER_CORROBORATED_CANDIDATE",
+      "use": "b0_covariate_if_verified",
+      "gate": "Verify sign/orientation: signal directed toward higher- vs lower-ranking recipient. Never infer from animals' names."
+    },
+    {
+      "field": "Collection_Year",
+      "source": "Dataset",
+      "status": "PAPER_AND_COUNT_CORROBORATED_CANDIDATE",
+      "use": "b0_covariate_if_verified",
+      "gate": "Confirm Dataset is year 2015/2016; never use as Group_ID."
+    },
+    {
+      "field": "Gesture_Class",
+      "source": "GEST",
+      "status": "PAPER_AND_HEADER_CORROBORATED_CANDIDATE",
+      "use": "b1_b2_predictor_if_verified",
+      "gate": "Freeze literal raw-code→stretched-arm/bent-arm mapping before model run; other codes remain held."
+    },
+    {
+      "field": "Facial_Expression_Class",
+      "source": "face",
+      "status": "PAPER_AND_HEADER_CORROBORATED_CANDIDATE",
+      "use": "b1_b2_predictor_if_verified",
+      "gate": "Freeze literal face codes for neutral, bared-teeth, funneled-lip/hoot; unavailable/not visible must never become neutral."
+    },
+    {
+      "field": "Social_Context",
+      "source": "context_dyad",
+      "status": "PAPER_AND_HEADER_CORROBORATED_CANDIDATE",
+      "use": "b0_b1_b2_covariate_if_verified",
+      "gate": "Confirm binary/finer source categories and that context precedes recipient response."
+    },
+    {
+      "field": "Recipient_Response",
+      "source": "REACT",
+      "status": "PAPER_AND_HEADER_CORROBORATED_CANDIDATE",
+      "use": "outcome_locked",
+      "gate": "Freeze literal raw-code→affiliative/non-affiliative mapping; missing/not visible must never become non-affiliative."
+    },
+    {
+      "field": "Signal_Configuration",
+      "source": "derived Gesture_Class × Facial_Expression_Class",
+      "status": "DERIVATION_HELD",
+      "use": "b2_interaction_only_after_component_approval",
+      "gate": "Derive only using verified visible, nonmissing source component codes; never assign signal meaning."
+    },
+    {
+      "field": "Coding_Visibility_or_Quality",
+      "source": "no separately identified header; potentially face/REACT native code",
+      "status": "HELD_NOT_SEPARATELY_VERIFIED",
+      "use": "quality_gate_only",
+      "gate": "Confirm uncodable/not-visible states from codebook; absence of explicit flag does not imply full visibility."
+    },
+    {
+      "field": "Rights_and_Reuse_State",
+      "source": "Figshare item CC BY 4.0 metadata and ethical conditions",
+      "status": "ITEM_LICENSE_OBSERVED_REVIEW_PENDING",
+      "use": "rights_gate_only",
+      "gate": "Verify attribution, third-party conditions and raw-file retention/redistribution restrictions."
+    },
+    {
+      "field": "Source_Record_Provenance",
+      "source": "Figshare 9192509.v1, file 16741928, SHA-256 + sheet + original row",
+      "status": "H1_PINNED_ROW_PROVENANCE_NOT_YET_MATERIALIZED",
+      "use": "provenance_only",
+      "gate": "Preserve immutable source checksum, sheet and source row for every future normalized record."
+    }
+  ],
+  "nonmodel_source_columns": [
+    {
+      "source": "event",
+      "status": "PROVENANCE_CANDIDATE",
+      "reason": "Assess within/source-wide uniqueness; never use as predictor."
+    },
+    {
+      "source": "clip_old",
+      "status": "SOURCE_MEDIA_REFERENCE_ONLY",
+      "reason": "Media/file reference; potentially sensitive; not a model covariate."
+    },
+    {
+      "source": "time",
+      "status": "TIMING_METADATA_UNAPPROVED",
+      "reason": "Time relative to event/signal/response not yet defined; no model input."
+    },
+    {
+      "source": "ini_approaching",
+      "status": "POSSIBLE_TEMPORAL_LEAKAGE_NOT_ALLOWED_IN_PR0005",
+      "reason": "Initiator motion coding timing not proven pre-response and not a preregistered B0 feature."
+    }
+  ],
+  "next_gate": "Exact pinned Group-2-only literal category vocabulary (no frequencies or Group-1 outcome access), then independent codebook crosswalk and H0-H9 eligibility/timing/ID review.",
+  "prohibited": [
+    "Opening Group 1 outcomes for exploration",
+    "Using outcomes or group identities as predictors",
+    "Recoding absent face as neutral or missing response as non-affiliative",
+    "Changing B0/B1/B2 or split after reading outcomes",
+    "Treating software checks or model agreement as biological evidence"
+  ]
+}
