@@ -36,9 +36,12 @@ def _license_summary(value: Any) -> dict[str, Any] | None:
 def _article_summary(record: dict[str, Any]) -> dict[str, Any]:
     identifier = record.get("id")
     doi = str(record.get("doi") or "")
-    match = identifier == ARTICLE_ID and doi.lower().rstrip("/") in {
-        EXPECTED_DOI, "https://doi.org/" + EXPECTED_DOI
-    }
+    canonical = doi.lower().rstrip("/").removeprefix("https://doi.org/")
+    version = record.get("version")
+    allowed = {EXPECTED_DOI}
+    if isinstance(version, int) and version >= 1:
+        allowed.add(f"{EXPECTED_DOI}.v{version}")
+    match = identifier == ARTICLE_ID and canonical in allowed
     raw_files = record.get("files")
     files = []
     if isinstance(raw_files, list):
