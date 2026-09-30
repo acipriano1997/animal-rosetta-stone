@@ -1,0 +1,137 @@
+{
+  "contract_id": "RDC-004",
+  "protocol_id": "PR0005",
+  "dataset_id": "D0019",
+  "eligibility_version": "v0.1",
+  "frozen_date": "2026-09-30",
+  "source_sha256": "26f69ee04f5d017d46f72430c0e18e5be960dd77432542644688acd88317075e",
+  "crosswalk_ref": "contracts/d0019_rdc004_source_crosswalk_v0_2.json",
+  "grouping_amendment_ref": "contracts/pr0005_pd_001_grouping_amendment.json",
+  "scope": "GROUP_2_DEVELOPMENT_ONLY",
+  "group_source_column": "group",
+  "required_group_token": "2",
+  "row_provenance": "Canonical Event_ID is exact source SHA + Rawdata + original Excel row; source event/year retained secondarily.",
+  "rules": {
+    "identifiers": {
+      "initiator": {
+        "required": true
+      },
+      "recipient": {
+        "required": true
+      },
+      "same_identity": {
+        "allowed": false
+      }
+    },
+    "year": {
+      "source": "Dataset",
+      "allowed": [
+        "2015",
+        "2016"
+      ],
+      "missing": "EXCLUDE_INVALID_YEAR"
+    },
+    "initiator_sex": {
+      "source": "sex_init",
+      "allowed": [
+        "female",
+        "male"
+      ],
+      "missing": "RETAIN_EXPLICIT_UNKNOWN_IF_ENCOUNTERED"
+    },
+    "recipient_sex": {
+      "source": "sex_rec",
+      "allowed": [
+        "female",
+        "male"
+      ],
+      "missing": "RETAIN_EXPLICIT_UNKNOWN_IF_ENCOUNTERED"
+    },
+    "rank_relationship": {
+      "source": "rel_dom",
+      "allowed": [
+        "todom",
+        "nottodom",
+        "NA"
+      ],
+      "mapping": {
+        "NA": "UNKNOWN_SOURCE_UNAVAILABLE"
+      },
+      "eligibility": "RETAIN_NA_AS_UNKNOWN"
+    },
+    "gesture": {
+      "source": "GEST",
+      "allowed": [
+        "SG",
+        "BG"
+      ],
+      "eligibility": "REQUIRED_SUBSTANTIVE; other/missing EXCLUDE"
+    },
+    "face": {
+      "source": "face",
+      "allowed": [
+        "neutral",
+        "bared",
+        "hoot",
+        "NA"
+      ],
+      "mapping": {
+        "NA": "SOURCE_UNAVAILABLE"
+      },
+      "eligibility": "EXCLUDE_NA_OR_MISSING; never map NA to neutral"
+    },
+    "context": {
+      "source": "context_dyad",
+      "allowed": [
+        "pos",
+        "neg",
+        "NA"
+      ],
+      "mapping": {
+        "NA": "SOURCE_UNAVAILABLE"
+      },
+      "eligibility": "EXCLUDE_NA_OR_MISSING"
+    },
+    "response": {
+      "source": "REACT",
+      "allowed": [
+        "affil",
+        "avoid",
+        "NA"
+      ],
+      "mapping": {
+        "affil": "affiliative",
+        "avoid": "non_affiliative",
+        "NA": "SOURCE_UNAVAILABLE"
+      },
+      "eligibility": "EXCLUDE_NA_OR_MISSING; never impute"
+    },
+    "source_dyad": {
+      "source": "dyad",
+      "eligibility": "PROVENANCE_ONLY; never primary grouping"
+    }
+  },
+  "aggregate_receipt_only": {
+    "allowed_outputs": [
+      "source Group2 row count",
+      "field-domain validity",
+      "blank/NA exclusion counts",
+      "total eligible count",
+      "eligible unordered-dyad count",
+      "eligible source-row-set digest",
+      "invalid-token counts",
+      "overlap/exclusion reason counts"
+    ],
+    "forbidden_outputs": [
+      "row-level source data",
+      "individual IDs",
+      "dyad identities",
+      "REACT affil vs avoid frequencies",
+      "model metrics",
+      "predictions",
+      "Group1 signals or outcomes"
+    ]
+  },
+  "admission_rule": "PASS_ELIGIBILITY_STRUCTURE only if source pin/crosswalk/amendment match, all observed Group2 tokens are within frozen domains, no required IDs are missing, no self-directed initiator=recipient rows exist, canonical source rows are unique, and at least 2 eligible unordered dyads remain. Passing does not authorize PR0005 until grouped split/fold-support and final admission checks pass.",
+  "scientific_boundary": "Eligibility/missingness is preprocessing governance, not biological evidence."
+}
