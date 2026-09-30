@@ -123,12 +123,57 @@ def probe(item: dict[str, Any],
     return receipt
 
 
+def check_frozen_snapshot(receipt: dict[str, Any], pins: dict[str, Any]) -> dict[str, Any]:
+    """Quarantine drift from the H1-verified source; never open Group 1 or outcomes."""
+    if receipt.get("state") != "H1_FILES_VERIFIED_H2_HEADER_CANDIDATES_CODEBOOK_HELD":
+        receipt["source_pin_verified"] = False
+        return receipt
+    actual = receipt.get("files") or []
+    expected_file = pins.get("file") or {}
+    verified = (
+        receipt.get("source_item_id") == pins.get("source_item_id")
+        and receipt.get("source_version") == pins.get("version")
+        and receipt.get("doi_as_reported") == pins.get("doi")
+        and receipt.get("license_as_reported") == pins.get("license_as_reported")
+        and len(actual) == 1
+        and actual[0].get("file_id") == expected_file.get("id")
+        and actual[0].get("filename") == expected_file.get("name")
+        and actual[0].get("declared_size") == expected_file.get("bytes")
+        and actual[0].get("md5_verified") == expected_file.get("md5")
+        and actual[0].get("sha256") == expected_file.get("sha256")
+    )
+    if verified:
+        actual_sheets = actual[0].get("header_inventory") or []
+        expected_sheets = pins.get("sheets") or []
+        verified = len(actual_sheets) == len(expected_sheets)
+        if verified:
+            for observed, expected in zip(actual_sheets, expected_sheets):
+                headers = [
+                    cell.get("header_candidate")
+                    for cell in observed.get("header_candidate_cells", [])
+                ]
+                if (
+                    observed.get("sheet_name") != expected.get("name")
+                    or observed.get("dimension_as_declared") != expected.get("declared_dimension")
+                    or observed.get("header_candidate_row") != expected.get("candidate_header_row")
+                    or headers != expected.get("source_header_candidates", [])
+                ):
+                    verified = False
+                    break
+    receipt["source_pin_verified"] = bool(verified)
+    if not verified:
+        receipt["state"] = "QUARANTINED_SOURCE_DRIFT"
+    return receipt
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Discover only D0019 Figshare source identities and header candidates")
     ap.add_argument("--out", default="build/d0019_figshare_source_probe.json")
     args = ap.parse_args()
     try:
         receipt = probe(public_item())
+        pins = json.loads(Path("contracts/d0019_v1_verified_source_snapshot.json").read_text())
+        receipt = check_frozen_snapshot(receipt, pins)
     except (OSError, ValueError, TypeError) as exc:
         receipt = {
             "dataset": "D0019", "protocol": "SOURCE_H0_H1_H2_HEADER_ONLY",
