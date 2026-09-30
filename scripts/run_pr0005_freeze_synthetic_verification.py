@@ -7,7 +7,10 @@ import json
 from pathlib import Path
 
 from ars_receiver_harness.pr0005_artifacts import freeze_run005_package
-from scripts.run_pr0005_synthetic_verification import synthetic_group2
+try:
+    from scripts.run_pr0005_synthetic_verification import synthetic_group2
+except ModuleNotFoundError:
+    from run_pr0005_synthetic_verification import synthetic_group2
 
 
 def main() -> None:
