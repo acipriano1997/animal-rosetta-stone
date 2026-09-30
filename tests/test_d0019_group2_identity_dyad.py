@@ -83,6 +83,7 @@ def test_group2_identity_audit_emits_structure_not_ids_or_holdout():
     result=group2_identity_audit(raw,HEADERS)
     assert result["group2_rows"]==149
     assert result["event_field_unique_within_group2"] is True
+    assert result["event_plus_year_unique_within_group2"] is True
     assert result["same_initiator_recipient_rows"]==0
     assert result["source_dyad_maps_to_one_unordered_pair"] is True
     assert result["unordered_pair_maps_to_one_source_dyad"] is True
@@ -116,3 +117,10 @@ def test_source_hash_drift_holds_before_claim():
     result=audit(item,pins,crosswalk,lambda url,size:raw)
     assert result["state"]=="HELD_IDENTITY_AUDIT_SOURCE"
     assert result["group1_outcomes_accessed"] is False
+
+
+def test_year_scoped_identifiers_can_resolve_reused_event_or_dyad_tokens():
+    raw=workbook(reverse=False)
+    result=group2_identity_audit(raw,HEADERS)
+    assert result["event_plus_group_plus_year_unique_within_group2"] is True
+    assert result["source_dyad_token_is_confined_to_one_year"] in (True, False)
