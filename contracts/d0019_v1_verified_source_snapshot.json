@@ -1,0 +1,68 @@
+{
+  "dataset_id": "D0019",
+  "phase": "H1_VERIFIED_H2_HEADERS_CANDIDATE",
+  "source_item_id": 9192509,
+  "doi": "10.6084/m9.figshare.9192509.v1",
+  "version": 1,
+  "source_provider": "Figshare",
+  "source_author": "Linda Oña",
+  "license_as_reported": {
+    "name": "CC BY 4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "observed_utc_date": "2026-09-30",
+  "file": {
+    "id": 16741928,
+    "name": "Rawdata_Compositionality.xlsx",
+    "bytes": 31922,
+    "md5": "f6b8393b5f59cc395709bbed65b579c9",
+    "sha256": "26f69ee04f5d017d46f72430c0e18e5be960dd77432542644688acd88317075e"
+  },
+  "sheets": [
+    {
+      "name": "Rawdata",
+      "declared_dimension": "A1:P253",
+      "candidate_header_row": 1,
+      "source_header_candidates": [
+        "Dataset",
+        "event",
+        "clip_old",
+        "time",
+        "initiator",
+        "group",
+        "sex_init",
+        "ini_approaching",
+        "recipient",
+        "sex_rec",
+        "dyad",
+        "rel_dom",
+        "face",
+        "context_dyad",
+        "GEST",
+        "REACT"
+      ]
+    },
+    {
+      "name": "Model formula",
+      "declared_dimension": "A2:A10",
+      "candidate_header_row": null
+    }
+  ],
+  "evidence": {
+    "github_ci_run": 36742297821,
+    "tested_head": "3dbf5e0b41713c7664eaf0628a5272f75b4dd5c9",
+    "workflow_artifact_id": 11110876443,
+    "digest": "sha256:f303815d90440571c25b5180e3f6de647be8acdac2081d2eed6d3eaf4780ef99"
+  },
+  "boundaries": {
+    "item_license_observed_additional_rights_review_pending": true,
+    "original_bytes_persisted": false,
+    "event_rows_inspected": false,
+    "outcome_distributions_inspected": false,
+    "rdc004_mapping_approved": false,
+    "group1_sealed": true,
+    "pr0005_run": "NOT_EXECUTED",
+    "biological_evidence": "NONE",
+    "crg_c": "UNMET"
+  }
+}

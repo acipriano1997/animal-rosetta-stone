@@ -43,6 +43,9 @@ jobs:
       - name: Inspect D0025 supplementary document cues (no source files published)
         if: github.head_ref == 'ars/d0025-supplementary-codebook-review-v0.1'
         run: python scripts/review_d0025_supplementary_docs.py --out build/d0025_supplementary_doc_cues.json
+      - name: Verify D0019 source metadata and bounded workbook headers
+        if: github.head_ref == 'ars/d0019-figshare-source-probe-v0.1'
+        run: python scripts/probe_d0019_source.py --out build/d0019_figshare_source_probe.json
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:
