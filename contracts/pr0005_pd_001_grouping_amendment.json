@@ -1,0 +1,41 @@
+{
+  "deviation_id": "PD-PR0005-001",
+  "protocol_id": "PR0005",
+  "dataset_id": "D0019",
+  "title": "Replace ordered dyad grouping with deterministic unordered dyad grouping",
+  "status": "FROZEN_PRE_OUTCOME_SOURCE_SCHEMA_AMENDMENT",
+  "date": "2026-09-30",
+  "trigger": "Exact-SHA Group-2 identity audit showed source dyad tokens are not stable pair keys and the same social pair can occur in both communication directions.",
+  "evidence": {
+    "source_sha256": "26f69ee04f5d017d46f72430c0e18e5be960dd77432542644688acd88317075e",
+    "ci_run": 36751217283,
+    "tested_head": "87435c60b2bd09cd8c0b878d49e461a950039662",
+    "group2_rows": 149,
+    "event_unique_alone": false,
+    "event_plus_year_unique": true,
+    "source_dyad_tokens": 96,
+    "ordered_pairs": 95,
+    "unordered_pairs": 93,
+    "source_dyad_maps_one_unordered_pair": true,
+    "unordered_pair_maps_one_source_dyad": false,
+    "source_dyad_confined_one_year": false,
+    "reverse_direction_social_pairs_present": true,
+    "group1_outcomes_accessed": false,
+    "pr0005_executed": false
+  },
+  "amendment": {
+    "primary_group_key": "UNORDERED_DYAD_ID",
+    "derivation": "Pseudonymize Initiator_ID and Recipient_ID with a runtime HMAC secret; lexicographically sort the two pseudonyms; hash the ordered tuple with a fixed D0019 dyad namespace. A↔B therefore shares one group.",
+    "source_dyad_column": "Preserve as source provenance only; never use as the primary fold grouping key.",
+    "fallback": "Initiator_ID pseudonym only if a valid recipient/dyad cannot be constructed under the frozen RDC-004 missingness rules. If neither is valid, HELD_SPLIT.",
+    "event_identity": "Canonical Event_ID is deterministic from exact source version/file SHA/sheet/original row. Preserve source `event` and Collection_Year as secondary provenance; do not rely on source `event` alone because it repeats.",
+    "model_change": "NONE. B0/B1/B2, C, preprocessing, metrics, Group2 development and Group1 one-time transfer rules are unchanged."
+  },
+  "rationale": "Grouping is intended to block dependence/leakage across repeated interactions. An ordered A→B key can place A→B and B→A observations from the same social pair in different folds. The source-schema audit was conducted before empirical model fitting or outcome-performance inspection, so this amendment reduces leakage without outcome-driven optimization.",
+  "scientific_boundary": "This is a validation/provenance correction, not biological evidence and not a claim about signal meaning.",
+  "supersedes": [
+    "RDC-004-F05 note specifying deterministic ordered Initiator_ID→Recipient_ID pair",
+    "RUN-005 ordered-dyad interpretation in execution contract v0.1"
+  ],
+  "requires_drive_reconciliation": true
+}
