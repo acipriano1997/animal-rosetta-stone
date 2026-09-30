@@ -1,0 +1,41 @@
+{
+  "dataset_id": "D0019",
+  "protocol_id": "PR0005",
+  "procedure_id": "RUN-006-GROUP1-TRANSFER-v0.1",
+  "freeze_date": "2026-09-30",
+  "status": "FROZEN_BEFORE_GROUP1_NONPARTITION_ACCESS",
+  "source_sha256": "26f69ee04f5d017d46f72430c0e18e5be960dd77432542644688acd88317075e",
+  "partition": {
+    "source_field": "group",
+    "source_token": "1",
+    "published_rows_before_exclusions": 103
+  },
+  "dependencies": {
+    "crosswalk": "contracts/d0019_rdc004_source_crosswalk_v0_2.json",
+    "grouping_amendment": "contracts/pr0005_pd_001_grouping_amendment.json",
+    "eligibility_rules": "contracts/d0019_group2_eligibility_rules_v0_1.json",
+    "split_policy": "contracts/pr0005_pd_002_split_policy.json",
+    "final_admission": "contracts/d0019_rdc004_final_admission_v0_1.json"
+  },
+  "preconditions": [
+    "RUN-005 is finalized and its B1/B2 pipelines, preprocessing, feature map and checksums are frozen",
+    "The same persistent ARS_D0019_HMAC_KEY identity namespace used for Group 2 is available",
+    "No Group-1 signal/outcome/category inspection occurred during development",
+    "Group-1 normalization applies the same source mappings and missingness rules without alteration"
+  ],
+  "one_time_sequence": [
+    "Read exact pinned D0019 source and select source group=1",
+    "Apply the frozen RDC-004 eligibility/missingness rules without looking at aggregate class balance to alter them",
+    "Create source-row Event_IDs and HMAC pseudonyms with the same identity namespace as Group 2",
+    "Apply the already-fitted Group-2 B1 and B2 preprocessing/model artifacts with no refit",
+    "Persist one-time predictions and registered metrics",
+    "Seal the result; no RUN-006 result may change RUN-005, preprocessing, eligibility, features or split policy"
+  ],
+  "prohibited": [
+    "Opening Group-1 nonpartition fields before RUN-005 is frozen",
+    "Retuning, refitting or recalibrating on Group 1",
+    "Changing eligibility/missingness because of Group-1 composition or performance",
+    "Using Group-1 result to select between alternative models or split policies"
+  ],
+  "scientific_boundary": "RUN-006 is a locked transfer test. Even a positive result is bounded to the registered D0019 source-coded endpoint and does not establish literal signal meaning or species-wide compositional syntax."
+}
