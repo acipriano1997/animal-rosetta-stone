@@ -30,6 +30,8 @@ jobs:
           python scripts/run_rhf_suite.py --out build/rhf_suite_receipt.json
       - name: Execute ZERO_SYNTHETIC PR0006 verification
         run: python scripts/run_synthetic_verification.py --out-dir build/synthetic_verification
+      - name: Verify Workbench Phase I Slice 1
+        run: python scripts/verify_workbench_slice1.py
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:
