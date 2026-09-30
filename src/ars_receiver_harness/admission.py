@@ -76,6 +76,9 @@ def validate_admission(
         raise AdmissionError("QUARANTINED_PROVENANCE", "Raw source filename mismatch.")
     raw_sha = _hash_file(raw_source, source.get("sha256"), "Raw source")
     norm_sha = _hash_file(normalized_csv, normal.get("normalized_sha256"), "Normalized")
+    canonical_frame = pd.read_csv(normalized_csv)
+    if not frame.reset_index(drop=True).equals(canonical_frame):
+        raise AdmissionError("QUARANTINED_PROVENANCE", "Analysis frame differs from hashed normalized CSV.")
 
     if not (cfg.n_splits == 5 and cfg.c == 1.0 and cfg.seed == 20260929
             and cfg.bootstrap_resamples == 2000 and cfg.sanity_permutations == 200
