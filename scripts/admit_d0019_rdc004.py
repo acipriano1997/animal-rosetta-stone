@@ -207,8 +207,9 @@ def final_admission(item: dict,pins: dict,crosswalk: dict,amendment1: dict,eligi
             "outcome_frequencies_emitted":False,
             "group1_nonpartition_cells_decoded":False,
         }
-        receipt["rdc004_empirical_admission"]=True
-        receipt["state"]="RDC004_FINAL_ADMISSION_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION"
+        receipt["final_premodel_gates_passed"]=True
+        receipt["rdc004_empirical_admission"]=False
+        receipt["state"]="RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION"
         return receipt,raw
     except (OSError,ValueError,TypeError,KeyError,IndexError,BadZipFile,ET.ParseError) as exc:
         receipt["state"]="HELD_FINAL_ADMISSION_SOURCE"
@@ -343,7 +344,7 @@ def main():
     objs=[json.loads(Path(p).read_text()) for p in paths]
     try:
         receipt,raw=final_admission(public_item(),*objs,fetch_source)
-        if receipt.get("rdc004_empirical_admission") and args.materialize_dir:
+        if receipt.get("final_premodel_gates_passed") and args.materialize_dir:
             secret=os.environ.get("ARS_D0019_HMAC_KEY","").encode()
             if not secret:
                 receipt["state"]="HELD_MATERIALIZATION_KEY"
@@ -353,6 +354,7 @@ def main():
                     raw,objs[0],objs[1],objs[3],objs[5],secret,Path(args.materialize_dir)
                 )
                 receipt["materialization"]=manifest
+                receipt["rdc004_empirical_admission"]=True
                 receipt["state"]="RDC004_GROUP2_MATERIALIZED_PR0005_READY"
     except (OSError,ValueError,TypeError,KeyError) as exc:
         receipt={"dataset_id":"D0019","phase":"H6_FINAL_RDC004_ADMISSION",
