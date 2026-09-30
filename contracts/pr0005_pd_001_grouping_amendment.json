@@ -5,7 +5,7 @@
   "title": "Replace ordered dyad grouping with deterministic unordered dyad grouping",
   "status": "FROZEN_PRE_OUTCOME_SOURCE_SCHEMA_AMENDMENT",
   "date": "2026-09-30",
-  "trigger": "Exact-SHA Group-2 identity audit showed source dyad tokens are not stable pair keys and the same social pair can occur in both communication directions.",
+  "trigger": "Exact-SHA Group-2 identity audit showed raw source dyad tokens are not stable one-to-one pair keys. Because 95 ordered identity pairs collapse to 93 unordered pairs with no self-directed rows, at least two social pairs occur in both communication directions; a direction-invariant grouping key is therefore the conservative leakage barrier.",
   "evidence": {
     "source_sha256": "26f69ee04f5d017d46f72430c0e18e5be960dd77432542644688acd88317075e",
     "ci_run": 36751217283,
@@ -21,7 +21,11 @@
     "source_dyad_confined_one_year": false,
     "reverse_direction_social_pairs_present": true,
     "group1_outcomes_accessed": false,
-    "pr0005_executed": false
+    "pr0005_executed": false,
+    "source_dyad_contains_both_directions_for_at_least_one_pair": false,
+    "reverse_direction_social_pairs_inferred_from_ordered_vs_unordered_counts": true,
+    "final_verification_ci_run": 36751702205,
+    "final_verified_head": "a70dc84e2c68a15d571ef7098c7d6ac5242fd44b"
   },
   "amendment": {
     "primary_group_key": "UNORDERED_DYAD_ID",
