@@ -46,3 +46,23 @@ def test_dataset_identity_mismatch_is_not_accepted():
     result = probe(wrong)
     assert result["article"]["state"] == "IDENTITY_MISMATCH_HELD"
     assert result["pr0006_execution"] == "NOT_ATTEMPTED"
+
+
+def test_versioned_doi_matches_its_declared_source_version():
+    def versioned(path):
+        record = _fake_fetch(path)
+        if path.endswith("/19683768"):
+            record["doi"] = "10.6084/m9.figshare.19683768.v1"
+        return record
+    result = probe(versioned)
+    assert result["article"]["state"] == "IDENTITY_MATCH_METADATA_ONLY"
+
+
+def test_wrong_version_suffix_does_not_match():
+    def version_conflict(path):
+        record = _fake_fetch(path)
+        if path.endswith("/19683768"):
+            record["doi"] = "10.6084/m9.figshare.19683768.v2"
+        return record
+    result = probe(version_conflict)
+    assert result["article"]["state"] == "IDENTITY_MISMATCH_HELD"
