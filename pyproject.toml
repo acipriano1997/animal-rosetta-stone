@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools==80.9.0", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "animal-rosetta-stone"
+version = "0.1.0"
+description = "Executable research infrastructure for the Animal Rosetta Stone project"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "numpy==2.3.5",
+  "pandas==2.2.3",
+  "scikit-learn==1.8.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest==9.0.2"]
+
+[project.scripts]
+ars-pr0006 = "ars_receiver_harness.cli:main"
+ars-rhf-suite = "ars_receiver_harness.fixtures:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

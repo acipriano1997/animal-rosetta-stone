@@ -1,0 +1,38 @@
+name: receiver-harness-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+      - name: Install pinned dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-lock.txt
+          python -m pip install -e .
+      - name: Unit and contract tests
+        run: python -m pytest -q
+      - name: Execute RHF-001..035
+        run: |
+          mkdir -p build
+          python scripts/run_rhf_suite.py --out build/rhf_suite_receipt.json
+      - name: Execute ZERO_SYNTHETIC PR0006 verification
+        run: python scripts/run_synthetic_verification.py --out-dir build/synthetic_verification
+      - name: Upload exact-head verification receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ars-receiver-harness-verification-${{ github.sha }}
+          path: build/
+          if-no-files-found: error
