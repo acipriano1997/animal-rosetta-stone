@@ -55,7 +55,7 @@ def _fixture(group_values=None, changed_counts=False):
     }
     item = {
         "id": 9192509, "version": 1, "doi": manifest["doi"],
-        "license": manifest["license_as_reported"],
+        "license": dict(manifest["license_as_reported"]),
         "files": [{
             "id": 16741928, "name": manifest["file"]["name"],
             "size": len(raw), "computed_md5": manifest["file"]["md5"],
