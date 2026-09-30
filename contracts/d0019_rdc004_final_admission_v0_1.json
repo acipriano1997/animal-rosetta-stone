@@ -14,7 +14,8 @@
     "split_policy": "contracts/pr0005_pd_002_split_policy.json",
     "eligible_source_row_set_sha256": "d6d004eb5a685eed1875e5a430cfb7bb0b6638bb315cf5bf2e2b998588c2be63",
     "eligible_rows": 104,
-    "primary_unordered_dyads": 69
+    "primary_unordered_dyads": 69,
+    "group1_transfer_procedure": "contracts/d0019_group1_transfer_procedure_v0_1.json"
   },
   "admission_requirements": [
     "Exact source identity, version, item-level CC BY metadata and SHA-256 match",
