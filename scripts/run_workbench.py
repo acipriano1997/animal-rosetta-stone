@@ -1,2 +1,1 @@
-from ars_workbench.__main__ import serve
-serve()
+from ars_workbench.app import serve\n\nserve()\n
