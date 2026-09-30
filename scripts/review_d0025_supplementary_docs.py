@@ -13,8 +13,8 @@ from zipfile import ZipFile
 
 W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
 KEYWORDS = re.compile(
-    r"\\b(dataset|codebook|variable|signaller|recipient|response|approach|avoidance|"
-    r"event|identity|dyad|social bond|intention|bimodal|gesture|vocal)\\b",
+    r"\b(dataset|codebook|variable|signaller|recipient|response|approach|avoidance|"
+    r"event|identity|dyad|social bond|intention|bimodal|gesture|vocal)\b",
     re.IGNORECASE,
 )
 
