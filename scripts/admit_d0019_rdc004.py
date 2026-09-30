@@ -17,8 +17,12 @@ from ars_receiver_harness.d0019_ids import (
     pseudonymize_source_id,
     unordered_dyad_id,
 )
-from scripts.audit_d0019_group2_eligibility import group2_eligibility
-from scripts.audit_d0019_split_support import split_support
+try:
+    from scripts.audit_d0019_group2_eligibility import group2_eligibility
+    from scripts.audit_d0019_split_support import split_support
+except ModuleNotFoundError:
+    from audit_d0019_group2_eligibility import group2_eligibility
+    from audit_d0019_split_support import split_support
 
 S="{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
 COLS={
