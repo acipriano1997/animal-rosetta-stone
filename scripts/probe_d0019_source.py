@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from zipfile import BadZipFile
 from typing import Any, Callable
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
@@ -41,7 +42,7 @@ def probe(item: dict[str, Any],
         "source_material_persisted": False, "event_rows_inspected": False,
         "outcome_distribution_inspected": False,
         "pr0005_executed": False, "group1_holdout_opened": False,
-        "r dc004_mapping_approved".replace(" ", ""): False,
+        "rdc004_mapping_approved": False,
         "scientific_effect": "NONE", "crg_c_credit": "UNMET",
         "rights": "HELD_UNTIL_SOURCE_SPECIFIC_REVIEW",
         "files": [], "state": "HELD_SOURCE_IDENTITY",
@@ -108,7 +109,7 @@ def probe(item: dict[str, Any],
                 summary["header_inventory"] = header_reader(raw)
                 summary["header_candidates_authoritative"] = False
                 inspected_excel += 1
-        except (OSError, ValueError, TypeError, KeyError, IndexError) as exc:
+        except (OSError, ValueError, TypeError, KeyError, IndexError, BadZipFile) as exc:
             success = False
             summary["state"] = "HELD_FILE_INTEGRITY_OR_SCHEMA"
             summary["error_type"] = type(exc).__name__
