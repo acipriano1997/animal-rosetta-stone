@@ -1,0 +1,41 @@
+{
+  "deviation_id": "PD-PR0005-002",
+  "protocol_id": "PR0005",
+  "dataset_id": "D0019",
+  "title": "Outcome-independent grouped development split policy",
+  "status": "FROZEN_PRE_OUTCOME_PERFORMANCE",
+  "date": "2026-09-30",
+  "trigger": "PR0005 froze grouped development but not a k-fold count. H4 eligibility established 104 eligible Group-2 events across 69 unordered dyads before any response-class frequencies or model performance were inspected.",
+  "primary_validation": {
+    "method": "LeaveOneGroupOut",
+    "group_key": "PD-PR0005-001 UNORDERED_DYAD_ID",
+    "fold_count_rule": "one held-out unordered dyad per fold; no outcome-dependent fold merging or k selection",
+    "models": "B0, B1 and B2 use exactly the same folds and fold-local preprocessing",
+    "primary_metric": "pooled event-weighted out-of-fold log loss",
+    "primary_comparison": "B2 minus B1 on identical out-of-fold events; lower is better",
+    "fold_macro_log_loss": "report as descriptive secondary only; cannot change disposition",
+    "roc_auc": "secondary only when defined; undefined fold AUC cannot alter folds"
+  },
+  "robustness_validation": {
+    "method": "LeaveOneGroupOut",
+    "group_key": "Initiator_ID",
+    "role": "robustness only; cannot rescue failure of the primary dyad analysis",
+    "models": "B1 and B2 on identical leave-initiator-out folds with fold-local preprocessing"
+  },
+  "support_gate": {
+    "eligible_source_rows_digest": "d6d004eb5a685eed1875e5a430cfb7bb0b6638bb315cf5bf2e2b998588c2be63",
+    "expected_eligible_rows": 104,
+    "expected_unordered_dyads": 69,
+    "required_checks": [
+      "Every eligible event appears in exactly one primary test fold",
+      "No primary train/test unordered-dyad overlap",
+      "Every primary training fold contains both registered response classes affil and avoid",
+      "Every robustness training fold contains both registered response classes affil and avoid",
+      "No Group-1 nonpartition field is decoded",
+      "No fold is dropped, merged or rebalanced based on outcomes"
+    ],
+    "allowed_output": "aggregate structural booleans and fold-size ranges only; no response-class counts/frequencies, identities or row assignments"
+  },
+  "fallback": "If support fails, RUN-005 is HELD_SPLIT. Do not switch to row-wise CV, choose k after inspecting outcomes, merge rare groups, or alter eligibility/model features.",
+  "scientific_boundary": "This amendment defines validation mechanics only. It is not biological evidence and does not authorize PR0005 execution until final RDC-004 admission."
+}

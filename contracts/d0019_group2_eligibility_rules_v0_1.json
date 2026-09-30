@@ -133,5 +133,6 @@
     ]
   },
   "admission_rule": "PASS_ELIGIBILITY_STRUCTURE only if source pin/crosswalk/amendment match, all observed Group2 tokens are within frozen domains, no required IDs are missing, no self-directed initiator=recipient rows exist, canonical source rows are unique, and at least 2 eligible unordered dyads remain. Passing does not authorize PR0005 until grouped split/fold-support and final admission checks pass.",
-  "scientific_boundary": "Eligibility/missingness is preprocessing governance, not biological evidence."
+  "scientific_boundary": "Eligibility/missingness is preprocessing governance, not biological evidence.",
+  "status": "FROZEN_PRE_MODEL_GROUP2_ELIGIBILITY"
 }
