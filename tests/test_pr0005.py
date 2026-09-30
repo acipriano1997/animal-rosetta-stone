@@ -76,6 +76,11 @@ def test_run005_uses_frozen_logo_schemes_and_complete_group2_only_input():
     assert np.isfinite(result.primary_delta_log_loss_b2_minus_b1)
     assert np.isfinite(result.robustness_delta_log_loss_b2_minus_b1)
     assert set(result.primary)=={"B0","B1","B2"}
+    assert set(result.robustness)=={"B1","B2"}
+    assert np.isfinite(result.primary["B1"]["fold_macro_log_loss"])
+    assert np.isfinite(result.primary["B2"]["fold_macro_log_loss"])
+    assert np.isfinite(result.robustness["B1"]["fold_macro_log_loss"])
+    assert np.isfinite(result.robustness["B2"]["fold_macro_log_loss"])
     assert result.group1_accessed is False
     assert result.evidence_scope=="DEVELOPMENT_ONLY"
 
@@ -127,4 +132,27 @@ def test_unsupported_leave_dyad_out_training_fold_fails_closed():
     target=frame["Dyad_ID"]=="D00"
     frame.loc[target,"Recipient_Response"]="non_affiliative"
     with pytest.raises(ValueError,match="HELD_SPLIT"):
+        run_pr0005_development(frame)
+
+
+def test_run005_rejects_noncanonical_row_or_dyad_shape():
+    frame=synthetic_group2().iloc[:-1].copy()
+    with pytest.raises(ValueError,match="104-row"):
+        run_pr0005_development(frame)
+
+    frame=synthetic_group2()
+    frame["Dyad_ID"]="ONE_DYAD"
+    with pytest.raises(ValueError,match="69 unordered dyads"):
+        run_pr0005_development(frame)
+
+
+def test_run005_requires_unique_source_provenance_locators():
+    frame=synthetic_group2()
+    frame.loc[1,"Source_Row_Locator"]=frame.loc[0,"Source_Row_Locator"]
+    with pytest.raises(ValueError,match="Source_Row_Locator"):
+        run_pr0005_development(frame)
+
+    frame=synthetic_group2()
+    frame.loc[0,"Source_Record_Provenance"]=""
+    with pytest.raises(ValueError,match="Source_Record_Provenance"):
         run_pr0005_development(frame)
