@@ -87,3 +87,28 @@ def test_invalid_zip_is_not_accepted_as_a_workbook():
     result = inspect_item_headers(item, pins, lambda url, size: raw)
     assert result["state"] == "HELD_SCHEMA_SOURCE"
     assert all(w["state"] == "HELD_SCHEMA_SOURCE" for w in result["workbooks"])
+
+
+def test_row2_column_headers_are_candidates_not_authoritative():
+    import re
+    with ZipFile(io.BytesIO(_mini_xlsx())) as original:
+        entries = {name: original.read(name) for name in original.namelist()}
+    text = entries["xl/worksheets/sheet1.xml"].decode()
+    headers = '''<row r="2">
+      <c r="A2" t="inlineStr"><is><t>Signaller_ID</t></is></c>
+      <c r="B2" t="inlineStr"><is><t>Recipient_Response</t></is></c>
+      <c r="C2" t="inlineStr"><is><t>Communication_Type</t></is></c>
+      </row>'''
+    updated = re.sub(r'<row r="2">.*?</row>', headers, text, flags=re.DOTALL)
+    updated = updated.replace('ref="A1:B2"', 'ref="A1:C2"')
+    entries["xl/worksheets/sheet1.xml"] = updated.encode()
+    buffer = io.BytesIO()
+    with ZipFile(buffer, "w") as output:
+        for name, value in entries.items():
+            output.writestr(name, value)
+    result = inspect_xlsx_headers(buffer.getvalue())[0]
+    assert result["header_candidate_row"] == 2
+    assert [c["header_candidate"] for c in result["header_candidate_cells"]] == [
+        "Signaller_ID", "Recipient_Response", "Communication_Type"
+    ]
+    assert result["header_row_authoritative"] is False
