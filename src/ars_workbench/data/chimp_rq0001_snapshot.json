@@ -1,0 +1,190 @@
+{
+  "snapshot_id": "WORKBENCH-CHIMP-RQ0001-v0.1",
+  "captured_date": "2026-09-30",
+  "mode": "STATIC_CANONICAL_VIEW_MODEL_FIXTURE",
+  "scientific_boundary": "Evidence structure and provenance only; no translation, semantic gloss generation, evidence grading, or claim promotion.",
+  "species": {
+    "species_id": "SP001",
+    "taxon": "Pan troglodytes",
+    "common_name": "Chimpanzee",
+    "activation_state": "ACTIVE",
+    "population_scope": ["Budongo/Sonso", "Taï", "Kanyawara", "other communities retained for validation"],
+    "active_question_ids": ["RQ0001"],
+    "comparison_readiness": {
+      "overall": "NOT_COMPARISON_READY",
+      "CRG-C": "NOT_PASS",
+      "CRG-D": "PARTIAL",
+      "controlling_reason": "No qualifying ARS rights-cleared receiver/component empirical run has closed."
+    },
+    "receiver_harness": {
+      "implementation_state": "OPERATIONALLY_VERIFIED_ZERO_SYNTHETIC",
+      "empirical_exercise_state": "UNEARNED",
+      "fixture_result": "RHF-001..035 = 35/35 PASS",
+      "biological_evidence": false
+    },
+    "provenance_ids": ["PROV-SPECIES", "PROV-COMPARISON-GATE", "PROV-HARNESS-VERIFY"]
+  },
+  "question": {
+    "question_id": "RQ0001",
+    "text": "Do multimodal signal combinations and ordered signal sequences in wild chimpanzees predict recipient responses and communicative outcomes beyond what is explained by component signals, context, and recipient state alone?",
+    "phase": "active_exploratory",
+    "primary_discriminator": "Out-of-sample improvement in predicting recipient response/outcome when combination/sequence features are added beyond component-signal + context + identity baselines, with replication across individuals/populations.",
+    "ethics_boundary": "Passive/archive-data synthesis initially. Any new animal-facing playback or manipulation remains blocked by the canonical ethics/welfare gate.",
+    "provenance_ids": ["PROV-RQ0001"]
+  },
+  "hypotheses": [
+    {
+      "hypothesis_id": "H0001",
+      "type": "primary",
+      "statement": "Multimodal combinations and ordered signal sequences carry interaction-relevant information beyond their component signals and observable context alone.",
+      "current_scope": "D0020 coarse sequence representation returned NULL_OR_CONTEXT_SUFFICIENT; component/multimodal receiver tests remain open.",
+      "provenance_ids": ["PROV-H0001"]
+    },
+    {
+      "hypothesis_id": "H0002",
+      "type": "alternative",
+      "statement": "Apparent multimodal or sequence effects primarily reflect social/ecological context, arousal, audience structure or individual identity rather than integrated communicative information.",
+      "current_scope": "D0020 is compatible with context/state sufficiency for the registered coarse features but does not establish H0002 generally.",
+      "provenance_ids": ["PROV-H0002"]
+    },
+    {
+      "hypothesis_id": "H0003",
+      "type": "null",
+      "statement": "Component signals plus measured context are sufficient to explain recipient responses and outcomes; multimodal combination/order terms add no reproducible information.",
+      "current_scope": "Supported only for the registered D0020 coarse sequence representation/outcome, not as a species-wide null.",
+      "provenance_ids": ["PROV-H0003"]
+    }
+  ],
+  "datasets": [
+    {
+      "dataset_id": "D0018",
+      "name": "Chimpanzee RQ0001 Event Corpus v0.1",
+      "role": "KNOWN_SIDE_CALIBRATION",
+      "availability": "BROWSABLE_CORPUS_METADATA",
+      "empirical_state": "CALIBRATION_CLOSED_THROUGH_RUN_002",
+      "rights_state": "DERIVED_PUBLIC_SOURCE_CONTEXT_WITH_UPSTREAM_RIGHTS_NUANCE",
+      "scope": "36 events; vocal/controlled receiver-outcome calibration; internal regression and event-schema validation.",
+      "semantic_authority": "NONE",
+      "provenance_ids": ["PROV-D0018"]
+    },
+    {
+      "dataset_id": "D0020",
+      "name": "Chimpanzee RQ0001 Wild Gesture Exchange Corpus v0.1",
+      "role": "ORDERED_SEQUENCE_VALIDATION",
+      "availability": "BROWSABLE_CORPUS_METADATA",
+      "empirical_state": "RUN_003_RUN_004_CLOSED_NULL_OR_CONTEXT_SUFFICIENT",
+      "rights_state": "PUBLIC_SOURCE_DERIVATIVE_INTERNAL_USE; REPOSITORY_LICENSE_NOT_STATED",
+      "scope": "4,223 interaction events across five wild communities; coarse exchange/order features.",
+      "semantic_authority": "NONE",
+      "provenance_ids": ["PROV-D0020", "PROV-RUN003", "PROV-RUN004"]
+    },
+    {
+      "dataset_id": "D0019",
+      "name": "Oña 2019 Compositionality raw event data",
+      "role": "PREFERRED_COMPONENT_LEVEL_MULTIMODAL_RECEIVER_CORPUS",
+      "availability": "GATED_METADATA_ONLY",
+      "empirical_state": "EMPIRICAL_EXECUTION_HELD",
+      "rights_state": "ITEM_LEVEL_LICENSE_UNVERIFIED",
+      "gate": "Exact source bytes, checksum/header inventory and dataset-file licence verification are required before execution.",
+      "semantic_authority": "NONE",
+      "provenance_ids": ["PROV-D0019"]
+    },
+    {
+      "dataset_id": "D0025",
+      "name": "Damjanovic 2022 Wild Chimp Multimodal Receiver-Response Corpus",
+      "role": "PRIMARY_PUBLIC_CRG_C_BYPASS",
+      "availability": "GATED_METADATA_ONLY",
+      "empirical_state": "PREBYTE_PR0006_FROZEN_EXECUTION_HELD",
+      "rights_state": "ITEM_LEVEL_LICENSE_UNVERIFIED",
+      "gate": "Exact Figshare licence, files, version, checksums, headers and row provenance remain unresolved.",
+      "known_exposure": "Published aggregate modality-response direction is known; PR0006 is not blind discovery.",
+      "semantic_authority": "NONE",
+      "provenance_ids": ["PROV-D0025", "PROV-PR0006"]
+    }
+  ],
+  "runs": [
+    {
+      "run_id": "RUN-PT-RQ0001-001",
+      "dataset_id": "D0018",
+      "evidence_class": "EMPIRICAL_KNOWN_SIDE_CALIBRATION",
+      "state": "CLOSED",
+      "disposition": "CALIBRATION_ONLY",
+      "interpretation_ceiling": "Known-side/internal calibration; no species-wide or semantic promotion.",
+      "provenance_ids": ["PROV-D0018", "PROV-RQ0001"]
+    },
+    {
+      "run_id": "RUN-PT-RQ0001-002",
+      "dataset_id": "D0018",
+      "evidence_class": "EMPIRICAL_KNOWN_SIDE_CALIBRATION",
+      "state": "CLOSED",
+      "disposition": "CALIBRATION_ONLY",
+      "interpretation_ceiling": "Known-side/internal calibration; does not satisfy CRG-C.",
+      "provenance_ids": ["PROV-D0018", "PROV-RQ0001"]
+    },
+    {
+      "run_id": "RUN-PT-RQ0001-003",
+      "dataset_id": "D0020",
+      "evidence_class": "PREREGISTERED_SECONDARY_ANALYSIS",
+      "state": "CLOSED",
+      "disposition": "DEVELOPMENT_SEQUENCE_CRITERION_NOT_MET",
+      "metrics": {"B0_log_loss": 0.455698, "B1_log_loss": 0.460562, "delta_log_loss": 0.004864},
+      "interpretation_ceiling": "Sequence features did not improve the registered development target; not a global rejection of sequence structure.",
+      "provenance_ids": ["PROV-RUN003"]
+    },
+    {
+      "run_id": "RUN-PT-RQ0001-004",
+      "dataset_id": "D0020",
+      "evidence_class": "LOCKED_CROSS_COMMUNITY_SECONDARY_ANALYSIS",
+      "state": "CLOSED",
+      "disposition": "NULL_OR_CONTEXT_SUFFICIENT",
+      "metrics": {"B0_log_loss": 0.445215, "B1_log_loss": 0.452642, "delta_log_loss": 0.007428},
+      "interpretation_ceiling": "Bounded null/context-sufficient result for Waibira under the frozen target and coarse sequence representation only.",
+      "provenance_ids": ["PROV-RUN004"]
+    },
+    {
+      "run_id": "RUN-PT-RQ0001-005",
+      "dataset_id": "D0019",
+      "evidence_class": "PLANNED_PREREGISTERED_EMPIRICAL",
+      "state": "EMPIRICAL_EXECUTION_HELD",
+      "disposition": null,
+      "gate": "D0019 rights/source-byte/schema materialization has not passed.",
+      "provenance_ids": ["PROV-D0019"]
+    },
+    {
+      "run_id": "RUN-PT-RQ0001-006",
+      "dataset_id": "D0019",
+      "evidence_class": "PLANNED_LOCKED_TRANSFER",
+      "state": "EMPIRICAL_EXECUTION_HELD",
+      "disposition": null,
+      "gate": "Cannot exist as an empirical result until the registered source/split path lawfully executes.",
+      "provenance_ids": ["PROV-D0019"]
+    }
+  ],
+  "software_verification": [
+    {
+      "verification_id": "Q0024-RHF-v0.1",
+      "class": "ZERO_SYNTHETIC",
+      "state": "OPERATIONALLY_VERIFIED",
+      "result": "RHF-001..035 = 35/35 PASS; HA-001..016 structural bundle present.",
+      "biological_evidence": false,
+      "repository_main_sha": "29a7190f3202605730b406f575514d1e1810b26d",
+      "provenance_ids": ["PROV-HARNESS-VERIFY"]
+    }
+  ],
+  "provenance": {
+    "PROV-SPECIES": {"authority": "Chimpanzee — Species Activation Record v0.1", "drive_id": "1KYlWfx-aD39DledKlF8xZdHOEKBdrMyXcQJwhHqAbic"},
+    "PROV-COMPARISON-GATE": {"authority": "ACEB Chimp Comparison Gate + Chimpanzee Comparison-Ready Gate v0.1", "drive_id": "1a7tBCV6OODbJ5mx6v0qwzarISlEu38c67MSSxgQ5tuo", "registry": "ACEB: Chimp Comparison Gate"},
+    "PROV-HARNESS-VERIFY": {"authority": "Receiver Harness GitHub Operational Verification — 2026-09-30", "drive_id": "1u9YOZCFWLSm4znq3sg0a1Qo2Nnuo-o0FcLh6ikQ42Rw", "github_repo": "acipriano1997/animal-rosetta-stone"},
+    "PROV-RQ0001": {"authority": "ACEB Research Questions", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Research Questions:RQ0001"},
+    "PROV-H0001": {"authority": "ACEB Hypotheses", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Hypotheses:H0001"},
+    "PROV-H0002": {"authority": "ACEB Hypotheses", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Hypotheses:H0002"},
+    "PROV-H0003": {"authority": "ACEB Hypotheses", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Hypotheses:H0003"},
+    "PROV-D0018": {"authority": "ACEB Datasets", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Datasets:D0018"},
+    "PROV-D0019": {"authority": "ACEB Datasets", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Datasets:D0019"},
+    "PROV-D0020": {"authority": "ACEB Datasets", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Datasets:D0020"},
+    "PROV-D0025": {"authority": "ACEB Datasets", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Datasets:D0025"},
+    "PROV-RUN003": {"authority": "RQ0001 RUN-003 Development-Only Sequence Analysis v0.1", "drive_id": "18DGI71VY_yPPgY4GQe0_-DCQNTqw48ydjcBNelbeL60"},
+    "PROV-RUN004": {"authority": "RQ0001 RUN-004 Locked Waibira Sequence Evaluation v0.1", "drive_id": "1u8Xom-fKKc1h7oXfW_Bd0A-km2l7zc0nz-i68eg3ujY"},
+    "PROV-PR0006": {"authority": "PRER-RQ0001-D0025 Receiver Modality Reanalysis v0.1", "drive_id": "1UcKKgG32fpwXHiYkMDLqiwrcb19Ix8sr47aAsz0GYno"}
+  }
+}
