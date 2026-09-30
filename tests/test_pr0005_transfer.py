@@ -1,6 +1,7 @@
 import copy
 import json
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 
@@ -14,8 +15,13 @@ from ars_receiver_harness.pr0005_transfer import (
 from scripts.run_pr0005_transfer_synthetic_verification import build_synthetic_case
 
 
-def test_end_to_end_locked_transfer_uses_frozen_models_without_refit(tmp_path):
-    case=build_synthetic_case(tmp_path)
+@pytest.fixture(scope="module")
+def synthetic_case(tmp_path_factory):
+    return build_synthetic_case(tmp_path_factory.mktemp("run006_case"))
+
+
+def test_end_to_end_locked_transfer_uses_frozen_models_without_refit(synthetic_case):
+    case=synthetic_case
     manifest=case["transfer_manifest"]
     assert manifest["group1_source_rows_before_exclusions"]==103
     assert manifest["group1_eligible_rows"]==103
@@ -35,8 +41,8 @@ def test_end_to_end_locked_transfer_uses_frozen_models_without_refit(tmp_path):
     assert "Recipient_ID" not in predictions.columns
 
 
-def test_invalid_run005_freeze_blocks_before_group1_fetch(tmp_path):
-    case=build_synthetic_case(tmp_path/"base")
+def test_invalid_run005_freeze_blocks_before_group1_fetch(tmp_path,synthetic_case):
+    case=synthetic_case
     bad=copy.deepcopy(case["freeze_manifest"])
     bad["group1_accessed"]=True
     called=False
@@ -55,9 +61,11 @@ def test_invalid_run005_freeze_blocks_before_group1_fetch(tmp_path):
     assert called is False
 
 
-def test_tampered_frozen_model_blocks_before_group1_fetch(tmp_path):
-    case=build_synthetic_case(tmp_path/"base")
-    model=case["freeze_dir"]/"run005_full_group2_b1.pkl"
+def test_tampered_frozen_model_blocks_before_group1_fetch(tmp_path,synthetic_case):
+    case=synthetic_case
+    copied=tmp_path/"freeze_copy"
+    shutil.copytree(case["freeze_dir"],copied)
+    model=copied/"run005_full_group2_b1.pkl"
     model.write_bytes(model.read_bytes()+b"tamper")
     called=False
     def forbidden(url,size):
@@ -69,15 +77,15 @@ def test_tampered_frozen_model_blocks_before_group1_fetch(tmp_path):
             item=case["item"],pins=case["pins"],crosswalk=case["crosswalk"],
             eligibility=case["eligibility"],group1_procedure=case["group1_procedure"],
             run005_freeze_manifest=case["freeze_manifest"],
-            run005_freeze_dir=case["freeze_dir"],secret=case["secret"],
+            run005_freeze_dir=copied,secret=case["secret"],
             fetch=forbidden,output_dir=tmp_path/"blocked",
             evidence_weight="ZERO_SYNTHETIC",
         )
     assert called is False
 
 
-def test_namespace_mismatch_blocks_before_group1_fetch(tmp_path):
-    case=build_synthetic_case(tmp_path/"base")
+def test_namespace_mismatch_blocks_before_group1_fetch(tmp_path,synthetic_case):
+    case=synthetic_case
     bad=copy.deepcopy(case["freeze_manifest"])
     bad["identity_namespace_fingerprint"]="0"*64
     called=False
@@ -96,8 +104,8 @@ def test_namespace_mismatch_blocks_before_group1_fetch(tmp_path):
     assert called is False
 
 
-def test_one_class_locked_transfer_keeps_log_loss_and_sets_auc_none(tmp_path):
-    case=build_synthetic_case(tmp_path/"base")
+def test_one_class_locked_transfer_keeps_log_loss_and_sets_auc_none(synthetic_case):
+    case=synthetic_case
     group1=pd.read_csv(case["output_dir"]/"run006_group1_normalized.csv")
     group1["Recipient_Response"]="affiliative"
     result,predictions=evaluate_locked_group1(
