@@ -10,7 +10,7 @@ import posixpath
 from typing import Any, Callable
 from urllib.parse import urlparse
 from xml.etree import ElementTree as ET
-from zipfile import ZipFile
+from zipfile import BadZipFile, ZipFile
 
 S = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
 R = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}"
@@ -96,7 +96,8 @@ def inspect_item_headers(
     }
     if item.get("id") != pins.get("item_id") or item.get("version") != pins.get("version") or item.get("doi") != pins.get("doi"):
         return result
-    if item.get("license", {}).get("name") != pins.get("license_as_reported", {}).get("name"):
+    license_info = item.get("license") or {}
+    if not isinstance(license_info, dict) or license_info.get("name") != pins.get("license_as_reported", {}).get("name"):
         return result
     source = {f.get("id"): f for f in item.get("files", []) if isinstance(f, dict)}
     success = True
@@ -119,7 +120,7 @@ def inspect_item_headers(
                 raise ValueError("Workbook differs from H1-verified bytes")
             info["sheets"] = inspect_xlsx_headers(raw)
             info["state"] = "ROW1_HEADER_CANDIDATES_RECORDED"
-        except (OSError, ValueError, TypeError, KeyError) as exc:
+        except (OSError, ValueError, TypeError, KeyError, BadZipFile, ET.ParseError) as exc:
             success = False
             info["state"] = "HELD_SCHEMA_SOURCE"
             info["error_type"] = type(exc).__name__
