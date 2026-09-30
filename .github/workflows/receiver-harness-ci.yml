@@ -37,6 +37,9 @@ jobs:
       - name: Check D0025 source-byte integrity (manifest only)
         if: github.head_ref == 'ars/d0025-source-integrity-v0.1'
         run: python scripts/freeze_d0025_source_integrity.py --out build/d0025_source_integrity.json
+      - name: Inventory D0025 Excel headers only (codebook still held)
+        if: github.head_ref == 'ars/d0025-header-inventory-v0.1'
+        run: python scripts/inspect_d0025_headers.py --out build/d0025_header_inventory.json
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:
