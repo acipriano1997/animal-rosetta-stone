@@ -43,8 +43,12 @@ IDENTITY_PROVENANCE_COLUMNS = {
     "Source_Record_Provenance",
     "Rights_and_Reuse_State",
 }
+EXPECTED_DEVELOPMENT_ROWS = 104
+EXPECTED_PRIMARY_GROUPS = 69
+
 REQUIRED_NORMALIZED_COLUMNS = set(B0_COLUMNS) | {
     "Event_ID",
+    "Source_Row_Locator",
     "Group_ID",
     "Initiator_ID",
     "Recipient_ID",
@@ -52,6 +56,10 @@ REQUIRED_NORMALIZED_COLUMNS = set(B0_COLUMNS) | {
     "Gesture_Class",
     "Facial_Expression_Class",
     "Recipient_Response",
+    "Signal_Configuration",
+    "Coding_Visibility_or_Quality",
+    "Rights_and_Reuse_State",
+    "Source_Record_Provenance",
 }
 
 
@@ -69,6 +77,7 @@ class PR0005Config:
 @dataclass(frozen=True)
 class ModelOOFMetrics:
     log_loss: float
+    fold_macro_log_loss: float
     brier: float
     roc_auc: float | None
 
@@ -120,6 +129,11 @@ def _prepare(df: pd.DataFrame, cfg: PR0005Config) -> tuple[pd.DataFrame, np.ndar
         raise ValueError("Normalized Group-2 corpus is empty")
     if df["Event_ID"].isna().any() or df["Event_ID"].duplicated().any():
         raise ValueError("Event_ID must be nonmissing and unique")
+    if df["Source_Row_Locator"].isna().any() or df["Source_Row_Locator"].duplicated().any():
+        raise ValueError("Source_Row_Locator must be nonmissing and unique")
+    for col in ("Source_Record_Provenance", "Rights_and_Reuse_State", "Coding_Visibility_or_Quality"):
+        if df[col].isna().any() or (df[col].astype(str).str.len() == 0).any():
+            raise ValueError(f"{col} must be nonmissing for canonical RUN-005 input")
     for col in ("Initiator_ID", "Recipient_ID", cfg.primary_group_col, cfg.robustness_group_col):
         if df[col].isna().any() or (df[col].astype(str).str.len() == 0).any():
             raise ValueError(f"{col} contains missing/empty identities")
@@ -250,10 +264,19 @@ def _oof_predictions(
     return pred
 
 
-def _metrics(y: np.ndarray, p: np.ndarray) -> ModelOOFMetrics:
+def _metrics(
+    y: np.ndarray,
+    p: np.ndarray,
+    splits: Iterable[tuple[np.ndarray, np.ndarray]],
+) -> ModelOOFMetrics:
     auc = float(roc_auc_score(y, p)) if len(np.unique(y)) == 2 else None
+    fold_losses = [
+        float(log_loss(y[test], p[test], labels=[0, 1]))
+        for _, test in splits
+    ]
     return ModelOOFMetrics(
         log_loss=float(log_loss(y, p, labels=[0, 1])),
+        fold_macro_log_loss=float(np.mean(fold_losses)),
         brier=float(brier_score_loss(y, p)),
         roc_auc=auc,
     )
@@ -264,6 +287,7 @@ def _run_scheme(
     y: np.ndarray,
     group_col: str,
     cfg: PR0005Config,
+    model_names: tuple[str, ...],
 ) -> tuple[dict[str, ModelOOFMetrics], float, tuple[dict, ...]]:
     splits = _logo_splits(work, y, group_col)
     supported, support = _support(work, y, splits, group_col)
@@ -271,11 +295,13 @@ def _run_scheme(
         raise ValueError(
             f"HELD_SPLIT: {group_col} leave-one-group-out has unsupported training fold"
         )
+    if not {"B1", "B2"}.issubset(model_names):
+        raise ValueError("Every PR0005 comparison scheme must include B1 and B2")
     preds = {
         name: _oof_predictions(work, y, splits, name, cfg)
-        for name in ("B0", "B1", "B2")
+        for name in model_names
     }
-    metrics = {name: _metrics(y, pred) for name, pred in preds.items()}
+    metrics = {name: _metrics(y, pred, splits) for name, pred in preds.items()}
     delta = metrics["B2"].log_loss - metrics["B1"].log_loss
     return metrics, float(delta), support
 
@@ -293,11 +319,19 @@ def run_pr0005_development(
         raise ValueError("PR0005 frozen outcome convention changed")
 
     work, y = _prepare(group2_normalized, cfg)
+    if len(work) != EXPECTED_DEVELOPMENT_ROWS:
+        raise ValueError(
+            f"RUN-005 requires frozen {EXPECTED_DEVELOPMENT_ROWS}-row Group-2 corpus"
+        )
+    if work[cfg.primary_group_col].nunique() != EXPECTED_PRIMARY_GROUPS:
+        raise ValueError(
+            f"RUN-005 requires frozen {EXPECTED_PRIMARY_GROUPS} unordered dyads"
+        )
     primary_metrics, primary_delta, primary_support = _run_scheme(
-        work, y, cfg.primary_group_col, cfg
+        work, y, cfg.primary_group_col, cfg, ("B0", "B1", "B2")
     )
     robustness_metrics, robustness_delta, robustness_support = _run_scheme(
-        work, y, cfg.robustness_group_col, cfg
+        work, y, cfg.robustness_group_col, cfg, ("B1", "B2")
     )
 
     if primary_delta < 0:
