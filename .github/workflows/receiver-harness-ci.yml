@@ -67,6 +67,9 @@ jobs:
       - name: Verify PR0005 RUN-005 on ZERO_SYNTHETIC normalized data
         if: github.head_ref == 'ars/pr0005-run005-runner-v0.1'
         run: python scripts/run_pr0005_synthetic_verification.py --out build/pr0005_synthetic_verification.json
+      - name: Verify PR0005 RUN-005 freeze package on ZERO_SYNTHETIC data
+        if: github.head_ref == 'ars/pr0005-run005-freeze-package-v0.1'
+        run: python scripts/run_pr0005_freeze_synthetic_verification.py --out-dir build/pr0005_freeze_synthetic
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:
