@@ -1,4 +1,4 @@
-"""D0025 H2 candidate: inspect Excel sheet names/dimensions/row-1 headers only."""
+"""D0025 H2: locate candidate headers within opening workbook rows only."""
 from __future__ import annotations
 
 import argparse
@@ -18,7 +18,7 @@ P = "{http://schemas.openxmlformats.org/package/2006/relationships}"
 
 
 def inspect_xlsx_headers(raw: bytes) -> list[dict[str, Any]]:
-    """Decode only sheet-level structure and first-row candidates, never analyze outcome rows."""
+    """Inspect source metadata and opening-row header candidates; no outcome distribution analysis."""
     with ZipFile(io.BytesIO(raw)) as xlsx:
         if sum(info.file_size for info in xlsx.infolist()) > 25_000_000:
             raise ValueError("Uncompressed XML exceeds the header-inspection limit")
@@ -70,23 +70,41 @@ def inspect_xlsx_headers(raw: bytes) -> list[dict[str, Any]]:
                 return cells
 
             first = candidate_cells(1)
-            second = candidate_cells(2)
-            values = [c["header_candidate"] for c in second]
-            plausible_second = (
-                len(values) >= 3
-                and all(isinstance(v, str) and 1 <= len(v.strip()) <= 100 for v in values)
-                and len({v.strip().lower() for v in values}) >= max(3, len(values) // 2)
-            )
-            # Titles in A1 and an empty row 1 in related workbooks are common.
-            # Row 2 is a *candidate* only; H3 mapping requires independent review.
+            candidate_row = None
+            candidate = []
+            openings = []
+            excluded_values = {"yes", "no", "male", "female", "gesture",
+                               "vocal", "vocalization", "vocalisation",
+                               "bimodal", "approach", "avoidance", "0", "1"}
+            for row_number in range(1, 9):
+                cells = candidate_cells(row_number)
+                vals = [c["header_candidate"] for c in cells]
+                text_vals = [v.strip() for v in vals if isinstance(v, str) and v.strip()]
+                openings.append({
+                    "row": row_number, "cell_count": len(cells),
+                    "text_cell_count": len(text_vals),
+                })
+                needed = 2 if row_number == 1 and len(first) > 1 else 3
+                plausible = (
+                    len(vals) >= needed and len(text_vals) == len(vals)
+                    and all(len(v) <= 100 and any(ch.isalpha() for ch in v) for v in text_vals)
+                    and len({v.lower() for v in text_vals}) >= needed
+                    and sum(v.lower() in excluded_values for v in text_vals) < len(text_vals) / 2
+                )
+                if plausible:
+                    candidate_row = row_number
+                    candidate = cells
+                    break
+            # Candidate locations are *not* authoritative labels or H3 mappings.
             result.append({
                 "sheet_name": sheet.get("name"),
                 "dimension_as_declared": dim.get("ref") if dim is not None else None,
-                "first_row_title_or_header_candidates": first,
-                "header_candidate_row": 2 if plausible_second else 1,
-                "header_candidate_cells": second if plausible_second else first,
-                "row2_candidate_suppressed_as_ambiguous": bool(second) and not plausible_second,
+                "first_row_title_or_header_candidates": first if len(first) <= 1 else [],
+                "opening_row_structure": openings,
+                "header_candidate_row": candidate_row,
+                "header_candidate_cells": candidate,
                 "header_row_authoritative": False,
+                "codebook_review_required": True,
             })
         if not result:
             raise ValueError("No worksheets listed in XLSX")
@@ -134,7 +152,7 @@ def inspect_item_headers(
             if len(raw) != pinned["size"] or hashlib.sha256(raw).hexdigest() != pinned["sha256"]:
                 raise ValueError("Workbook differs from H1-verified bytes")
             info["sheets"] = inspect_xlsx_headers(raw)
-            info["state"] = "ROW1_HEADER_CANDIDATES_RECORDED"
+            info["state"] = "OPENING_ROW_STRUCTURE_RECORDED"
         except (OSError, ValueError, TypeError, KeyError, BadZipFile, ET.ParseError) as exc:
             success = False
             info["state"] = "HELD_SCHEMA_SOURCE"

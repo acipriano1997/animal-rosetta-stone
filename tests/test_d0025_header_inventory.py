@@ -100,6 +100,7 @@ def test_row2_column_headers_are_candidates_not_authoritative():
       <c r="C2" t="inlineStr"><is><t>Communication_Type</t></is></c>
       </row>'''
     updated = re.sub(r'<row r="2">.*?</row>', headers, text, flags=re.DOTALL)
+    updated = re.sub(r'<row r="1">.*?</row>', '<row r="1"><c r="A1" t="inlineStr"><is><t>Research question</t></is></c></row>', updated, flags=re.DOTALL)
     updated = updated.replace('ref="A1:B2"', 'ref="A1:C2"')
     entries["xl/worksheets/sheet1.xml"] = updated.encode()
     buffer = io.BytesIO()
@@ -110,5 +111,30 @@ def test_row2_column_headers_are_candidates_not_authoritative():
     assert result["header_candidate_row"] == 2
     assert [c["header_candidate"] for c in result["header_candidate_cells"]] == [
         "Signaller_ID", "Recipient_Response", "Communication_Type"
+    ]
+    assert result["header_row_authoritative"] is False
+
+
+def test_row3_headers_after_title_and_empty_row():
+    import re
+    with ZipFile(io.BytesIO(_mini_xlsx())) as original:
+        entries = {name: original.read(name) for name in original.namelist()}
+    text = entries["xl/worksheets/sheet1.xml"].decode()
+    title = '<row r="1"><c r="A1" t="inlineStr"><is><t>Research question</t></is></c></row>'
+    headers = ('<row r="3"><c r="A3" t="inlineStr"><is><t>Subject_ID</t></is></c>'
+               '<c r="B3" t="inlineStr"><is><t>Communication_Type</t></is></c>'
+               '<c r="C3" t="inlineStr"><is><t>Response_Coded</t></is></c></row>')
+    updated = re.sub(r'<row r="1">.*?</row>', title, text, flags=re.DOTALL)
+    updated = re.sub(r'<row r="2">.*?</row>', headers, updated, flags=re.DOTALL)
+    updated = updated.replace('ref="A1:B2"', 'ref="A1:C3"')
+    entries["xl/worksheets/sheet1.xml"] = updated.encode()
+    buffer = io.BytesIO()
+    with ZipFile(buffer, "w") as output:
+        for name, value in entries.items():
+            output.writestr(name, value)
+    result = inspect_xlsx_headers(buffer.getvalue())[0]
+    assert result["header_candidate_row"] == 3
+    assert [x["header_candidate"] for x in result["header_candidate_cells"]] == [
+        "Subject_ID", "Communication_Type", "Response_Coded"
     ]
     assert result["header_row_authoritative"] is False
