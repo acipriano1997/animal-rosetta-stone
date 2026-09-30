@@ -19,9 +19,13 @@ test = ["pytest==9.0.2"]
 [project.scripts]
 ars-pr0006 = "ars_receiver_harness.cli:main"
 ars-rhf-suite = "ars_receiver_harness.fixtures:main"
+ars-workbench = "ars_workbench.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+ars_workbench = ["data/*.json", "static/*.html", "static/*.js", "static/*.css"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
