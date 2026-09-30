@@ -1,0 +1,48 @@
+{
+  "status": "IMMUTABLE_H1_VERIFICATION_SNAPSHOT_NOT_RIGHTS_ADJUDICATION",
+  "dataset_id": "D0025",
+  "item_id": 19683768,
+  "doi": "10.6084/m9.figshare.19683768.v1",
+  "version": 1,
+  "license_as_reported": {
+    "name": "CC BY 4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "verification": {
+    "github_run_id": 36713634370,
+    "tested_head": "6f30ecffb21e589af900dc7597533cabf307d1bd",
+    "drive_receipt_id": "1Nik4IRxr-BP3wsueEdJJQhWMbz3Ifx-b",
+    "raw_files_persisted": false,
+    "rows_inspected": false
+  },
+  "files": [
+    {
+      "id": 35234047,
+      "name": "Supplementary Information 3.xlsx",
+      "size": 205204,
+      "md5": "b5e5fd690b00f2c31006335a08424370",
+      "sha256": "8dc60931fd98a696da4fad38cd36c5c3e182c1e9d38a91b19394402bc7383e37"
+    },
+    {
+      "id": 35234059,
+      "name": "Supplementary information 4.xlsx",
+      "size": 31099,
+      "md5": "55c00e60dbff9dc1af8321a4ed05b501",
+      "sha256": "9857b45dd40450c9aabc3665d9f42d759f4528ffc4ee30b8f23d21b2e76955b8"
+    },
+    {
+      "id": 35888735,
+      "name": "Supplementary information 1.docx",
+      "size": 39376,
+      "md5": "f48ce002bac17d06857e848efb99fb75",
+      "sha256": "51046e55462e2b4bad5e0a52bd084c7778187ffda1117a74c5acb74d17b14732"
+    },
+    {
+      "id": 35888738,
+      "name": "Supplementary information 2.docx",
+      "size": 24987,
+      "md5": "f392768cd34bf9bf1ae7fabf20cb01f7",
+      "sha256": "38fad2add3cbe124c99c89f40bec1405256085631b96fe4549d9729c69a10a76"
+    }
+  ]
+}
