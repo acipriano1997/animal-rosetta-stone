@@ -1,6 +1,8 @@
 import hashlib
 import json
 from pathlib import Path
+import subprocess
+import sys
 
 import pandas as pd
 import pytest
@@ -103,3 +105,11 @@ def test_freeze_rejects_group1_materialization_flag(tmp_path):
         freeze_run005_package(
             csv_path,manifest_path,tmp_path/"freeze",evidence_weight="ZERO_SYNTHETIC"
         )
+
+
+def test_synthetic_freeze_verifier_can_execute_directly():
+    completed=subprocess.run(
+        [sys.executable,"scripts/run_pr0005_freeze_synthetic_verification.py","--help"],
+        check=False,capture_output=True,text=True,
+    )
+    assert completed.returncode==0, completed.stderr
