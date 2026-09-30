@@ -1,6 +1,6 @@
 import hashlib
 
-from scripts.probe_d0019_source import probe
+from scripts.probe_d0019_source import check_frozen_snapshot, probe
 
 
 def item_fixture():
@@ -55,3 +55,31 @@ def test_wrong_item_version_never_downloads():
     item["version"] = 2
     result = probe(item, lambda u, s: (_ for _ in ()).throw(AssertionError("unsafe download")))
     assert result["state"] == "HELD_SOURCE_IDENTITY"
+
+
+def test_frozen_pin_accepts_only_identical_source_and_headers():
+    item, raw = item_fixture()
+    reader = lambda b: [{
+        "sheet_name": "Rawdata", "dimension_as_declared": "A1:A2",
+        "header_candidate_row": 1, "header_candidate_cells": [{
+            "cell_ref": "A1", "header_candidate": "event"
+        }]
+    }]
+    verified = probe(item, lambda u, s: raw, reader)
+    pins = {
+        "source_item_id": 9192509, "version": 1,
+        "doi": item["doi"], "license_as_reported": item["license"],
+        "file": {
+            "id": item["files"][0]["id"], "name": item["files"][0]["name"],
+            "bytes": len(raw), "md5": hashlib.md5(raw).hexdigest(),
+            "sha256": hashlib.sha256(raw).hexdigest()
+        },
+        "sheets": [{
+            "name": "Rawdata", "declared_dimension": "A1:A2",
+            "candidate_header_row": 1, "source_header_candidates": ["event"]
+        }]
+    }
+    assert check_frozen_snapshot(verified, pins)["source_pin_verified"] is True
+    pins["file"]["sha256"] = "0" * 64
+    changed = probe(item, lambda u, s: raw, reader)
+    assert check_frozen_snapshot(changed, pins)["state"] == "QUARANTINED_SOURCE_DRIFT"
