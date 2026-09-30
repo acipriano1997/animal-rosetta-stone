@@ -1,0 +1,282 @@
+{
+  "contract_id": "RDC-004",
+  "protocol_id": "PR0005",
+  "dataset_id": "D0019",
+  "version": "source-crosswalk-v0.2",
+  "supersedes": "contracts/d0019_rdc004_source_crosswalk_v0_1.json",
+  "source_pin": "contracts/d0019_v1_verified_source_snapshot.json",
+  "source_sha256": "26f69ee04f5d017d46f72430c0e18e5be960dd77432542644688acd88317075e",
+  "source_sheet": "Rawdata",
+  "frozen_contract_date": "2026-09-29",
+  "review_date": "2026-09-30",
+  "mapping_state": "PARTIAL_PAPER_BACKED_MAPPING_APPROVED_EMPIRICAL_ADMISSION_STILL_FALSE",
+  "empirical_admission": false,
+  "group1_outcomes_accessed": false,
+  "evidence_basis": [
+    {
+      "doi": "10.7717/peerj.7623",
+      "url": "https://peerj.com/articles/7623/",
+      "role": "primary study operational definitions and model covariates"
+    },
+    {
+      "doi": "10.6084/m9.figshare.9192509.v1",
+      "role": "exact public source workbook/item metadata and native labels"
+    },
+    {
+      "doi": "10.7717/peerj.16800",
+      "url": "https://peerj.com/articles/16800/",
+      "role": "independent reanalysis context only; not source-code authority"
+    }
+  ],
+  "partition_policy": {
+    "source_group_column": "group",
+    "group2_source_token": "2",
+    "group2_published_n": 149,
+    "group1_source_token": "1",
+    "group1_published_n": 103,
+    "source_year_column": "Dataset",
+    "year_values": [
+      2015,
+      2016
+    ],
+    "status": "APPROVED_STRUCTURAL_MAPPING_NOT_MODEL_FEATURE",
+    "evidence": "Paper explicitly uses chimpanzee group 1 vs 2 and collection year 2015 vs 2016; PR12 source counts match 103/149 and source year tokens are 2015/2016.",
+    "group1_policy": "SEALED_ONE_TIME_TRANSFER; outcomes/signals not opened during development"
+  },
+  "global_na_policy": {
+    "source_token": "NA",
+    "normalized_semantics": "SOURCE_UNAVAILABLE_OR_NOT_APPLICABLE_UNRESOLVED_SUBTYPE",
+    "status": "APPROVED_CONSERVATIVE_NON_SUBSTANTIVE_STATE",
+    "rule": "NA is never mapped to a substantive biological category. Field-specific RDC-004 missingness rules decide retention/exclusion. Author/codebook clarification may refine the subtype later but cannot retroactively convert NA into neutral/affiliative/non-affiliative.",
+    "rationale": "The source contains explicit substantive tokens alongside NA; the paper separately describes not-visible/unidentifiable states for face/response. Treating NA as unavailable is conservative and preserves the semantic firewall."
+  },
+  "fields": [
+    {
+      "field": "Source_Row_Locator",
+      "source": "Rawdata!row(original Excel row) + Figshare v1/file SHA",
+      "status": "APPROVED_DERIVATION_RULE",
+      "normalized_rule": "figshare:9192509.v1/file:16741928/sheet:Rawdata/row:<original_row>",
+      "use": "provenance_only",
+      "notes": "Never regenerated from a sorted or filtered frame."
+    },
+    {
+      "field": "Group_ID",
+      "source": "group",
+      "status": "APPROVED_SOURCE_MAPPING",
+      "native_mapping": {
+        "1": "Group 1",
+        "2": "Group 2"
+      },
+      "use": "partition_only",
+      "notes": "Group 2 development; Group 1 sealed transfer. Never predictor."
+    },
+    {
+      "field": "Initiator_ID",
+      "source": "initiator",
+      "status": "APPROVED_FIELD_ROLE_ID_AUDIT_PENDING",
+      "use": "grouping_only",
+      "notes": "Paper defines initiator as individual producing the gesture; source values retained/pseudonymized, never predictor."
+    },
+    {
+      "field": "Recipient_ID",
+      "source": "recipient",
+      "status": "APPROVED_FIELD_ROLE_ID_AUDIT_PENDING",
+      "use": "grouping_only",
+      "notes": "Paper defines recipient as individual the signal was directed to; source values retained/pseudonymized, never predictor."
+    },
+    {
+      "field": "Dyad_ID",
+      "source": "dyad plus deterministic Initiator_ID→Recipient_ID audit",
+      "status": "HELD_EQUIVALENCE_AUDIT",
+      "use": "grouping_only",
+      "notes": "Primary grouped validation only after Group-2 source dyad is shown compatible with frozen deterministic pair rule."
+    },
+    {
+      "field": "Initiator_Sex",
+      "source": "sex_init",
+      "status": "APPROVED_SOURCE_MAPPING",
+      "native_values": [
+        "female",
+        "male"
+      ],
+      "use": "b0_covariate",
+      "notes": "Paper includes initiator sex; native category retained."
+    },
+    {
+      "field": "Recipient_Sex",
+      "source": "sex_rec",
+      "status": "APPROVED_SOURCE_MAPPING",
+      "native_values": [
+        "female",
+        "male"
+      ],
+      "use": "b0_covariate",
+      "notes": "Paper includes recipient sex; native category retained."
+    },
+    {
+      "field": "Rank_Relationship",
+      "source": "rel_dom",
+      "status": "APPROVED_FIELD_ROLE_NATIVE_TOKENS_UNGLOSSED",
+      "native_values": [
+        "todom",
+        "nottodom",
+        "NA"
+      ],
+      "use": "b0_covariate",
+      "normalization": {
+        "NA": "SOURCE_UNAVAILABLE_OR_NOT_APPLICABLE_UNRESOLVED_SUBTYPE"
+      },
+      "notes": "Paper uses whether signal was directed toward lower- vs higher-ranking individual. Model may retain source tokens as categories; todom/nottodom English orientation remains unglossed until codebook confirmation."
+    },
+    {
+      "field": "Collection_Year",
+      "source": "Dataset",
+      "status": "APPROVED_SOURCE_MAPPING",
+      "native_values": [
+        2015,
+        2016
+      ],
+      "use": "b0_covariate",
+      "notes": "Paper explicitly includes year 2015 vs 2016 and distinguishes it from chimpanzee group."
+    },
+    {
+      "field": "Gesture_Class",
+      "source": "GEST",
+      "status": "APPROVED_SOURCE_MAPPING",
+      "native_mapping": {
+        "SG": "stretched_arm",
+        "BG": "bent_arm"
+      },
+      "use": "b1_b2_predictor",
+      "notes": "Exact abbreviations and definitions are used in the primary paper."
+    },
+    {
+      "field": "Facial_Expression_Class",
+      "source": "face",
+      "status": "PARTIAL_APPROVED_NA_NON_SUBSTANTIVE",
+      "native_mapping": {
+        "neutral": "neutral",
+        "bared": "bared_teeth",
+        "hoot": "funneled_lip_hoot",
+        "NA": "SOURCE_UNAVAILABLE_OR_NOT_APPLICABLE_UNRESOLVED_SUBTYPE"
+      },
+      "use": "b1_b2_predictor",
+      "eligibility": "NA excluded from primary B1/B2; explicit neutral remains distinct",
+      "notes": "Paper separately defines neutral and face-not-visible and excludes face-not-visible from final analysis."
+    },
+    {
+      "field": "Social_Context",
+      "source": "context_dyad",
+      "status": "PARTIAL_APPROVED_NA_NON_SUBSTANTIVE",
+      "native_mapping": {
+        "pos": "positive_affiliative_context",
+        "neg": "negative_agonistic_context",
+        "NA": "SOURCE_UNAVAILABLE_OR_NOT_APPLICABLE_UNRESOLVED_SUBTYPE"
+      },
+      "use": "b0_b1_b2_covariate",
+      "eligibility": "NA cannot satisfy required primary context and is excluded from primary model",
+      "notes": "Paper defines pos/neg at the signal-event context before recipient response is coded."
+    },
+    {
+      "field": "Recipient_Response",
+      "source": "REACT",
+      "status": "PARTIAL_APPROVED_NA_NON_SUBSTANTIVE",
+      "native_mapping": {
+        "affil": "affiliative",
+        "avoid": "non_affiliative",
+        "NA": "SOURCE_UNAVAILABLE_OR_NOT_APPLICABLE_UNRESOLVED_SUBTYPE"
+      },
+      "use": "outcome_locked",
+      "eligibility": "NA unavailable for primary endpoint and excluded; never imputed",
+      "notes": "Paper defines affiliative (approaching) vs non-affiliative (avoidant and/or ignoring) and separately excludes unidentified/not-visible response."
+    },
+    {
+      "field": "Signal_Configuration",
+      "source": "Gesture_Class × Facial_Expression_Class",
+      "status": "APPROVED_DERIVATION_AFTER_ELIGIBILITY",
+      "use": "b2_interaction",
+      "notes": "Deterministic structural feature only; no English signal meaning."
+    },
+    {
+      "field": "Coding_Visibility_or_Quality",
+      "source": "NA states in face/REACT plus original source provenance",
+      "status": "PARTIAL_APPROVED_CONSERVATIVE",
+      "use": "quality_gate_only",
+      "notes": "No standalone visibility column. NA states remain non-substantive and field-specific; subtype is not inferred."
+    },
+    {
+      "field": "Rights_and_Reuse_State",
+      "source": "Figshare item 9192509.v1 CC BY 4.0 metadata",
+      "status": "APPROVED_LOCAL_RESEARCH_REUSE_WITH_ATTRIBUTION_RAW_REDISTRIBUTION_NOT_NEEDED",
+      "use": "rights_gate_only",
+      "notes": "Maintain attribution and ethical/source provenance; ARS need not redistribute raw workbook."
+    },
+    {
+      "field": "Source_Record_Provenance",
+      "source": "Figshare v1/file 16741928/SHA-256/sheet/original row",
+      "status": "APPROVED_PROVENANCE_SCHEMA_ROW_MATERIALIZATION_PENDING",
+      "use": "provenance_only"
+    }
+  ],
+  "timing_boundary": {
+    "status": "PARTIAL_APPROVED",
+    "pre_response_supported": [
+      "sex_init",
+      "sex_rec",
+      "rel_dom",
+      "Dataset",
+      "GEST",
+      "face",
+      "context_dyad"
+    ],
+    "outcome_locked": [
+      "REACT"
+    ],
+    "excluded_from_pr0005_predictors": [
+      "event",
+      "clip_old",
+      "time",
+      "ini_approaching",
+      "initiator",
+      "recipient",
+      "dyad",
+      "group"
+    ],
+    "evidence": "Paper describes gesture/face and social context of the event before coding recipient behavior as the response, and treats sex/rank/group/year as model controls."
+  },
+  "nonmodel_source_columns": [
+    {
+      "source": "event",
+      "status": "PROVENANCE_CANDIDATE_ID_AUDIT_PENDING",
+      "reason": "May supplement source-row provenance; never predictor."
+    },
+    {
+      "source": "clip_old",
+      "status": "MEDIA_REFERENCE_ONLY",
+      "reason": "No model role."
+    },
+    {
+      "source": "time",
+      "status": "NONMODEL_TIMING_METADATA",
+      "reason": "No PR0005 role; exact clock semantics unnecessary for registered model."
+    },
+    {
+      "source": "ini_approaching",
+      "status": "EXCLUDED_NONMODEL_FIELD",
+      "reason": "Not preregistered; do not add post hoc."
+    }
+  ],
+  "remaining_gates": [
+    "Group-2-only event/source-row uniqueness and initiator/recipient/dyad consistency audit without exposing Group-1 signal/outcome values",
+    "Group-2-only eligibility/missingness ledger using frozen substantive vs NA rules",
+    "Grouped-fold support and nuisance/leakage checks on eligible Group 2",
+    "Freeze normalized Group 2 development corpus and separately sealed Group 1 normalization procedure before any Group 1 outcome access"
+  ],
+  "prohibited": [
+    "Opening Group 1 outcomes or signal categories before RUN-006",
+    "Using identities/group/source row as predictors",
+    "Mapping NA to neutral, affiliative, non-affiliative, pos, neg, rank direction, or any other substantive state",
+    "Changing B0/B1/B2 or eligibility after examining outcome performance",
+    "Assigning signal meaning, compositional semantics, or CRG-C credit from software/source-mapping work"
+  ]
+}
