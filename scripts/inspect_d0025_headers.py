@@ -45,33 +45,48 @@ def inspect_xlsx_headers(raw: bytes) -> list[dict[str, Any]]:
             root = ET.fromstring(xlsx.read(member))
             dim = root.find(S + "dimension")
             data = root.find(S + "sheetData")
-            header_row = None
-            if data is not None:
-                for row in data.findall(S + "row"):
-                    if row.get("r") == "1":
-                        header_row = row
-                        break
-            headers = []
-            if header_row is not None:
-                for cell in header_row.findall(S + "c"):
+            def candidate_cells(row_number: int) -> list[dict[str, Any]]:
+                if data is None:
+                    return []
+                target = next((r for r in data.findall(S + "row")
+                               if r.get("r") == str(row_number)), None)
+                if target is None:
+                    return []
+                cells = []
+                for cell in target.findall(S + "c"):
                     kind = cell.get("t")
                     v = cell.find(S + "v")
                     if kind == "s" and v is not None:
                         index = int(v.text)
                         if index < 0 or index >= len(shared):
-                            raise ValueError("Header references a missing shared string")
+                            raise ValueError("Candidate header references missing shared string")
                         value = shared[index]
                     elif kind == "inlineStr":
                         instr = cell.find(S + "is")
                         value = "".join(t.text or "" for t in instr.iter(S + "t")) if instr is not None else ""
                     else:
                         value = v.text if v is not None else None
-                    headers.append({"cell_ref": cell.get("r"), "header_candidate": value})
+                    cells.append({"cell_ref": cell.get("r"), "header_candidate": value})
+                return cells
+
+            first = candidate_cells(1)
+            second = candidate_cells(2)
+            values = [c["header_candidate"] for c in second]
+            plausible_second = (
+                len(values) >= 3
+                and all(isinstance(v, str) and 1 <= len(v.strip()) <= 100 for v in values)
+                and len({v.strip().lower() for v in values}) >= max(3, len(values) // 2)
+            )
+            # Titles in A1 and an empty row 1 in related workbooks are common.
+            # Row 2 is a *candidate* only; H3 mapping requires independent review.
             result.append({
                 "sheet_name": sheet.get("name"),
                 "dimension_as_declared": dim.get("ref") if dim is not None else None,
-                "header_candidate_row": 1,
-                "header_candidate_cells": headers,
+                "first_row_title_or_header_candidates": first,
+                "header_candidate_row": 2 if plausible_second else 1,
+                "header_candidate_cells": second if plausible_second else first,
+                "row2_candidate_suppressed_as_ambiguous": bool(second) and not plausible_second,
+                "header_row_authoritative": False,
             })
         if not result:
             raise ValueError("No worksheets listed in XLSX")
