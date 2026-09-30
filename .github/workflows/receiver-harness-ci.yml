@@ -52,6 +52,9 @@ jobs:
       - name: Inspect D0019 Group 2 categorical vocabulary only
         if: github.head_ref == 'ars/d0019-rdc004-source-crosswalk-v0.1'
         run: python scripts/audit_d0019_group2_vocabulary.py --out build/d0019_group2_label_vocabulary.json
+      - name: Audit D0019 Group 2 event and dyad identities only
+        if: github.head_ref == 'ars/d0019-paper-backed-crosswalk-v0.2'
+        run: python scripts/audit_d0019_group2_identity_dyad.py --out build/d0019_group2_identity_dyad_audit.json
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:
