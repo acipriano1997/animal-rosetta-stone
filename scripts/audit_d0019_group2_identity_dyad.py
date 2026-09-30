@@ -82,6 +82,12 @@ def group2_identity_audit(raw: bytes, expected_headers: list[str]) -> dict:
 
         events = [r["event"] for r in group2 if r["event"]]
         event_unique = len(events) == len(set(events)) and len(events) == 149
+        event_year = [(r["Dataset"], r["event"]) for r in group2 if r["Dataset"] and r["event"]]
+        event_group_year = [(r["Dataset"], "2", r["event"]) for r in group2 if r["Dataset"] and r["event"]]
+        event_unique_with_year = len(event_year) == len(set(event_year)) and len(event_year) == 149
+        event_unique_with_group_year = (
+            len(event_group_year) == len(set(event_group_year)) and len(event_group_year) == 149
+        )
 
         same_individual = sum(
             1 for r in group2
@@ -107,12 +113,25 @@ def group2_identity_audit(raw: bytes, expected_headers: list[str]) -> dict:
         ordered_pair_maps_one_source_dyad = all(len(v)==1 for v in ordered_to_source.values())
         reverse_orientation_present = any(len(v)>1 for v in source_dyad_to_ordered.values())
 
+        pair_year_to_source: dict[tuple[str,str,str],set[str]] = {}
+        source_to_years: dict[str,set[str]] = {}
+        for r in group2:
+            if not r["Dataset"] or not r["initiator"] or not r["recipient"] or not r["dyad"]:
+                continue
+            unordered=tuple(sorted((r["initiator"],r["recipient"])))
+            pair_year_to_source.setdefault((r["Dataset"],)+unordered,set()).add(r["dyad"])
+            source_to_years.setdefault(r["dyad"],set()).add(r["Dataset"])
+        unordered_pair_year_maps_one_source_dyad = all(len(v)==1 for v in pair_year_to_source.values())
+        source_dyad_is_single_year = all(len(v)==1 for v in source_to_years.values())
+
         years=sorted({r["Dataset"] for r in group2 if r["Dataset"]})
         return {
             "group2_rows":149,
             "source_row_locator_unique_by_construction":len({r["source_row"] for r in group2})==149,
             "missing_identifier_counts":missing,
             "event_field_unique_within_group2":event_unique,
+            "event_plus_year_unique_within_group2":event_unique_with_year,
+            "event_plus_group_plus_year_unique_within_group2":event_unique_with_group_year,
             "same_initiator_recipient_rows":same_individual,
             "collection_year_tokens":years,
             "source_dyad_unique_tokens":len(source_dyad_to_ordered),
@@ -122,6 +141,8 @@ def group2_identity_audit(raw: bytes, expected_headers: list[str]) -> dict:
             "unordered_pair_maps_to_one_source_dyad":unordered_pair_maps_one_source_dyad,
             "ordered_pair_maps_to_one_source_dyad":ordered_pair_maps_one_source_dyad,
             "source_dyad_contains_both_directions_for_at_least_one_pair":reverse_orientation_present,
+            "unordered_pair_plus_year_maps_to_one_source_dyad":unordered_pair_year_maps_one_source_dyad,
+            "source_dyad_token_is_confined_to_one_year":source_dyad_is_single_year,
             "identity_fields_ready_for_deterministic_pseudonymization":identity_ready,
             "identity_values_or_row_level_pairs_emitted":False,
             "group1_identity_signal_or_outcome_cells_decoded":False,
