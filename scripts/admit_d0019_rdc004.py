@@ -123,10 +123,14 @@ def _validate_contracts(pins: dict,crosswalk: dict,amendment1: dict,eligibility:
         raise ValueError("Final admission source SHA differs from H1 pin")
     if crosswalk.get("version")!="source-crosswalk-v0.2":
         raise ValueError("RDC-004 crosswalk v0.2 required")
+    if crosswalk.get("source_sha256")!=pins["file"]["sha256"]:
+        raise ValueError("Crosswalk source SHA differs from H1 pin")
     if crosswalk.get("empirical_admission") is not False:
         raise ValueError("Crosswalk must remain pre-model until this gate completes")
     if amendment1.get("status")!="FROZEN_PRE_OUTCOME_SOURCE_SCHEMA_AMENDMENT":
         raise ValueError("PD-PR0005-001 is not frozen")
+    if amendment1.get("evidence",{}).get("source_sha256")!=pins["file"]["sha256"]:
+        raise ValueError("PD-PR0005-001 source SHA differs from H1 pin")
     if eligibility.get("status")!="FROZEN_PRE_MODEL_GROUP2_ELIGIBILITY":
         raise ValueError("H4 eligibility rules are not frozen")
     if split_policy.get("status")!="FROZEN_PRE_OUTCOME_PERFORMANCE":
@@ -160,7 +164,13 @@ def final_admission(item: dict,pins: dict,crosswalk: dict,amendment1: dict,eligi
         "rdc004_empirical_admission":False,"pr0005_executed":False,
         "scientific_effect":"NONE","crg_c_credit":"UNMET",
     }
-    _validate_contracts(pins,crosswalk,amendment1,eligibility,split_policy,admission,group1)
+    try:
+        _validate_contracts(pins,crosswalk,amendment1,eligibility,split_policy,admission,group1)
+    except (ValueError,TypeError,KeyError) as exc:
+        receipt["state"]="HELD_CONTRACT_MISMATCH"
+        receipt["error_type"]=type(exc).__name__
+        receipt["error_summary"]=str(exc)[:180]
+        return receipt,b""
     if item.get("id")!=pins["source_item_id"] or item.get("version")!=1 or item.get("doi")!=pins["doi"]:
         receipt["state"]="HELD_SOURCE_IDENTITY"; return receipt,b""
     lic=item.get("license") or {}
