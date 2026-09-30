@@ -15,6 +15,16 @@ The first executable slice is the chimpanzee receiver-corpus harness and hardene
 - paired out-of-fold delta log loss, grouped bootstrap uncertainty, leave-signaller-out robustness, and deterministic modality-permutation sanity testing;
 - explicit `ZERO_SYNTHETIC` separation: synthetic fixtures and verification outputs carry **no biological evidentiary weight**.
 
+## Rosetta Research Workbench — Phase I Slice 1
+
+A deliberately barebones, read-only browser shell is implemented from a frozen chimpanzee RQ0001 view-model snapshot:
+
+```bash
+ars-workbench --host 127.0.0.1 --port 8765
+```
+
+Slice 1 displays species activation/gates, RQ0001 and competing hypotheses, D0018/D0020 corpus metadata, D0019/D0025 rights-gated metadata, RUN-001..006 state, segregated ZERO_SYNTHETIC software evidence, and navigable provenance pointers. It does **not** yet provide live Drive adapters or event-row exploration; those remain later Phase I slices.
+
 ## Canonical bindings
 
 `contracts/canonical_bindings.json` pins the Drive document revision IDs and ACEB registry ranges this executable slice consumes. If the Drive semantic authority changes, code is stale until reconciled; code never silently redefines the scientific rules.
