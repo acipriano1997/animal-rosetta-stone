@@ -53,20 +53,20 @@ class PR0006Result:
     fold_support: tuple[dict, ...]
     config_snapshot: dict
     runtime_versions: dict[str, str]
+    positive_class: str = "approach"
 
     def to_dict(self) -> dict:
         return asdict(self)
 
 
 def _binary_outcome(series: pd.Series) -> np.ndarray:
-    if pd.api.types.is_bool_dtype(series):
-        return series.astype(int).to_numpy()
-    vals = list(pd.unique(series.dropna()))
-    if len(vals) != 2:
-        raise ValueError(f"Primary outcome must have exactly two observed classes; found {vals!r}")
-    ordered = sorted(vals, key=lambda x: str(x))
-    mapping = {ordered[0]: 0, ordered[1]: 1}
-    return series.map(mapping).to_numpy(dtype=int)
+    """RDC-005 locks approach=1, avoidance=0; never infer the positive class."""
+    if series.isna().any():
+        raise ValueError("Primary outcome missing; outcome imputation is forbidden")
+    observed = set(series.astype(str).unique())
+    if observed != {"approach", "avoidance"}:
+        raise ValueError(f"PR0006 requires approach/avoidance, not {sorted(observed)!r}")
+    return series.map({"approach": 1, "avoidance": 0}).to_numpy(dtype=int)
 
 
 def _pipeline(numeric: Sequence[str], categorical: Sequence[str], c: float) -> Pipeline:
