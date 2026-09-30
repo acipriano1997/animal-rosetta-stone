@@ -34,6 +34,9 @@ jobs:
         run: python scripts/verify_workbench_slice1.py
       - name: Probe public D0025 metadata (never source bytes)
         run: python scripts/probe_d0025_metadata.py --out build/d0025_metadata_probe.json
+      - name: Check D0025 source-byte integrity (manifest only)
+        if: github.head_ref == 'ars/d0025-source-integrity-v0.1'
+        run: python scripts/freeze_d0025_source_integrity.py --out build/d0025_source_integrity.json
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:
