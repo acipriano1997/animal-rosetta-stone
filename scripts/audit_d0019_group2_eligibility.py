@@ -80,6 +80,7 @@ def group2_eligibility(raw: bytes, expected_headers: list[str], rules: dict) -> 
         eligible_rows=[]
         eligible_pairs=set()
         group2_rows=0
+        group2_source_rows=[]
         group1_other_cells_decoded=False
 
         for row in rows:
@@ -92,6 +93,7 @@ def group2_eligibility(raw: bytes, expected_headers: list[str], rules: dict) -> 
                 # Holdout firewall: after structural partition selection no other Group-1 cell is decoded.
                 continue
             group2_rows+=1
+            group2_source_rows.append(number)
             values={name:decode(cells.get(f"{col}{number}")).strip() for name,col in COLS.items()}
             reasons=[]
 
@@ -136,6 +138,7 @@ def group2_eligibility(raw: bytes, expected_headers: list[str], rules: dict) -> 
 
         if group2_rows!=149:
             raise ValueError("Group-2 source row count differs from frozen 149")
+        source_rows_unique=len(group2_source_rows)==len(set(group2_source_rows))==149
         invalid_total=sum(invalid_counts.values())
         digest=hashlib.sha256(
             ("D0019_ELIGIBLE_V0.1|"+rules["source_sha256"]+"|"+
@@ -152,6 +155,7 @@ def group2_eligibility(raw: bytes, expected_headers: list[str], rules: dict) -> 
             "all_tokens_within_frozen_domains":invalid_total==0,
             "eligible_unordered_dyad_count":len(eligible_pairs),
             "eligible_source_row_set_sha256":digest,
+            "canonical_group2_source_rows_unique":source_rows_unique,
             "eligibility_rules_version":rules["eligibility_version"],
             "outcome_class_frequencies_computed":False,
             "predictor_class_frequencies_computed":False,
@@ -206,8 +210,12 @@ def audit(item: dict,pins: dict,crosswalk: dict,amendment: dict,rules: dict,fetc
         receipt["eligibility"]=summary
         if (
             summary["all_tokens_within_frozen_domains"]
+            and summary["canonical_group2_source_rows_unique"]
             and summary["eligible_primary_rows"]>0
             and summary["eligible_unordered_dyad_count"]>=2
+            and summary["exclusion_reason_counts"].get("MISSING_INITIATOR",0)==0
+            and summary["exclusion_reason_counts"].get("MISSING_RECIPIENT",0)==0
+            and summary["exclusion_reason_counts"].get("SELF_DIRECTED_ID_CONFLICT",0)==0
             and summary["group1_holdout_opened"] is False
         ):
             receipt["state"]="H4_ELIGIBILITY_STRUCTURE_PASS_SPLIT_SUPPORT_PENDING"
