@@ -26,8 +26,8 @@ def main() -> None:
         "d0020_null_is_bounded": run004["disposition"] == "NULL_OR_CONTEXT_SUFFICIENT" and "bounded" in run004["interpretation_ceiling"].lower(),
         "d0019_metadata_only": d0019["availability"] == "GATED_METADATA_ONLY" and all(r["state"] == "EMPIRICAL_EXECUTION_HELD" for r in d0019_runs),
         "d0019_materialization_gate_current": (
-            d0019["empirical_state"] == "PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION"
-            and d0019["rights_state"] == "ITEM_LEVEL_CC_BY_4_METADATA_VERIFIED_LOCAL_RESEARCH_REUSE"
+            d0019["empirical_state"] == "RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION"
+            and d0019["rights_state"] == "APPROVED_LOCAL_RESEARCH_REUSE_WITH_ATTRIBUTION_RAW_REDISTRIBUTION_NOT_NEEDED"
             and "READY_FOR_SECRET_BACKED_MATERIALIZATION" in d0019["gate"]
         ),
         "d0025_metadata_only": d0025["availability"] == "GATED_METADATA_ONLY" and not any(r["dataset_id"] == "D0025" for r in store.run_list()),
