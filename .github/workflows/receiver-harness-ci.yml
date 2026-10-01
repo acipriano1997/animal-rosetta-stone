@@ -73,6 +73,9 @@ jobs:
       - name: Verify PR0005 RUN-006 locked transfer on ZERO_SYNTHETIC data
         if: github.head_ref == 'ars/pr0005-run006-transfer-v0.1'
         run: python scripts/run_pr0005_transfer_synthetic_verification.py --out-dir build/pr0005_run006_synthetic
+      - name: Verify PR0005 RUN-006 locked transfer on ZERO_SYNTHETIC data
+        if: github.head_ref == 'ars/pr0005-run006-transfer-v0.1'
+        run: python scripts/run_pr0005_transfer_synthetic_verification.py --out-dir build/pr0005_run006_synthetic
       - name: Upload exact-head verification receipts
         uses: actions/upload-artifact@v4
         with:
