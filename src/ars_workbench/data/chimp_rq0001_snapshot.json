@@ -1,5 +1,5 @@
 {
-  "snapshot_id": "WORKBENCH-CHIMP-RQ0001-v0.1",
+  "snapshot_id": "WORKBENCH-CHIMP-RQ0001-v0.2",
   "captured_date": "2026-09-30",
   "mode": "STATIC_CANONICAL_VIEW_MODEL_FIXTURE",
   "scientific_boundary": "Evidence structure and provenance only; no translation, semantic gloss generation, evidence grading, or claim promotion.",
@@ -83,16 +83,16 @@
       "name": "Oña 2019 Compositionality raw event data",
       "role": "PREFERRED_COMPONENT_LEVEL_MULTIMODAL_RECEIVER_CORPUS",
       "availability": "GATED_METADATA_ONLY",
-      "empirical_state": "EMPIRICAL_EXECUTION_HELD",
-      "rights_state": "ITEM_LEVEL_LICENSE_UNVERIFIED",
-      "gate": "Exact source bytes, checksum/header inventory and dataset-file licence verification are required before execution.",
+      "empirical_state": "RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION",
+      "rights_state": "APPROVED_LOCAL_RESEARCH_REUSE_WITH_ATTRIBUTION_RAW_REDISTRIBUTION_NOT_NEEDED",
+      "gate": "Securely provision one persistent >=32-byte ARS_D0019_HMAC_KEY, use a clean exact reviewed Git head, require READY_FOR_SECRET_BACKED_MATERIALIZATION, and write restricted materialization outside the repository/common sync paths.",
       "semantic_authority": "NONE",
       "provenance_ids": ["PROV-D0019"]
     },
     {
       "dataset_id": "D0025",
       "name": "Damjanovic 2022 Wild Chimp Multimodal Receiver-Response Corpus",
-      "role": "PRIMARY_PUBLIC_CRG_C_BYPASS",
+      "role": "PARALLEL_PUBLIC_CRG_C_FALLBACK",
       "availability": "GATED_METADATA_ONLY",
       "empirical_state": "PREBYTE_PR0006_FROZEN_EXECUTION_HELD",
       "rights_state": "ITEM_LEVEL_LICENSE_UNVERIFIED",
@@ -147,7 +147,7 @@
       "evidence_class": "PLANNED_PREREGISTERED_EMPIRICAL",
       "state": "EMPIRICAL_EXECUTION_HELD",
       "disposition": null,
-      "gate": "D0019 rights/source-byte/schema materialization has not passed.",
+      "gate": "RDC-004 pre-model gates pass; empirical execution remains held until secret-backed Group-2 materialization succeeds on the exact reviewed clean Git head.",
       "provenance_ids": ["PROV-D0019"]
     },
     {
@@ -156,7 +156,7 @@
       "evidence_class": "PLANNED_LOCKED_TRANSFER",
       "state": "EMPIRICAL_EXECUTION_HELD",
       "disposition": null,
-      "gate": "Cannot exist as an empirical result until the registered source/split path lawfully executes.",
+      "gate": "Group 1 remains sealed. RUN-006 may execute only after empirical RUN-005 is frozen and must reuse the same D0019 HMAC namespace with no refit.",
       "provenance_ids": ["PROV-D0019"]
     }
   ],

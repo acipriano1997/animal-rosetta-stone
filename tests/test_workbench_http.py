@@ -40,7 +40,8 @@ def test_workbench_http_surface_smoke():
         assert status == 200
         d0019 = json.loads(body)
         assert d0019["availability"] == "GATED_METADATA_ONLY"
-        assert d0019["empirical_state"] == "EMPIRICAL_EXECUTION_HELD"
+        assert d0019["empirical_state"] == "RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION"
+        assert d0019["rights_state"] == "APPROVED_LOCAL_RESEARCH_REUSE_WITH_ATTRIBUTION_RAW_REDISTRIBUTION_NOT_NEEDED"
 
         status, _, body = _get(base, "/api/software-verification")
         assert status == 200
