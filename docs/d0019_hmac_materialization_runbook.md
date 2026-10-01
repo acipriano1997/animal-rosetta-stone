@@ -30,16 +30,15 @@ Use the repository readiness checker before the first empirical materialization:
 
 The checker reads `ARS_D0019_HMAC_KEY` only from the process environment. It never prints or writes the secret. It may emit the non-secret identity-namespace fingerprint.
 
-Example pattern:
+Invocation pattern:
 
 ```bash
-export ARS_D0019_HMAC_KEY='<provided by your approved secret facility>'
 python scripts/check_d0019_materialization_readiness.py \
   --output-dir /path/outside/the/repository/ars-d0019-restricted \
   --expected-head <REVIEWED_COMMIT_SHA>
 ```
 
-Do not paste the secret into chat, GitHub, Drive, a notebook, a shell script, a command-line argument, or a CI artifact. Prefer a protected OS/runtime secret store that injects the environment variable into the materialization process.
+Launch that process from an approved OS/runtime secret manager that injects `ARS_D0019_HMAC_KEY` into the environment. Do not type the real secret into an interactive shell command, where it may enter shell history. Do not paste it into chat, GitHub, Drive, a notebook, a shell script, a command-line argument, or a CI artifact. The readiness checker refuses to report ready unless `--expected-head` is supplied and exactly matches the clean checked-out commit.
 
 The readiness checker must report:
 
