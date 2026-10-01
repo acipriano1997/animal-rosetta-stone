@@ -33,8 +33,8 @@ def test_d0019_never_appears_empirically_executed():
     s = WorkbenchStore().snapshot()
     d = next(x for x in s["datasets"] if x["dataset_id"] == "D0019")
     assert d["availability"] == "GATED_METADATA_ONLY"
-    assert d["empirical_state"] == "PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION"
-    assert d["rights_state"] == "ITEM_LEVEL_CC_BY_4_METADATA_VERIFIED_LOCAL_RESEARCH_REUSE"
+    assert d["empirical_state"] == "RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION"
+    assert d["rights_state"] == "APPROVED_LOCAL_RESEARCH_REUSE_WITH_ATTRIBUTION_RAW_REDISTRIBUTION_NOT_NEEDED"
     assert "READY_FOR_SECRET_BACKED_MATERIALIZATION" in d["gate"]
     runs = [r for r in s["runs"] if r["dataset_id"] == "D0019"]
     assert runs
