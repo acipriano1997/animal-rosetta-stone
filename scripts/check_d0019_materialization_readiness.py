@@ -137,7 +137,8 @@ def readiness(
             failures.append("Git HEAD does not match the explicitly reviewed commit")
     else:
         checks["expected_head"] = None
-        checks["git_head_matches_expected"] = None
+        checks["git_head_matches_expected"] = False
+        failures.append("Explicit reviewed Git commit SHA is required for empirical materialization")
 
     return {
         "dataset_id":"D0019",
@@ -157,7 +158,7 @@ def main() -> None:
     ap=argparse.ArgumentParser(description="Check D0019 empirical materialization readiness without printing the secret")
     ap.add_argument("--repo-root",default=".")
     ap.add_argument("--output-dir",required=True)
-    ap.add_argument("--expected-head",default=None)
+    ap.add_argument("--expected-head",required=True)
     ap.add_argument("--out",default=None,help="Optional JSON receipt path; must not contain secret")
     args=ap.parse_args()
 
