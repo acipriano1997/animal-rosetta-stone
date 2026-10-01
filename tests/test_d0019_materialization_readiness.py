@@ -1,4 +1,5 @@
 from pathlib import Path
+import subprocess
 
 from scripts.check_d0019_materialization_readiness import (
     namespace_fingerprint,
@@ -67,3 +68,33 @@ def test_obvious_low_diversity_secret_is_rejected(tmp_path):
     )
     assert result["ready"] is False
     assert result["checks"]["secret_obvious_placeholder"] is True
+
+
+def test_missing_explicit_reviewed_head_holds_even_with_valid_secret(tmp_path):
+    repo=Path(".").resolve()
+    result=readiness(
+        repo_root=repo,
+        output_dir=tmp_path/"safe",
+        secret=b"0123456789abcdef0123456789ABCDEF",
+        expected_head=None,
+    )
+    assert result["ready"] is False
+    assert result["checks"]["git_head_matches_expected"] is False
+    assert any("reviewed Git commit SHA" in x for x in result["failures"])
+
+
+def test_exact_reviewed_clean_head_can_pass_readiness(tmp_path):
+    repo=Path(".").resolve()
+    head=subprocess.run(
+        ["git","rev-parse","HEAD"],cwd=repo,check=True,capture_output=True,text=True
+    ).stdout.strip()
+    result=readiness(
+        repo_root=repo,
+        output_dir=tmp_path/"restricted",
+        secret=b"0123456789abcdef0123456789ABCDEF",
+        expected_head=head,
+    )
+    assert result["checks"]["git_head_matches_expected"] is True
+    assert result["checks"]["git_worktree_clean"] is True
+    assert result["ready"] is True
+    assert result["state"]=="READY_FOR_SECRET_BACKED_MATERIALIZATION"
