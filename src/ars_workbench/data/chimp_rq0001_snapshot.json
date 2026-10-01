@@ -83,8 +83,8 @@
       "name": "Oña 2019 Compositionality raw event data",
       "role": "PREFERRED_COMPONENT_LEVEL_MULTIMODAL_RECEIVER_CORPUS",
       "availability": "GATED_METADATA_ONLY",
-      "empirical_state": "PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION",
-      "rights_state": "ITEM_LEVEL_CC_BY_4_METADATA_VERIFIED_LOCAL_RESEARCH_REUSE",
+      "empirical_state": "RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION",
+      "rights_state": "APPROVED_LOCAL_RESEARCH_REUSE_WITH_ATTRIBUTION_RAW_REDISTRIBUTION_NOT_NEEDED",
       "gate": "Securely provision one persistent >=32-byte ARS_D0019_HMAC_KEY, use a clean exact reviewed Git head, require READY_FOR_SECRET_BACKED_MATERIALIZATION, and write restricted materialization outside the repository/common sync paths.",
       "semantic_authority": "NONE",
       "provenance_ids": ["PROV-D0019"]
