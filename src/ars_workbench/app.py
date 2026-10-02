@@ -49,6 +49,8 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
             return self._static("index.html")
         if path in {"/app.js", "/styles.css"}:
             return self._static(path[1:])
+        if path == "/api/authority-status":
+            return self._json(self.store.authority_status())
         if path == "/api/snapshot":
             return self._json(self.store.snapshot())
         if path == "/api/species":
@@ -86,5 +88,5 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
 
 def serve(host: str = "127.0.0.1", port: int = 8765) -> None:
     server = ThreadingHTTPServer((host, port), WorkbenchHandler)
-    print(f"Rosetta Research Workbench Slice 1: http://{host}:{port}")
+    print(f"Rosetta Research Workbench Phase I: http://{host}:{port}")
     server.serve_forever()
