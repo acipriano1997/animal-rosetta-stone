@@ -61,6 +61,10 @@ def main() -> None:
         status = store.authority_status()
         checks = {
             "canonical_mode_active": status["source_mode"] == "CANONICAL_READ_ADAPTER",
+            "file_transport_not_mislabeled_live": (
+                status["source_transport"] == "file"
+                and status["authoritative_live_read"] is False
+            ),
             "authority_current": status["authority_state"] == "CURRENT",
             "all_required_domains_bound": len(status["bindings"]) == 7,
             "species_adapter_operational": store.species_get("SP001")["taxon"] == "Pan troglodytes",
