@@ -1,21 +1,45 @@
 from __future__ import annotations
 
 import json
+import os
 from copy import deepcopy
 from importlib.resources import files
 from typing import Any
 
+from .canonical import load_canonical_source
+
 
 class WorkbenchStore:
-    """Read-only view-model adapter over a frozen canonical fixture snapshot.
+    """Read-only Workbench service boundary.
 
-    Slice 1 intentionally does not fetch live Drive data and does not compute
-    evidence grades, semantics, scientific status, or schedule estimates.
+    With ARS_WORKBENCH_CANONICAL_SOURCE (or an explicit canonical_source), the
+    store consumes a fail-closed canonical read bundle. Without one it preserves
+    the Phase I Slice 1 frozen fixture as an explicitly non-live fallback.
+
+    The store never computes evidence grades, semantics, scientific status, or
+    schedule estimates.
     """
 
-    def __init__(self) -> None:
-        path = files("ars_workbench").joinpath("data/chimp_rq0001_snapshot.json")
-        self._snapshot: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
+    def __init__(self, canonical_source: str | None = None) -> None:
+        source = canonical_source or os.getenv("ARS_WORKBENCH_CANONICAL_SOURCE")
+        if source:
+            self._snapshot, self._authority_status = load_canonical_source(source)
+        else:
+            path = files("ars_workbench").joinpath("data/chimp_rq0001_snapshot.json")
+            self._snapshot = json.loads(path.read_text(encoding="utf-8"))
+            self._authority_status = {
+                "source_mode": "STATIC_FIXTURE",
+                "source": "package:ars_workbench/data/chimp_rq0001_snapshot.json",
+                "adapter_contract": None,
+                "authority_state": "STATIC_FIXTURE",
+                "captured_at_utc": None,
+                "bindings": {},
+                "authoritative_live_read": False,
+                "scientific_effect": "NONE",
+            }
+
+    def authority_status(self) -> dict[str, Any]:
+        return deepcopy(self._authority_status)
 
     def snapshot(self) -> dict[str, Any]:
         return deepcopy(self._snapshot)
