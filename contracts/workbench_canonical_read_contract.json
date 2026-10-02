@@ -60,5 +60,20 @@
     "Animal-facing control"
   ],
   "scientific_effect": "NONE",
-  "biological_evidence": false
+  "biological_evidence": false,
+  "optional_event_layer": {
+    "trigger": "snapshot.events is present and non-empty",
+    "required_fields": [
+      "event_inventory",
+      "event_provenance"
+    ],
+    "required_binding": "events",
+    "provenance_rule": "Every event provenance_id must resolve through provenance or event_provenance.",
+    "forbidden_event_fields": [
+      "meaning",
+      "translation",
+      "semantic_gloss",
+      "english_gloss"
+    ]
+  }
 }
