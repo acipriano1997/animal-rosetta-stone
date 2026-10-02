@@ -39,6 +39,15 @@ class CanonicalReadError(RuntimeError):
     """Raised when a canonical Workbench read source cannot be trusted."""
 
 
+def _source_transport(source: str) -> str:
+    parsed = urlparse(source)
+    if parsed.scheme in {"http", "https"}:
+        return "http"
+    if source == "<memory>":
+        return "memory"
+    return "file"
+
+
 def _read_json_source(source: str) -> dict[str, Any]:
     parsed = urlparse(source)
     try:
@@ -157,17 +166,19 @@ def canonical_bundle_to_snapshot(
                 "ZERO_SYNTHETIC software verification cannot carry biological evidence"
             )
 
+    transport = _source_transport(source)
     snapshot = deepcopy(raw_snapshot)
     snapshot["mode"] = "CANONICAL_READ_ADAPTER"
     snapshot["canonical_adapter_contract"] = CANONICAL_READ_CONTRACT
     status = {
         "source_mode": "CANONICAL_READ_ADAPTER",
+        "source_transport": transport,
         "source": source,
         "adapter_contract": CANONICAL_READ_CONTRACT,
         "authority_state": "CURRENT",
         "captured_at_utc": bundle.get("captured_at_utc"),
         "bindings": deepcopy(bindings),
-        "authoritative_live_read": True,
+        "authoritative_live_read": transport == "http",
         "scientific_effect": "NONE",
     }
     return snapshot, status
