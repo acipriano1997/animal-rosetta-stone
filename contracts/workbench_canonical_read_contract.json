@@ -1,0 +1,64 @@
+{
+  "contract_id": "WORKBENCH-CANONICAL-READ-v0.1",
+  "status": "SLICE_2A_EXECUTABLE_CONTRACT",
+  "purpose": "Define the transport-neutral envelope accepted by the Rosetta Research Workbench canonical-read adapter without moving scientific semantic authority into the browser or repository.",
+  "authority_rule": "Payload producers must read the canonical semantic owners. This contract validates transport, binding completeness, provenance resolution, and scientific-firewall invariants; it does not create or grade scientific truth.",
+  "accepted_transports": {
+    "file_path": "Current as-of export; never labeled live.",
+    "file_uri": "Current as-of export; never labeled live.",
+    "https": "Live canonical-read service transport when the returned bundle reports CURRENT authority."
+  },
+  "required_top_level_fields": [
+    "adapter_contract",
+    "authority_state",
+    "bindings",
+    "snapshot"
+  ],
+  "required_authority_state": "CURRENT",
+  "required_binding_domains": [
+    "species",
+    "question",
+    "hypotheses",
+    "datasets",
+    "runs",
+    "software_verification",
+    "provenance"
+  ],
+  "required_binding_fields": [
+    "semantic_owner",
+    "at least one source locator: drive_id | spreadsheet_id | registry | github_repo | source"
+  ],
+  "required_snapshot_fields": [
+    "snapshot_id",
+    "scientific_boundary",
+    "species",
+    "question",
+    "hypotheses",
+    "datasets",
+    "runs",
+    "software_verification",
+    "provenance"
+  ],
+  "fail_closed_conditions": [
+    "adapter contract mismatch",
+    "authority_state is not CURRENT",
+    "required domain binding missing",
+    "binding lacks semantic_owner or source locator",
+    "required snapshot field missing",
+    "provenance index empty",
+    "displayed record references unresolved provenance id",
+    "dataset semantic_authority is not NONE",
+    "ZERO_SYNTHETIC software verification carries biological_evidence other than false"
+  ],
+  "explicit_non_goals": [
+    "Direct Google Drive authentication or synchronization",
+    "ACEB row extraction",
+    "Scientific evidence grading",
+    "Semantic gloss generation",
+    "Claim promotion",
+    "Schedule estimation",
+    "Animal-facing control"
+  ],
+  "scientific_effect": "NONE",
+  "biological_evidence": false
+}
