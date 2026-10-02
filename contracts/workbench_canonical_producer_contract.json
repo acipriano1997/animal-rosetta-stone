@@ -22,7 +22,8 @@
     "mode": "FAIL_CLOSED_ON_PIN_DRIFT",
     "google_docs": "exact document ID, title, and revisionId must match the producer source manifest",
     "aceb": "exact spreadsheet ID, title, and observed modifiedTime must match the producer source manifest",
-    "effect_of_drift": "No bundle is emitted until the source manifest and compatibility tests are reviewed."
+    "effect_of_drift": "No bundle is emitted until the source manifest and compatibility tests are reviewed.",
+    "event_corpora": "D0018 and D0020 exact spreadsheet ID, title, and observed modifiedTime must match the producer source manifest"
   },
   "projection_rules": [
     "Question, hypotheses, datasets, comparison-gate states, and claim-propagation rules are projected from ACEB rows.",
@@ -30,7 +31,9 @@
     "RUN-004 registered run disposition and claim-propagation disposition remain separate fields.",
     "RUN-005/RUN-006 remain EMPIRICAL_EXECUTION_HELD with null disposition until their owning empirical authorities say otherwise.",
     "Dataset semantic_authority is always NONE in the Workbench projection.",
-    "ZERO_SYNTHETIC verification is always biological_evidence=false."
+    "ZERO_SYNTHETIC verification is always biological_evidence=false.",
+    "D0018 and D0020 events are projected from their canonical event sheets with source-preserved identifiers, missingness, split state, source locators, and event/source provenance.",
+    "D0020 anonymized Goal_* codes remain anonymized and gesture forms remain explicitly unavailable where not released."
   ],
   "live_verification_boundary": "CI verifies producer behavior against synthetic Workspace responses only. Live authenticated Drive/ACEB execution is a separate operational gate.",
   "scientific_effect": "NONE",
