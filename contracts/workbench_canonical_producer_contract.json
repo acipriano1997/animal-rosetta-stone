@@ -1,0 +1,38 @@
+{
+  "contract_id": "WORKBENCH-CANONICAL-PRODUCER-v0.1",
+  "phase": "Rosetta Research Workbench Phase I Slice 2B",
+  "purpose": "Read pinned Google Drive and ACEB semantic authorities and emit WORKBENCH-CANONICAL-READ-v0.1 without creating a second scientific authority.",
+  "credential_policy": {
+    "mode": "RUNTIME_BEARER_TOKEN_ONLY",
+    "required_capability": "read-only Google Workspace access to the declared personal-Drive authorities",
+    "never_persist": [
+      "access token",
+      "refresh token",
+      "client secret"
+    ],
+    "forbidden_locations": [
+      "Git",
+      "Drive documentation",
+      "generated bundles",
+      "CI artifacts",
+      "command-line arguments"
+    ]
+  },
+  "authority_policy": {
+    "mode": "FAIL_CLOSED_ON_PIN_DRIFT",
+    "google_docs": "exact document ID, title, and revisionId must match the producer source manifest",
+    "aceb": "exact spreadsheet ID, title, and observed modifiedTime must match the producer source manifest",
+    "effect_of_drift": "No bundle is emitted until the source manifest and compatibility tests are reviewed."
+  },
+  "projection_rules": [
+    "Question, hypotheses, datasets, comparison-gate states, and claim-propagation rules are projected from ACEB rows.",
+    "Species activation and run records are projected from their named pinned Drive documents.",
+    "RUN-004 registered run disposition and claim-propagation disposition remain separate fields.",
+    "RUN-005/RUN-006 remain EMPIRICAL_EXECUTION_HELD with null disposition until their owning empirical authorities say otherwise.",
+    "Dataset semantic_authority is always NONE in the Workbench projection.",
+    "ZERO_SYNTHETIC verification is always biological_evidence=false."
+  ],
+  "live_verification_boundary": "CI verifies producer behavior against synthetic Workspace responses only. Live authenticated Drive/ACEB execution is a separate operational gate.",
+  "scientific_effect": "NONE",
+  "biological_evidence": false
+}

@@ -1,0 +1,78 @@
+{
+  "manifest_id": "WORKBENCH-CANONICAL-SOURCES-v0.1",
+  "authority_policy": "FAIL_CLOSED_ON_PIN_DRIFT",
+  "aceb": {
+    "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+    "title": "Animal Rosetta Stone — Experimental Evidence Bank v1.0",
+    "observed_modified_time": "2026-10-01T03:21:42.148Z",
+    "ranges": {
+      "research_questions": "Research Questions!A1:Q20",
+      "hypotheses": "Hypotheses!A1:Q20",
+      "datasets": "Datasets!A1:Z100",
+      "comparison_gate": "Chimp Comparison Gate!A1:K20",
+      "claim_propagation": "RQ0001 Claim Propagation!A1:I20"
+    }
+  },
+  "documents": {
+    "species": {
+      "document_id": "1KYlWfx-aD39DledKlF8xZdHOEKBdrMyXcQJwhHqAbic",
+      "title": "Chimpanzee — Species Activation Record v0.1",
+      "revision_id": "ANLCKQm7gHfGmifAjc0CQf4z4LwmhTybyugt_so7kn46k7iJFByUIDb2YiUIyeVcs4w52EHYOUHNQzOus2D1zyfLl0_Dsa3oJezsraQJw2c"
+    },
+    "run001": {
+      "document_id": "1DvbLNfCyAyZMy2kHuQfb_Rkq01TcagCHrI9jl_qe2U4",
+      "title": "Animal Rosetta Stone — RQ0001 RUN-001 Development-Only Known-Side Recovery v0.1",
+      "revision_id": "ANLCKQmYJPy8IoDbk3p8FjsMy6q1a-vkS18yZs7X0JEKURpmxr7QroAO2LF0bAsXCnm9eeoysAx37xk18rmoVz5jukMGgl-7gq9X_aNtkmg"
+    },
+    "run002": {
+      "document_id": "12PVauFUgQAR_pvN0Zz5h9jyp-BvmtBQjYAMIw7Qqbh8",
+      "title": "Animal Rosetta Stone — RQ0001 RUN-002 Locked Internal Evaluation v0.1",
+      "revision_id": "ANLCKQlAepEEbhUCZJypcvlGWmZsA3mbHbGhyfoOXE3bgtB3gSTAJACNjXVOkJ52JXT7U3PjWAzOanX6I82uBwsNhnRkbTXNZ9nWWE5D5OQ"
+    },
+    "run003": {
+      "document_id": "18DGI71VY_yPPgY4GQe0_-DCQNTqw48ydjcBNelbeL60",
+      "title": "Animal Rosetta Stone — RQ0001 RUN-003 Development-Only Sequence Analysis v0.1",
+      "revision_id": "ANLCKQlPcjhiBSvQZGGG8TP68q8dcG5I2M3TcS5tI3cAuZ2bTagOge8SF9IDdCQWXGHeGfFdEvp8YMk6cJwXqoFItXzkJX_D2jWnB7-Y7qs"
+    },
+    "run004": {
+      "document_id": "1u8Xom-fKKc1h7oXfW_Bd0A-km2l7zc0nz-i68eg3ujY",
+      "title": "Animal Rosetta Stone — RQ0001 RUN-004 Locked Waibira Sequence Evaluation v0.1",
+      "revision_id": "ANLCKQlTFg7Ve06qvpZn48Py6EgGrFvsimhgZ_xtBw366PmPO15d7wjyzCPQ1WLVmrvNT7NBEHbt_bcIo6csx644nPQuzBbhgkCnl-BR7ao"
+    },
+    "run005006": {
+      "document_id": "1bZ2fU66fMYSTKPOf08yTxpYnc-GwKyWIxiyhz-RVyjk",
+      "title": "Animal Rosetta Stone — RQ0001 D0019 RUN-005/RUN-006 Execution Contract v0.1",
+      "revision_id": "ANLCKQl6V3jzdtttDLPNzh06dxJ2FbCrY5lz8akQ6Tw3P0KRBDSDQKXZBU_tRBAGv-El5aSUkq3-ify0yhNcmfoNqnIoXSCGsrd15MuGmN0"
+    },
+    "harness_verify": {
+      "document_id": "1u9YOZCFWLSm4znq3sg0a1Qo2Nnuo-o0FcLh6ikQ42Rw",
+      "title": "Animal Rosetta Stone — Receiver Harness GitHub Operational Verification — 2026-09-30",
+      "revision_id": "ANLCKQkT990dkE7TixQQLKrrNbmnqpZQrKYqLxXtwZKFjTw1AGylTsiEopc6BB43soaAudyppyIAXFgW6pgwIlzW0y9m__XZvBhIKcHHuL8"
+    }
+  },
+  "selection": {
+    "question_id": "RQ0001",
+    "hypothesis_ids": [
+      "H0001",
+      "H0002",
+      "H0003"
+    ],
+    "dataset_ids": [
+      "D0018",
+      "D0019",
+      "D0020",
+      "D0025"
+    ]
+  },
+  "credentials": {
+    "policy": "RUNTIME_BEARER_TOKEN_ONLY",
+    "default_environment_variable": "ARS_GOOGLE_OAUTH_ACCESS_TOKEN",
+    "prohibited_storage": [
+      "Git",
+      "Drive documentation",
+      "CI artifacts",
+      "command-line arguments",
+      "generated bundles"
+    ]
+  }
+}
