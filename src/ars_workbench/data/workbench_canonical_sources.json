@@ -74,5 +74,25 @@
       "command-line arguments",
       "generated bundles"
     ]
+  },
+  "event_sources": {
+    "D0018": {
+      "spreadsheet_id": "1FebOEu5FDjsp5WPsq4b-Ux7ThSL0TfBjg30uINyWibA",
+      "title": "Animal Rosetta Stone — Chimpanzee RQ0001 Event Corpus v0.1",
+      "observed_modified_time": "2026-09-29T16:40:42.641Z",
+      "event_range": "Events!A1:AG100",
+      "provenance_range": "Provenance!A1:L50",
+      "event_sheet": "Events",
+      "expected_event_count": 36
+    },
+    "D0020": {
+      "spreadsheet_id": "1ztyGFty1T0eHbxluT4vCyDD8NfM-kcoQZoHbjyqgVqw",
+      "title": "Animal Rosetta Stone — Chimpanzee RQ0001 Wild Gesture Exchange Corpus v0.1",
+      "observed_modified_time": "2026-09-29T18:52:08.960Z",
+      "event_range": "'Interaction Events'!A1:AG4300",
+      "provenance_range": "Provenance!A1:L40",
+      "event_sheet": "Interaction Events",
+      "expected_event_count": 4223
+    }
   }
 }
