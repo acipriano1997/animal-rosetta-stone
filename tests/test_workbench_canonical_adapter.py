@@ -12,7 +12,7 @@ from ars_workbench.store import WorkbenchStore
 
 
 def _bundle():
-    snapshot = WorkbenchStore().snapshot()
+    snapshot = WorkbenchStore().overview()
     return {
         "adapter_contract": CANONICAL_READ_CONTRACT,
         "authority_state": "CURRENT",

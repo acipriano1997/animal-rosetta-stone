@@ -1,0 +1,36 @@
+{
+  "contract_id": "WORKBENCH-EVENT-EXPLORER-v0.1",
+  "phase": "Rosetta Research Workbench Phase I Slice 3",
+  "purpose": "Expose D0018 and D0020 situated event records and provenance without semantic reinterpretation or browser-local scientific authority.",
+  "canonical_sources": {
+    "D0018": {
+      "spreadsheet_id": "1FebOEu5FDjsp5WPsq4b-Ux7ThSL0TfBjg30uINyWibA",
+      "event_sheet": "Events",
+      "canonical_event_count": 36
+    },
+    "D0020": {
+      "spreadsheet_id": "1ztyGFty1T0eHbxluT4vCyDD8NfM-kcoQZoHbjyqgVqw",
+      "event_sheet": "Interaction Events",
+      "canonical_event_count": 4223
+    }
+  },
+  "service_contract": {
+    "events.list": "Read-only pagination/filtering over canonical event fields. Allowed filters: dataset, population/group, split.",
+    "events.get": "Return one source-preserved event record by Event_ID.",
+    "provenance.get": "Resolve event-specific and dataset/source provenance IDs.",
+    "snapshot": "Landing overview must omit bulk event rows and event-level provenance."
+  },
+  "presentation_rules": [
+    "Missing or not-recorded fields remain visibly missing.",
+    "D0020 Goal_* values remain anonymized source codes and never become glosses.",
+    "D0020 gesture form remains NOT_RELEASED_IN_ANON_CSV where source form is unavailable.",
+    "Split and split-eligibility state remain visible, including pre-freeze exposure and locked cross-community evaluation.",
+    "Event source locators preserve file/blob/row or communication/source-row span identifiers.",
+    "Every displayed event carries at least one resolvable event-specific provenance ID and its relevant source-level provenance ID.",
+    "No event field named meaning, translation, semantic_gloss, or english_gloss is permitted in canonical bundles."
+  ],
+  "fixture_boundary": "The packaged fallback contains four real source-preserved sample rows only, clearly marked STATIC_SAMPLE_ONLY; it is not a duplicated event database.",
+  "live_boundary": "Full canonical event coverage is emitted only by the authenticated canonical producer reading the pinned event spreadsheets.",
+  "scientific_effect": "NONE",
+  "biological_evidence": false
+}

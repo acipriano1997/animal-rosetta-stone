@@ -12,9 +12,9 @@ from .canonical import load_canonical_source
 class WorkbenchStore:
     """Read-only Workbench service boundary.
 
-    With ARS_WORKBENCH_CANONICAL_SOURCE (or an explicit canonical_source), the
-    store consumes a fail-closed canonical read bundle. Without one it preserves
-    the Phase I Slice 1 frozen fixture as an explicitly non-live fallback.
+    Canonical bundles may carry the full event/provenance corpus. The packaged
+    fallback carries only a tiny, explicitly sample-only event fixture so the UI
+    remains executable without becoming a second scientific database.
 
     The store never computes evidence grades, semantics, scientific status, or
     schedule estimates.
@@ -24,9 +24,17 @@ class WorkbenchStore:
         source = canonical_source or os.getenv("ARS_WORKBENCH_CANONICAL_SOURCE")
         if source:
             self._snapshot, self._authority_status = load_canonical_source(source)
+            self._events = deepcopy(self._snapshot.get("events", []))
+            self._event_inventory = deepcopy(self._snapshot.get("event_inventory", {}))
+            self._event_provenance = deepcopy(self._snapshot.get("event_provenance", {}))
         else:
             path = files("ars_workbench").joinpath("data/chimp_rq0001_snapshot.json")
             self._snapshot = json.loads(path.read_text(encoding="utf-8"))
+            event_path = files("ars_workbench").joinpath("data/chimp_rq0001_events_sample.json")
+            event_fixture = json.loads(event_path.read_text(encoding="utf-8"))
+            self._events = event_fixture["events"]
+            self._event_inventory = event_fixture["event_inventory"]
+            self._event_provenance = event_fixture["event_provenance"]
             self._authority_status = {
                 "source_mode": "STATIC_FIXTURE",
                 "source": "package:ars_workbench/data/chimp_rq0001_snapshot.json",
@@ -35,6 +43,7 @@ class WorkbenchStore:
                 "captured_at_utc": None,
                 "bindings": {},
                 "authoritative_live_read": False,
+                "event_coverage": "STATIC_SAMPLE_ONLY",
                 "scientific_effect": "NONE",
             }
 
@@ -42,7 +51,20 @@ class WorkbenchStore:
         return deepcopy(self._authority_status)
 
     def snapshot(self) -> dict[str, Any]:
-        return deepcopy(self._snapshot)
+        out = deepcopy(self._snapshot)
+        if self._events:
+            out["events"] = deepcopy(self._events)
+            out["event_inventory"] = deepcopy(self._event_inventory)
+            out["event_provenance"] = deepcopy(self._event_provenance)
+        return out
+
+    def overview(self) -> dict[str, Any]:
+        """Return the browser landing payload without thousands of event rows."""
+        out = deepcopy(self._snapshot)
+        out.pop("events", None)
+        out.pop("event_provenance", None)
+        out["event_inventory"] = deepcopy(self._event_inventory)
+        return out
 
     def species_list(self) -> list[dict[str, Any]]:
         s = self._snapshot["species"]
@@ -69,6 +91,54 @@ class WorkbenchStore:
     def dataset_list(self) -> list[dict[str, Any]]:
         return deepcopy(self._snapshot["datasets"])
 
+    def event_inventory(self) -> dict[str, Any]:
+        return deepcopy(self._event_inventory)
+
+    def events_list(
+        self,
+        *,
+        dataset_id: str | None = None,
+        population: str | None = None,
+        split: str | None = None,
+        limit: int = 50,
+        offset: int = 0,
+    ) -> dict[str, Any]:
+        if limit < 1 or limit > 250:
+            raise ValueError("event limit must be between 1 and 250")
+        if offset < 0:
+            raise ValueError("event offset must be non-negative")
+
+        rows = self._events
+        if dataset_id:
+            rows = [row for row in rows if row.get("dataset_id") == dataset_id]
+        if population:
+            rows = [
+                row for row in rows
+                if row.get("population_or_group_id") == population
+            ]
+        if split:
+            rows = [row for row in rows if row.get("split") == split]
+
+        total = len(rows)
+        return {
+            "items": deepcopy(rows[offset: offset + limit]),
+            "total": total,
+            "offset": offset,
+            "limit": limit,
+            "filters": {
+                "dataset_id": dataset_id,
+                "population": population,
+                "split": split,
+            },
+            "inventory": deepcopy(self._event_inventory),
+        }
+
+    def event_get(self, event_id: str) -> dict[str, Any] | None:
+        for row in self._events:
+            if row.get("event_id") == event_id:
+                return deepcopy(row)
+        return None
+
     def run_list(self) -> list[dict[str, Any]]:
         return deepcopy(self._snapshot["runs"])
 
@@ -94,6 +164,8 @@ class WorkbenchStore:
 
     def provenance_get(self, provenance_id: str) -> dict[str, Any] | None:
         item = self._snapshot["provenance"].get(provenance_id)
+        if item is None:
+            item = self._event_provenance.get(provenance_id)
         if item is None:
             return None
         return {"provenance_id": provenance_id, **deepcopy(item)}

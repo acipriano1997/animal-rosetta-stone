@@ -54,9 +54,16 @@ ars-workbench --host 127.0.0.1 --port 8765
 
 The token should be supplied by an approved local secret manager or OAuth flow, not typed into the command line, committed, written to Drive documentation, or placed in CI artifacts. Full Slice 2 remains open until the authenticated producer is exercised against the live pinned authorities and that exact-head result is recorded.
 
+### Slice 3 — event and provenance exploration
+
+The Workbench event service now exposes D0018 and D0020 through bounded `events.list` / `events.get` behavior with event-specific provenance resolution. The browser requests event rows separately from the landing snapshot, so the core page stays lightweight even when a canonical bundle carries all 4,259 currently registered event rows.
+
+The packaged fallback contains only four real source-preserved sample rows and is explicitly labeled `STATIC_SAMPLE_ONLY`. The authenticated canonical producer owns full coverage: 36 D0018 events and 4,223 D0020 interaction events. Missingness, locked/development split state, source row/blob locators, D0020 goal anonymization, and the absence of released D0020 gesture forms remain visible. Event rows cannot contain generated meaning/translation/gloss fields.
+
+
 ## Canonical bindings
 
-`contracts/canonical_bindings.json` pins Drive/ACEB bindings used by executable research paths. `contracts/workbench_canonical_read_contract.json` defines the Workbench adapter envelope and its fail-closed transport semantics. `src/ars_workbench/data/workbench_canonical_sources.json` pins the current Workbench producer authorities, and `contracts/workbench_canonical_producer_contract.json` defines the credential, drift, projection, and scientific-firewall rules for direct reads. If Drive semantic authority changes, code is stale until reconciled; code never silently redefines the scientific rules.
+`contracts/canonical_bindings.json` pins Drive/ACEB bindings used by executable research paths. `contracts/workbench_canonical_read_contract.json` defines the Workbench adapter envelope and its fail-closed transport semantics. `src/ars_workbench/data/workbench_canonical_sources.json` pins the current Workbench producer and event authorities; `contracts/workbench_canonical_producer_contract.json` defines the credential, drift, projection, and scientific-firewall rules for direct reads; `contracts/workbench_event_explorer_contract.json` owns the Slice 3 event/provenance presentation boundary. If Drive semantic authority changes, code is stale until reconciled; code never silently redefines the scientific rules.
 
 ## Verification
 
@@ -69,6 +76,7 @@ python scripts/run_synthetic_verification.py --out-dir build/synthetic_verificat
 python scripts/verify_workbench_slice1.py
 python scripts/verify_workbench_slice2_adapter.py
 python scripts/verify_workbench_slice2_producer.py
+python scripts/verify_workbench_slice3_events.py
 ```
 
 GitHub Actions runs the same verification on pull requests and `main` and uploads exact-head receipts.

@@ -8,16 +8,21 @@
 </head>
 <body>
 <header>
-  <div><p class="eyebrow">Animal Rosetta Stone</p><h1>Rosetta Research Workbench</h1><p>Phase I · Slice 1 · read-only canonical snapshot</p></div>
+  <div><p class="eyebrow">Animal Rosetta Stone</p><h1>Rosetta Research Workbench</h1><p>Phase I · read-only scientific workbench</p></div>
   <div class="boundary">Not a translator · no semantic claim promotion</div>
 </header>
 <main>
   <nav aria-label="Workbench sections">
-    <button data-target="species">Species</button><button data-target="question">RQ0001</button><button data-target="datasets">Corpora</button><button data-target="runs">Runs</button><button data-target="provenance">Provenance</button>
+    <button data-target="species">Species</button><button data-target="question">RQ0001</button><button data-target="datasets">Corpora</button><button data-target="events">Events</button><button data-target="runs">Runs</button><button data-target="provenance">Provenance</button>
   </nav>
-  <section id="status" class="notice">Loading canonical view-model snapshot…</section>
-  <section id="species"></section><section id="question"></section><section id="datasets"></section><section id="runs"></section><section id="provenance"></section>
+  <section id="status" class="notice">Loading canonical Workbench state…</section>
+  <section id="species"></section>
+  <section id="question"></section>
+  <section id="datasets"></section>
+  <section id="events"></section>
+  <section id="runs"></section>
+  <section id="provenance"></section>
 </main>
-<footer>Scientific state is displayed from the frozen view model; this interface does not recompute evidence grades, meanings, or schedules.</footer>
+<footer>Scientific state is read through bounded adapters; this interface does not recompute evidence grades, meanings, validation status, or schedules.</footer>
 <script src="/app.js"></script>
 </body></html>

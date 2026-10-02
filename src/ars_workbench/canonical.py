@@ -84,7 +84,7 @@ def _record_provenance_ids(snapshot: dict[str, Any]) -> list[str]:
         record = snapshot.get(key)
         if isinstance(record, dict):
             refs.extend(record.get("provenance_ids", []))
-    for key in ("hypotheses", "datasets", "runs", "software_verification"):
+    for key in ("hypotheses", "datasets", "runs", "software_verification", "events"):
         rows = snapshot.get(key)
         if isinstance(rows, list):
             for row in rows:
@@ -144,8 +144,38 @@ def canonical_bundle_to_snapshot(
     provenance = raw_snapshot.get("provenance")
     if not isinstance(provenance, dict) or not provenance:
         raise CanonicalReadError("canonical snapshot provenance index is empty")
+
+    event_provenance = raw_snapshot.get("event_provenance", {})
+    if event_provenance and not isinstance(event_provenance, dict):
+        raise CanonicalReadError("event_provenance must be an object")
+
+    events = raw_snapshot.get("events", [])
+    if events:
+        if "events" not in bindings:
+            raise CanonicalReadError("event-enabled canonical bundle lacks events binding")
+        event_binding = bindings["events"]
+        if (
+            not isinstance(event_binding, dict)
+            or not str(event_binding.get("semantic_owner", "")).strip()
+            or not any(event_binding.get(key) for key in ("spreadsheet_id", "source", "registry"))
+        ):
+            raise CanonicalReadError("canonical binding 'events' is incomplete")
+        if not isinstance(raw_snapshot.get("event_inventory"), dict):
+            raise CanonicalReadError("event-enabled canonical bundle lacks event_inventory")
+        forbidden_event_fields = {"meaning", "translation", "semantic_gloss", "english_gloss"}
+        for event in events:
+            if not isinstance(event, dict) or not event.get("event_id"):
+                raise CanonicalReadError("canonical event row lacks event_id")
+            leaked = sorted(forbidden_event_fields & set(event))
+            if leaked:
+                raise CanonicalReadError(
+                    f"event {event.get('event_id')} contains forbidden semantic fields: "
+                    + ", ".join(leaked)
+                )
+
     refs = _record_provenance_ids(raw_snapshot)
-    unresolved = sorted(set(refs) - set(provenance))
+    known_provenance = set(provenance) | set(event_provenance)
+    unresolved = sorted(set(refs) - known_provenance)
     if unresolved:
         raise CanonicalReadError(
             "canonical snapshot has unresolved provenance ids: " + ", ".join(unresolved)
