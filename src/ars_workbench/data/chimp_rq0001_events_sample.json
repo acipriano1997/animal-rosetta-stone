@@ -1,0 +1,262 @@
+{
+  "fixture_id": "WORKBENCH-CHIMP-RQ0001-EVENT-SAMPLE-v0.1",
+  "mode": "STATIC_EVENT_SAMPLE_ONLY",
+  "event_inventory": {
+    "D0018": {
+      "canonical_total": 36,
+      "available_in_fixture": 2,
+      "coverage": "STATIC_SAMPLE_ONLY"
+    },
+    "D0020": {
+      "canonical_total": 4223,
+      "available_in_fixture": 2,
+      "coverage": "STATIC_SAMPLE_ONLY"
+    }
+  },
+  "events": [
+    {
+      "event_id": "EVT-PT-RQ0001-D0018-SNK-001",
+      "dataset_id": "D0018",
+      "taxon_id": "SP001",
+      "population_or_group_id": "Sonso/Budongo",
+      "source_study_id": "S0017",
+      "source_experiment_id": "E0019",
+      "event_type": "controlled_elicitation",
+      "sender_ids": [
+        "S0017:RE"
+      ],
+      "receiver_ids": [
+        "UNKNOWN_AGGREGATE_AUDIENCE"
+      ],
+      "context": {
+        "context_id": "CTX-D0018-SNAKE-BACK",
+        "source_condition": "back",
+        "trigger_or_anchor": "model-snake discovery"
+      },
+      "signal": {
+        "component_1": "alarm-huu",
+        "component_2": "waa-bark",
+        "order": "alarm-huu→waa-bark (≤2 s source criterion)",
+        "combination_flag": "yes"
+      },
+      "receiver_response": "nb_recruited=8 within 120 s; recruited defined as arrival <15 m from caller",
+      "consequence_or_outcome": "audience recruitment count=8",
+      "observation_window": "120 s post-discovery",
+      "split": "DEVELOPMENT",
+      "split_eligibility": "DEVELOPMENT_ONLY",
+      "event_confidence": "HIGH",
+      "missingness_codes": [
+        "START_TIME_NOT_RECORDED",
+        "END_TIME_NOT_RECORDED",
+        "RECEIVER_IDENTITIES_NOT_RECORDED",
+        "FOLLOWUP_NOT_RECORDED"
+      ],
+      "source_locator": {
+        "source_file": "Source-data-snake.csv",
+        "source_blob_sha": "4b95ce69e1a511c943f0847474cae7c56e6bddb1",
+        "source_row": "2"
+      },
+      "notes": "Source condition label retained verbatim; exact alone/back/front spatial semantics not expanded here.",
+      "provenance_ids": [
+        "PRV-D0018-SNK-001",
+        "PRV-D0018-SNAKE-SOURCE"
+      ]
+    },
+    {
+      "event_id": "EVT-PT-RQ0001-D0018-SNK-003",
+      "dataset_id": "D0018",
+      "taxon_id": "SP001",
+      "population_or_group_id": "Sonso/Budongo",
+      "source_study_id": "S0017",
+      "source_experiment_id": "E0019",
+      "event_type": "controlled_elicitation",
+      "sender_ids": [
+        "S0017:ZM"
+      ],
+      "receiver_ids": [
+        "UNKNOWN_AGGREGATE_AUDIENCE"
+      ],
+      "context": {
+        "context_id": "CTX-D0018-SNAKE-BACK",
+        "source_condition": "back",
+        "trigger_or_anchor": "model-snake discovery"
+      },
+      "signal": {
+        "component_1": "alarm-huu",
+        "component_2": "waa-bark",
+        "order": "alarm-huu→waa-bark (≤2 s source criterion)",
+        "combination_flag": "yes"
+      },
+      "receiver_response": "nb_recruited=2 within 120 s; recruited defined as arrival <15 m from caller",
+      "consequence_or_outcome": "audience recruitment count=2",
+      "observation_window": "120 s post-discovery",
+      "split": "LOCKED_INTERNAL_EVALUATION",
+      "split_eligibility": "NOT_CONFIRMATORY_PRE_FREEZE_OUTCOME_EXPOSED",
+      "event_confidence": "HIGH",
+      "missingness_codes": [
+        "START_TIME_NOT_RECORDED",
+        "END_TIME_NOT_RECORDED",
+        "RECEIVER_IDENTITIES_NOT_RECORDED",
+        "FOLLOWUP_NOT_RECORDED"
+      ],
+      "source_locator": {
+        "source_file": "Source-data-snake.csv",
+        "source_blob_sha": "4b95ce69e1a511c943f0847474cae7c56e6bddb1",
+        "source_row": "4"
+      },
+      "notes": "Fixture sample preserves locked-evaluation status; it is not a fresh holdout.",
+      "provenance_ids": [
+        "PRV-D0018-SNK-003",
+        "PRV-D0018-SNAKE-SOURCE"
+      ]
+    },
+    {
+      "event_id": "EVT-PT-RQ0001-D0020-300390",
+      "dataset_id": "D0020",
+      "taxon_id": "SP001",
+      "population_or_group_id": "Waibira",
+      "source_study_id": "S0018",
+      "source_experiment_id": "E0021",
+      "event_type": "natural_gesture_interaction",
+      "sender_ids": [
+        "A_F"
+      ],
+      "receiver_ids": [
+        "ID_5"
+      ],
+      "context": {
+        "relative_start_s": "2.164",
+        "relative_end_s": "4.043",
+        "initial_goal_anon": "Goal_1"
+      },
+      "signal": {
+        "gesture_token_count": "1",
+        "exchange_status": "NO",
+        "declared_turn_count": "1",
+        "sender_alternation_count": "0",
+        "gesture_form": "NOT_RELEASED_IN_ANON_CSV"
+      },
+      "receiver_response": "NOT_SEPARATELY_CODED_IN_EVENT_VIEW",
+      "consequence_or_outcome": "GoalRecipient",
+      "split": "LOCKED_CROSS_COMMUNITY_EVALUATION",
+      "split_eligibility": "PROSPECTIVE_SECONDARY_CROSS_COMMUNITY_EVAL_NOT_FULLY_BLIND",
+      "event_confidence": "HIGH",
+      "missingness_codes": [
+        "ABSOLUTE_TIME_NOT_RECORDED",
+        "GESTURE_FORM_NOT_RELEASED",
+        "RAW_MEDIA_NOT_INGESTED",
+        "GOAL_LABEL_ANONYMIZED"
+      ],
+      "source_locator": {
+        "source_communication_id": "300390",
+        "source_row_min": "2",
+        "source_row_max": "2",
+        "source_row_count": "1"
+      },
+      "notes": "Goal labels are anonymized source codes and must not be rendered as semantic glosses.",
+      "provenance_ids": [
+        "PRV-D0020-EVT-300390",
+        "PRV-D0020-CSV"
+      ]
+    },
+    {
+      "event_id": "EVT-PT-RQ0001-D0020-300790",
+      "dataset_id": "D0020",
+      "taxon_id": "SP001",
+      "population_or_group_id": "Waibira",
+      "source_study_id": "S0018",
+      "source_experiment_id": "E0021",
+      "event_type": "natural_gesture_interaction",
+      "sender_ids": [
+        "ID_21"
+      ],
+      "receiver_ids": [
+        "A_F"
+      ],
+      "context": {
+        "relative_start_s": "3.634",
+        "relative_end_s": "34.597",
+        "initial_goal_anon": "Goal_2"
+      },
+      "signal": {
+        "gesture_token_count": "3",
+        "exchange_status": "YES",
+        "declared_turn_count": "3",
+        "sender_alternation_count": "2",
+        "gesture_form": "NOT_RELEASED_IN_ANON_CSV"
+      },
+      "receiver_response": "NOT_SEPARATELY_CODED_IN_EVENT_VIEW",
+      "consequence_or_outcome": "GoalAmbiguous",
+      "split": "LOCKED_CROSS_COMMUNITY_EVALUATION",
+      "split_eligibility": "PROSPECTIVE_SECONDARY_CROSS_COMMUNITY_EVAL_NOT_FULLY_BLIND",
+      "event_confidence": "HIGH",
+      "missingness_codes": [
+        "ABSOLUTE_TIME_NOT_RECORDED",
+        "GESTURE_FORM_NOT_RELEASED",
+        "RAW_MEDIA_NOT_INGESTED",
+        "GOAL_LABEL_ANONYMIZED"
+      ],
+      "source_locator": {
+        "source_communication_id": "300790",
+        "source_row_min": "6",
+        "source_row_max": "330",
+        "source_row_count": "3"
+      },
+      "notes": "Continuation structure is descriptive; function of continuation is not inferred.",
+      "provenance_ids": [
+        "PRV-D0020-EVT-300790",
+        "PRV-D0020-CSV"
+      ]
+    }
+  ],
+  "event_provenance": {
+    "PRV-D0018-SNK-001": {
+      "authority": "Animal Rosetta Stone — Chimpanzee RQ0001 Event Corpus v0.1",
+      "spreadsheet_id": "1FebOEu5FDjsp5WPsq4b-Ux7ThSL0TfBjg30uINyWibA",
+      "registry": "Events:EVT-PT-RQ0001-D0018-SNK-001",
+      "source_file": "Source-data-snake.csv",
+      "source_blob_sha": "4b95ce69e1a511c943f0847474cae7c56e6bddb1",
+      "source_row": "2"
+    },
+    "PRV-D0018-SNK-003": {
+      "authority": "Animal Rosetta Stone — Chimpanzee RQ0001 Event Corpus v0.1",
+      "spreadsheet_id": "1FebOEu5FDjsp5WPsq4b-Ux7ThSL0TfBjg30uINyWibA",
+      "registry": "Events:EVT-PT-RQ0001-D0018-SNK-003",
+      "source_file": "Source-data-snake.csv",
+      "source_blob_sha": "4b95ce69e1a511c943f0847474cae7c56e6bddb1",
+      "source_row": "4"
+    },
+    "PRV-D0018-SNAKE-SOURCE": {
+      "authority": "D0018 Provenance sheet",
+      "spreadsheet_id": "1FebOEu5FDjsp5WPsq4b-Ux7ThSL0TfBjg30uINyWibA",
+      "registry": "Provenance:PRV-D0018-SNAKE-SOURCE",
+      "persistent_id_or_url": "https://github.com/MaelLeroux/AH-WB/blob/Data/Source-data-snake.csv",
+      "content_id": "Git blob 4b95ce69e1a511c943f0847474cae7c56e6bddb1",
+      "rights": "Associated with CC BY 4.0 open article/source-data package; GitHub repo itself shows no separate license file"
+    },
+    "PRV-D0020-EVT-300390": {
+      "authority": "Animal Rosetta Stone — Chimpanzee RQ0001 Wild Gesture Exchange Corpus v0.1",
+      "spreadsheet_id": "1ztyGFty1T0eHbxluT4vCyDD8NfM-kcoQZoHbjyqgVqw",
+      "registry": "Interaction Events:EVT-PT-RQ0001-D0020-300390",
+      "source_communication_id": "300390",
+      "source_row_min": "2",
+      "source_row_max": "2"
+    },
+    "PRV-D0020-EVT-300790": {
+      "authority": "Animal Rosetta Stone — Chimpanzee RQ0001 Wild Gesture Exchange Corpus v0.1",
+      "spreadsheet_id": "1ztyGFty1T0eHbxluT4vCyDD8NfM-kcoQZoHbjyqgVqw",
+      "registry": "Interaction Events:EVT-PT-RQ0001-D0020-300790",
+      "source_communication_id": "300790",
+      "source_row_min": "6",
+      "source_row_max": "330"
+    },
+    "PRV-D0020-CSV": {
+      "authority": "D0020 Provenance sheet",
+      "spreadsheet_id": "1ztyGFty1T0eHbxluT4vCyDD8NfM-kcoQZoHbjyqgVqw",
+      "registry": "Provenance:PRV-D0020-CSV",
+      "persistent_id_or_url": "https://github.com/Wild-Minds/GestureConversations/blob/main/Badihi_CurrentBio_AnonData.csv",
+      "content_id": "Git blob b07738910098500a28d02d70d8d1bb670c02ae61",
+      "rights": "Repository-specific license NOT_STATED"
+    }
+  }
+}
