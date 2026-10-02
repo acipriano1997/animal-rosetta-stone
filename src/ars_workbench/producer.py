@@ -8,6 +8,7 @@ from importlib.resources import files
 from typing import Any
 
 from .canonical import CANONICAL_READ_CONTRACT, canonical_bundle_to_snapshot
+from .event_projection import build_event_projection
 
 
 class CanonicalProducerError(RuntimeError):
@@ -167,6 +168,9 @@ class WorkspaceCanonicalProducer:
             for key in self.manifest["documents"]
         }
         lines = {key: _lines(doc) for key, doc in docs.items()}
+        events, event_inventory, event_provenance = build_event_projection(
+            self.reader, self.manifest
+        )
 
         selection = self.manifest["selection"]
         q = _one(aceb["research_questions"], "Question_ID", selection["question_id"])
@@ -424,6 +428,9 @@ class WorkspaceCanonicalProducer:
             "datasets": dataset_view,
             "runs": run_view,
             "software_verification": software_verification,
+            "events": events,
+            "event_inventory": event_inventory,
+            "event_provenance": event_provenance,
             "provenance": provenance,
         }
 
@@ -446,6 +453,13 @@ class WorkspaceCanonicalProducer:
                 "semantic_owner": "ACEB Datasets",
                 "spreadsheet_id": self.manifest["aceb"]["spreadsheet_id"],
                 "registry": "Datasets:" + ",".join(selection["dataset_ids"]),
+            },
+            "events": {
+                "semantic_owner": "D0018/D0020 canonical event spreadsheets",
+                "source": ",".join(
+                    self.manifest["event_sources"][dataset_id]["spreadsheet_id"]
+                    for dataset_id in ("D0018", "D0020")
+                ),
             },
             "runs": {
                 "semantic_owner": "RQ0001 frozen run authorities",
