@@ -67,7 +67,8 @@ python -m pytest -q
 python scripts/run_rhf_suite.py --out build/rhf_suite_receipt.json
 python scripts/run_synthetic_verification.py --out-dir build/synthetic_verification
 python scripts/verify_workbench_slice1.py
-python scripts/verify_workbench_slice2_adapter.py\npython scripts/verify_workbench_slice2_producer.py
+python scripts/verify_workbench_slice2_adapter.py
+python scripts/verify_workbench_slice2_producer.py
 ```
 
 GitHub Actions runs the same verification on pull requests and `main` and uploads exact-head receipts.
