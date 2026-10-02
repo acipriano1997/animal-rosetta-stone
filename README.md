@@ -40,11 +40,23 @@ The source may be a local path, a `file://` URI, or an HTTP(S) endpoint. File-ba
 
 The adapter fails closed if the authority state is stale/conflicted, required domain bindings are missing, provenance references do not resolve, a dataset attempts to acquire semantic authority, or ZERO_SYNTHETIC software verification is presented as biological evidence.
 
-Slice 2A establishes the transport and validation boundary only. A direct Drive/ACEB synchronization/export service that produces the canonical bundle remains open Slice 2 work; the repository does not claim that direct Google Drive synchronization is complete.
+Slice 2A establishes the transport and validation boundary. Slice 2B adds a read-only canonical producer that can read the pinned Drive/ACEB authorities directly through Google Workspace REST when a short-lived OAuth bearer token is injected at runtime.
+
+The producer stores no Google credential, accepts no bearer token as a command-line argument, fails closed when any pinned Google Doc revision or the pinned ACEB modified time drifts, and validates its output through the Slice 2A adapter contract before export. CI exercises the entire producer with synthetic Workspace responses and drift failures; public CI does **not** contain a private Google token and therefore does not claim live-Drive operational verification.
+
+To export from the live authorities, inject an approved read-only OAuth token through the environment and run:
+
+```bash
+python scripts/export_workbench_canonical_bundle.py --out /secure/local/path/workbench-canonical.json
+export ARS_WORKBENCH_CANONICAL_SOURCE=/secure/local/path/workbench-canonical.json
+ars-workbench --host 127.0.0.1 --port 8765
+```
+
+The token should be supplied by an approved local secret manager or OAuth flow, not typed into the command line, committed, written to Drive documentation, or placed in CI artifacts. Full Slice 2 remains open until the authenticated producer is exercised against the live pinned authorities and that exact-head result is recorded.
 
 ## Canonical bindings
 
-`contracts/canonical_bindings.json` pins the Drive document revision IDs and ACEB registry ranges consumed by executable research paths. `contracts/workbench_canonical_read_contract.json` defines the Workbench adapter envelope and its fail-closed transport semantics. If Drive semantic authority changes, code is stale until reconciled; code never silently redefines the scientific rules.
+`contracts/canonical_bindings.json` pins Drive/ACEB bindings used by executable research paths. `contracts/workbench_canonical_read_contract.json` defines the Workbench adapter envelope and its fail-closed transport semantics. `src/ars_workbench/data/workbench_canonical_sources.json` pins the current Workbench producer authorities, and `contracts/workbench_canonical_producer_contract.json` defines the credential, drift, projection, and scientific-firewall rules for direct reads. If Drive semantic authority changes, code is stale until reconciled; code never silently redefines the scientific rules.
 
 ## Verification
 
