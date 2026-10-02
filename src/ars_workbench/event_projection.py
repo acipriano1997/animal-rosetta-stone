@@ -183,6 +183,7 @@ def build_event_projection(
     events: list[dict[str, Any]] = []
     inventory: dict[str, Any] = {}
     event_provenance: dict[str, dict[str, Any]] = {}
+    seen_event_ids: set[str] = set()
 
     for dataset_id in ("D0018", "D0020"):
         spec = manifest["event_sources"][dataset_id]
@@ -228,8 +229,9 @@ def build_event_projection(
                 )
             event_id = event["event_id"]
             provenance_id = event["provenance_ids"][0]
-            if any(existing["event_id"] == event_id for existing in events):
+            if event_id in seen_event_ids:
                 raise EventProjectionError(f"duplicate event id: {event_id}")
+            seen_event_ids.add(event_id)
             if provenance_id in event_provenance:
                 raise EventProjectionError(
                     f"event provenance id collides with source provenance: {provenance_id}"
