@@ -4,7 +4,7 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from importlib.resources import files
 import json
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlparse
 
 from .store import WorkbenchStore
 
@@ -43,8 +43,19 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(payload)
 
+    @staticmethod
+    def _int_query(query: dict[str, list[str]], key: str, default: int) -> int:
+        raw = query.get(key, [str(default)])[0]
+        try:
+            return int(raw)
+        except ValueError as exc:
+            raise ValueError(f"{key} must be an integer") from exc
+
     def do_GET(self):
-        path = urlparse(self.path).path
+        parsed = urlparse(self.path)
+        path = parsed.path
+        query = parse_qs(parsed.query)
+
         if path == "/":
             return self._static("index.html")
         if path in {"/app.js", "/styles.css"}:
@@ -52,7 +63,7 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
         if path == "/api/authority-status":
             return self._json(self.store.authority_status())
         if path == "/api/snapshot":
-            return self._json(self.store.snapshot())
+            return self._json(self.store.overview())
         if path == "/api/species":
             return self._json(self.store.species_list())
         if path.startswith("/api/species/"):
@@ -65,6 +76,23 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
             return self._json(self.store.dataset_list())
         if path.startswith("/api/datasets/"):
             item = self.store.dataset_get(path.split("/")[-1])
+            return self._json(item, HTTPStatus.OK if item else HTTPStatus.NOT_FOUND)
+        if path == "/api/event-inventory":
+            return self._json(self.store.event_inventory())
+        if path == "/api/events":
+            try:
+                result = self.store.events_list(
+                    dataset_id=query.get("dataset_id", [None])[0],
+                    population=query.get("population", [None])[0],
+                    split=query.get("split", [None])[0],
+                    limit=self._int_query(query, "limit", 50),
+                    offset=self._int_query(query, "offset", 0),
+                )
+            except ValueError as exc:
+                return self._json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+            return self._json(result)
+        if path.startswith("/api/events/"):
+            item = self.store.event_get(path.split("/")[-1])
             return self._json(item, HTTPStatus.OK if item else HTTPStatus.NOT_FOUND)
         if path == "/api/runs":
             return self._json(self.store.run_list())
@@ -82,7 +110,6 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
         self.send_error(HTTPStatus.NOT_FOUND)
 
     def log_message(self, fmt, *args):
-        # Barebones local research app: keep stdout clean unless caller wraps logging.
         return
 
 
