@@ -67,14 +67,14 @@ python -m pytest -q
 python scripts/run_rhf_suite.py --out build/rhf_suite_receipt.json
 python scripts/run_synthetic_verification.py --out-dir build/synthetic_verification
 python scripts/verify_workbench_slice1.py
-python scripts/verify_workbench_slice2_adapter.py
+python scripts/verify_workbench_slice2_adapter.py\npython scripts/verify_workbench_slice2_producer.py
 ```
 
 GitHub Actions runs the same verification on pull requests and `main` and uploads exact-head receipts.
 
 ## Scientific boundary
 
-Passing this software suite means only that the executable harness and Workbench adapter behave as frozen on their registered software inputs. It does **not** establish animal-signal meaning, compositionality, syntax, cross-species generalization, welfare safety, or CRG-C biological credit. Real empirical execution remains rights-, provenance-, preregistration-, and claim-ceiling gated.
+Passing this software suite means only that the executable harness, Workbench adapter, and canonical producer behave as frozen on their registered software inputs. It does **not** establish animal-signal meaning, compositionality, syntax, cross-species generalization, welfare safety, or CRG-C biological credit. Real empirical execution remains rights-, provenance-, preregistration-, and claim-ceiling gated.
 
 ## License
 
