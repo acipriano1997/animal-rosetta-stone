@@ -55,7 +55,7 @@ def main() -> None:
     fixture_store = WorkbenchStore()
     with tempfile.TemporaryDirectory() as tmp:
         source = Path(tmp) / "canonical.json"
-        source.write_text(json.dumps(_bundle(fixture_store.snapshot())), encoding="utf-8")
+        source.write_text(json.dumps(_bundle(fixture_store.overview())), encoding="utf-8")
         store = WorkbenchStore(canonical_source=str(source))
 
         status = store.authority_status()
