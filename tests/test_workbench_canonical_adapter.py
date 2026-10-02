@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 from copy import deepcopy
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from threading import Thread
 
 import pytest
 
@@ -58,7 +60,7 @@ def test_fixture_mode_is_explicit():
     assert status["authoritative_live_read"] is False
 
 
-def test_canonical_bundle_replaces_fixture_through_adapter(tmp_path):
+def test_canonical_file_bundle_replaces_fixture_without_claiming_live_read(tmp_path):
     bundle = _bundle()
     path = tmp_path / "canonical.json"
     path.write_text(json.dumps(bundle), encoding="utf-8")
@@ -66,11 +68,42 @@ def test_canonical_bundle_replaces_fixture_through_adapter(tmp_path):
     store = WorkbenchStore(canonical_source=str(path))
     status = store.authority_status()
     assert status["source_mode"] == "CANONICAL_READ_ADAPTER"
+    assert status["source_transport"] == "file"
     assert status["authority_state"] == "CURRENT"
-    assert status["authoritative_live_read"] is True
+    assert status["authoritative_live_read"] is False
     assert store.snapshot()["mode"] == "CANONICAL_READ_ADAPTER"
     assert store.species_get("SP001")["taxon"] == "Pan troglodytes"
     assert store.dataset_get("D0019")["semantic_authority"] == "NONE"
+
+
+def test_http_canonical_service_is_identified_as_live_read():
+    payload = json.dumps(_bundle()).encode("utf-8")
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(payload)))
+            self.end_headers()
+            self.wfile.write(payload)
+
+        def log_message(self, fmt, *args):
+            return
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    thread = Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    host, port = server.server_address
+    try:
+        store = WorkbenchStore(canonical_source=f"http://{host}:{port}/canonical")
+        status = store.authority_status()
+        assert status["source_transport"] == "http"
+        assert status["authoritative_live_read"] is True
+        assert store.run_get("RUN-PT-RQ0001-004")["disposition"] == "NULL_OR_CONTEXT_SUFFICIENT"
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=5)
 
 
 def test_noncurrent_authority_fails_closed(tmp_path):
