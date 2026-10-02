@@ -25,6 +25,12 @@ def test_workbench_http_surface_smoke():
         assert "text/html" in ctype
         assert b"Rosetta Research Workbench" in body
 
+        status, _, body = _get(base, "/api/authority-status")
+        assert status == 200
+        authority = json.loads(body)
+        assert authority["source_mode"] == "STATIC_FIXTURE"
+        assert authority["authoritative_live_read"] is False
+
         status, ctype, body = _get(base, "/api/species/SP001")
         assert status == 200
         species = json.loads(body)
