@@ -10,7 +10,11 @@
       "hypotheses": "Hypotheses!A1:Q20",
       "datasets": "Datasets!A1:Z100",
       "comparison_gate": "Chimp Comparison Gate!A1:K20",
-      "claim_propagation": "RQ0001 Claim Propagation!A1:I20"
+      "claim_propagation": "RQ0001 Claim Propagation!A1:I20",
+      "claims": "Claims!A1:Z200",
+      "claim_evidence_links": "'Claim-Evidence Links'!A1:Q300",
+      "contradictions": "'Contradictions & Corrections'!A1:I300",
+      "disagreements": "'Disagreement Maps'!A1:S300"
     }
   },
   "documents": {
@@ -83,7 +87,8 @@
       "event_range": "Events!A1:AG100",
       "provenance_range": "Provenance!A1:L50",
       "event_sheet": "Events",
-      "expected_event_count": 36
+      "expected_event_count": 36,
+      "missingness_range": "'Missingness & Limits'!A1:E50"
     },
     "D0020": {
       "spreadsheet_id": "1ztyGFty1T0eHbxluT4vCyDD8NfM-kcoQZoHbjyqgVqw",
@@ -92,7 +97,20 @@
       "event_range": "'Interaction Events'!A1:AG4300",
       "provenance_range": "Provenance!A1:L40",
       "event_sheet": "Interaction Events",
-      "expected_event_count": 4223
+      "expected_event_count": 4223,
+      "missingness_range": "'Missingness & Limits'!A1:E50"
     }
+  },
+  "evidence_selection": {
+    "research_question_id": "RQ0001",
+    "claim_ids": [
+      "C0062",
+      "C0083",
+      "C0084",
+      "C0085",
+      "C0086"
+    ],
+    "selection_role": "BOUND_RQ0001_WORKBENCH_PRESENTATION_SET",
+    "rule": "Presentation selection only; does not change claim confidence, evidence weight, or scientific status."
   }
 }
