@@ -59,6 +59,8 @@ def _d0018_event(
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     event_id = row["Event_ID"]
     event_prov_id = row["Provenance_Record_ID"]
+    if not event_prov_id:
+        raise EventProjectionError(f"D0018 event {event_id} lacks provenance id")
     source_file = row["Source_File"]
     source_prov = (
         "PRV-D0018-SNAKE-SOURCE"
@@ -120,6 +122,8 @@ def _d0020_event(
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     event_id = row["Event_ID"]
     event_prov_id = row["Provenance_Record_ID"]
+    if not event_prov_id:
+        raise EventProjectionError(f"D0020 event {event_id} lacks provenance id")
     event = {
         "event_id": event_id,
         "dataset_id": "D0020",
