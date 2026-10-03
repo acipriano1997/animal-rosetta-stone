@@ -1,6 +1,6 @@
 {
-  "snapshot_id": "WORKBENCH-CHIMP-RQ0001-v0.2",
-  "captured_date": "2026-09-30",
+  "snapshot_id": "WORKBENCH-CHIMP-RQ0001-v0.3",
+  "captured_date": "2026-10-03",
   "mode": "STATIC_CANONICAL_VIEW_MODEL_FIXTURE",
   "scientific_boundary": "Evidence structure and provenance only; no translation, semantic gloss generation, evidence grading, or claim promotion.",
   "species": {
@@ -94,9 +94,9 @@
       "name": "Damjanovic 2022 Wild Chimp Multimodal Receiver-Response Corpus",
       "role": "PARALLEL_PUBLIC_CRG_C_FALLBACK",
       "availability": "GATED_METADATA_ONLY",
-      "empirical_state": "PREBYTE_PR0006_FROZEN_EXECUTION_HELD",
-      "rights_state": "ITEM_LEVEL_LICENSE_UNVERIFIED",
-      "gate": "Exact Figshare licence, files, version, checksums, headers and row provenance remain unresolved.",
+      "empirical_state": "D0025_V1_H1_SHA256_VERIFIED_H2_ROW3_HEADERS_LOCATED_H3_PR0006_FULL_PRIMARY_SCHEMA_NOT_DEMONSTRATED_HELD",
+      "rights_state": "Figshare item-level CC BY 4.0 license metadata is verified from the source API/H1 snapshot. This is not blanket rights adjudication: preserve attribution and review source-specific third-party/ethical restrictions, field-site context, and any redistribution constraints before empirical execution.",
+      "gate": "H1 source identity/checksums and source-reported item-level CC BY 4.0 metadata are verified. H2 located analysis-specific row-3 headers and reviewed bounded supplementary codebook cues, but H3 remains HELD_SCHEMA because the frozen PR0006 primary modality/bond/recipient-response schema is not demonstrated in one safely joinable event-level source. Do not join on animal identities or relabel secondary endpoints; require the original unfiltered event-level extract or author-certified unique event IDs/mapping before empirical PR0006 execution.",
       "known_exposure": "Published aggregate modality-response direction is known; PR0006 is not blind discovery.",
       "semantic_authority": "NONE",
       "provenance_ids": ["PROV-D0025", "PROV-PR0006"]
