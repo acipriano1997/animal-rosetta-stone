@@ -94,6 +94,13 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
         if path.startswith("/api/events/"):
             item = self.store.event_get(path.split("/")[-1])
             return self._json(item, HTTPStatus.OK if item else HTTPStatus.NOT_FOUND)
+        if path == "/api/claims":
+            return self._json(self.store.claims_list())
+        if path.startswith("/api/claims/"):
+            item = self.store.claim_get(path.split("/")[-1])
+            return self._json(item, HTTPStatus.OK if item else HTTPStatus.NOT_FOUND)
+        if path == "/api/media-placeholders":
+            return self._json(self.store.media_placeholders())
         if path == "/api/runs":
             return self._json(self.store.run_list())
         if path.startswith("/api/runs/"):

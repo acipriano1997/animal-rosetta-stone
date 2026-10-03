@@ -1,0 +1,287 @@
+{
+  "fixture_id": "WORKBENCH-CHIMP-RQ0001-EVIDENCE-SAMPLE-v0.1",
+  "mode": "STATIC_EVIDENCE_PRESENTATION_FIXTURE",
+  "selection_rule": "Bounded RQ0001 presentation set only; does not change claim confidence, evidence weight, or scientific status.",
+  "evidence_items": [
+    {
+      "claim_id": "C0062",
+      "claim_short": "Wild chimpanzees produce a large repertoire of non-random vocal-visual combinations across multiple call types",
+      "species": "Pan troglodytes schweinfurthii",
+      "scope_boundary": "Kanyawara vocal events",
+      "status": "observational_structural_support",
+      "claim_type": "signal_structure",
+      "evidence_channels": "multimodal structure; collocation",
+      "behavioral_validation": "no receiver outcome test",
+      "independent_replication": "—",
+      "ars_confidence": "moderate-high for co-occurrence structure",
+      "confidence_rationale": "297 vocal events yielded 108 vocal-visual combinations occurring above chance; even low-frequency pant bark and whimper had significant collocations",
+      "do_not_overclaim": "Above-chance collocation is not compositional semantics, syntax or receiver comprehension",
+      "population_boundary": "Kanyawara community",
+      "method_boundary": "Multimodal collocation analysis",
+      "alternative_explanations": "Visibility, context and shared arousal may drive some co-occurrence; rare call counts are small",
+      "null_evidence_ids": [],
+      "source_study_ids": [
+        "S0057"
+      ],
+      "reproducibility_status": "open article",
+      "evidence_links": [
+        {
+          "link_id": "L0057",
+          "evidence_direction": "supports",
+          "experiment_id": "E0062",
+          "study_id": "S0057",
+          "dataset_id": "",
+          "evidence_channel": "multimodal structure; collocation",
+          "population_scope": "Kanyawara",
+          "method_scope": "Vocal-visual collocation analysis",
+          "independence_level": "same-study structural evidence",
+          "replication_relation": "multimodal repertoire",
+          "correction_state": "current",
+          "weight_or_confidence_basis": "108 above-chance combinations across seven call types",
+          "alternative_explanation_addressed": "Co-occurrence does not establish compositional function",
+          "source_provenance_verified": "yes",
+          "notes": "",
+          "provenance_ids": [
+            "PROV-LINK-L0057"
+          ]
+        }
+      ],
+      "explicit_link_state": "LINKED_ROWS_PRESENT",
+      "provenance_ids": [
+        "PROV-CLAIM-C0062",
+        "PROV-LINK-L0057"
+      ]
+    },
+    {
+      "claim_id": "C0083",
+      "claim_short": "Free multimodal grunt–gesture combinations in wild Kanyawara chimpanzees increased recipient response probability relative to grunt alone, but not relative to gesture alone",
+      "species": "Pan troglodytes schweinfurthii",
+      "scope_boundary": "Kanyawara natural free multimodal grunt–gesture events with matched unimodal components",
+      "status": "observational_support_with_receiver_response",
+      "claim_type": "recipient_response",
+      "evidence_channels": "reception; multimodal integration; matched components",
+      "behavioral_validation": "intended-recipient behavioral response directly coded",
+      "independent_replication": "related convergence from S0015 and S0017; exact matched-component effect not independently replicated",
+      "ars_confidence": "moderate-high for bounded response effect; low for added semantic content",
+      "confidence_rationale": "Within-study matched-component comparison shows gain over grunt alone but not gesture alone, constraining both pure-context and strong-composition interpretations",
+      "do_not_overclaim": "Do not treat multimodal combination as automatically more meaningful/effective than its strongest component; no fixed gloss or compositional semantics established",
+      "population_boundary": "Kanyawara",
+      "method_boundary": "Naturalistic observational signal production and recipient response; no randomized stimulus manipulation",
+      "alternative_explanations": "Gesture may carry the principal response-driving information; vocal element may act as attention getter, redundancy, disambiguator, or context-correlated addition",
+      "null_evidence_ids": [],
+      "source_study_ids": [
+        "S0083"
+      ],
+      "reproducibility_status": "publication/accepted manuscript accessible; raw corpus/code unresolved",
+      "evidence_links": [],
+      "explicit_link_state": "NO_EXPLICIT_CLAIM_EVIDENCE_LINK_ROW_IN_SELECTED_REGISTRY",
+      "provenance_ids": [
+        "PROV-CLAIM-C0083"
+      ]
+    },
+    {
+      "claim_id": "C0084",
+      "claim_short": "In the S0084 Chimfunshi corpus, manual-gesture and facial-expression configurations are associated with different affiliative versus non-affiliative recipient responses in a context-dependent manner",
+      "species": "Pan troglodytes",
+      "scope_boundary": "Two semi-wild Chimfunshi groups; focal stretched-arm/bent-arm gestures with neutral, bared-teeth or funneled-lip faces",
+      "status": "observational_support_with_receiver_response",
+      "claim_type": "recipient_response_multimodal_component_interaction",
+      "evidence_channels": "reception; multimodal combination; context; dyadic interaction",
+      "behavioral_validation": "recipient response directly coded as affiliative/non-affiliative",
+      "independent_replication": "same-data reanalysis by S0085; independent biological replication not established",
+      "ars_confidence": "moderate for within-corpus response association; low for fixed component meaning/compositional semantics",
+      "confidence_rationale": "252-event corpus with repeated identities/dyads and contextual controls; public raw data and independent reanalysis increase inspectability, but setting and sampling are bounded",
+      "do_not_overclaim": "Do not equate response association with stable facial/gesture meanings; do not infer compositionality or non-compositionality from directionally inconsistent effects alone",
+      "population_boundary": "Chimfunshi semi-wild groups only",
+      "method_boundary": "Naturalistic observational event coding + mixed-effects analyses; no experimental signal manipulation",
+      "alternative_explanations": "Context, dominance/rank, dyad, individual identity, target-event sampling, sanctuary ecology and other unmeasured social state can influence both signal configuration and response",
+      "null_evidence_ids": [],
+      "source_study_ids": [
+        "S0084",
+        "S0085"
+      ],
+      "reproducibility_status": "raw dataset public; original local bytes pending; independent analysis code public",
+      "evidence_links": [],
+      "explicit_link_state": "NO_EXPLICIT_CLAIM_EVIDENCE_LINK_ROW_IN_SELECTED_REGISTRY",
+      "provenance_ids": [
+        "PROV-CLAIM-C0084"
+      ]
+    },
+    {
+      "claim_id": "C0085",
+      "claim_short": "The S0084 response pattern does not uniquely identify a compositional or non-compositional system; explicit competing theoretical models remain viable on the same observations",
+      "species": "Pan troglodytes",
+      "scope_boundary": "Interpretive/model-comparison boundary for S0084 face-gesture corpus",
+      "status": "methodological_challenge",
+      "claim_type": "interpretive_constraint",
+      "evidence_channels": "model comparison; reanalysis; semantic-claim governance",
+      "behavioral_validation": "uses the same coded recipient-response observations as S0084",
+      "independent_replication": "not applicable—same data challenge",
+      "ars_confidence": "high for methodological caution; not a biological-function claim",
+      "confidence_rationale": "Independent authors reanalyzed the public data and demonstrated that alternative compositional interpretations can be constructed, especially when dominance is considered",
+      "do_not_overclaim": "Do not count this as independent animal evidence for compositionality; it constrains interpretation and requires prospective empirical discriminators",
+      "population_boundary": "Same Chimfunshi corpus as S0084",
+      "method_boundary": "Secondary statistical/theoretical reanalysis",
+      "alternative_explanations": "Multiple theoretical systems can fit sparse observational response patterns; model flexibility and post hoc explanation risk",
+      "null_evidence_ids": [],
+      "source_study_ids": [
+        "S0085"
+      ],
+      "reproducibility_status": "OSF analysis code public",
+      "evidence_links": [],
+      "explicit_link_state": "NO_EXPLICIT_CLAIM_EVIDENCE_LINK_ROW_IN_SELECTED_REGISTRY",
+      "provenance_ids": [
+        "PROV-CLAIM-C0085"
+      ]
+    },
+    {
+      "claim_id": "C0086",
+      "claim_short": "Under PRER-RQ0001-SEQ-v0.1, the registered coarse event-level sequence features did not improve prediction of the source-coded recipient-outcome class beyond the registered baseline in development or locked Waibira transfer",
+      "species": "Pan troglodytes schweinfurthii",
+      "scope_boundary": "D0020 released wild gesture-exchange corpus; registered Y_recipient target; registered B0/B1 feature sets and logistic model; five source communities",
+      "status": "registered_null_or_context_sufficient",
+      "claim_type": "null_predictive_increment",
+      "evidence_channels": "registered secondary analysis; recipient outcome; sequence structure; cross-community transfer; negative/null evidence",
+      "behavioral_validation": "Source-coded final recipient outcome directly enters the registered prediction target; no semantic interpretation assigned",
+      "independent_replication": "Waibira was prospectively held out from ARS fitting, but remains within the same published study/framework; no independent-study replication",
+      "ars_confidence": "high for the bounded registered model/target result; low for any broader absence claim",
+      "confidence_rationale": "Both preregistered criteria failed with frozen artifacts and a one-time locked population evaluation; negative result is reproducible and protected from post-hoc retuning under v0.1",
+      "do_not_overclaim": "Do not infer that chimpanzee gestural exchanges lack temporal organization, interactional structure, semantic content or compositionality. The result concerns only incremental prediction from four coarse sequence features for one anonymized outcome target.",
+      "population_boundary": "Sonso, Issa, Kalinzu and Kanyawara development; Waibira locked transfer; all within D0020/S0018",
+      "method_boundary": "Preregistered L2 logistic prediction with grouped CV and frozen population holdout; gesture form absent from release",
+      "alternative_explanations": "Coarse features may discard informative gesture identity/timing detail; anonymized Goal baseline may absorb relevant structure; outcome label may not capture all recipient response; richer context/state and other model families remain plausible",
+      "null_evidence_ids": [
+        "AN-PT-RQ0001-007",
+        "AN-PT-RQ0001-008"
+      ],
+      "source_study_ids": [
+        "S0018"
+      ],
+      "reproducibility_status": "RUN-003 and RUN-004 exact reports/results/predictions preserved; frozen model coefficients and preprocessing parameters preserved",
+      "evidence_links": [
+        {
+          "link_id": "L0078",
+          "evidence_direction": "supports",
+          "experiment_id": "E0086",
+          "study_id": "S0018",
+          "dataset_id": "D0020",
+          "evidence_channel": "registered null prediction; recipient outcome; sequence structure; cross-community transfer",
+          "population_scope": "Five wild East African communities; Waibira locked transfer",
+          "method_scope": "PRER-RQ0001-SEQ-v0.1 B0 versus B1 logistic prediction",
+          "independence_level": "development grouped CV + held-out population within same source study",
+          "replication_relation": "prospective cross-community transfer; not independent-study replication",
+          "correction_state": "current",
+          "weight_or_confidence_basis": "Both preregistered log-loss criteria failed; exact frozen artifacts and one-time Waibira predictions preserved",
+          "alternative_explanation_addressed": "Shows the registered coarse sequence features add no predictive increment for this target; does not address richer gesture identity/context or broader semantics",
+          "source_provenance_verified": "yes",
+          "notes": "RUN-003 and RUN-004 exact reports preserved",
+          "provenance_ids": [
+            "PROV-LINK-L0078"
+          ]
+        }
+      ],
+      "explicit_link_state": "LINKED_ROWS_PRESENT",
+      "provenance_ids": [
+        "PROV-CLAIM-C0086",
+        "PROV-LINK-L0078"
+      ]
+    }
+  ],
+  "corrections": [],
+  "disagreements": [],
+  "evidence_registry_status": {
+    "research_question_id": "RQ0001",
+    "selected_claim_ids": [
+      "C0062",
+      "C0083",
+      "C0084",
+      "C0085",
+      "C0086"
+    ],
+    "contradictions_registry_checked": true,
+    "matching_contradiction_rows": 0,
+    "disagreement_registry_checked": true,
+    "matching_disagreement_rows": 0,
+    "absence_rule": "Zero matching registry rows means only that no matching canonical row is currently registered; it is not evidence that contrary evidence or scientific disagreement does not exist.",
+    "selection_rule": "Bounded RQ0001 presentation set only; does not change claim confidence, evidence weight, or scientific status."
+  },
+  "media_placeholders": [
+    {
+      "dataset_id": "D0018",
+      "media_type": "RAW_AUDIO_VIDEO",
+      "availability_status": "NOT_INGESTED",
+      "rights_state": "DERIVED_PUBLIC_SOURCE_CONTEXT_WITH_UPSTREAM_RIGHTS_NUANCE",
+      "bytes_available": false,
+      "preview_allowed": false,
+      "scientific_consequence": "Cannot independently recode signal timing/behavior from media",
+      "required_action": "No semantic promotion from row data alone.",
+      "placeholder_message": "Raw media is not available in the Workbench. Metadata and provenance may be shown, but no preview is synthesized.",
+      "provenance_ids": [
+        "PROV-MEDIA-D0018",
+        "PROV-D0018"
+      ]
+    },
+    {
+      "dataset_id": "D0020",
+      "media_type": "RAW_AUDIO_VIDEO",
+      "availability_status": "NOT_INGESTED",
+      "rights_state": "PUBLIC_SOURCE_DERIVATIVE_INTERNAL_USE; REPOSITORY_LICENSE_NOT_STATED",
+      "bytes_available": false,
+      "preview_allowed": false,
+      "scientific_consequence": "Cannot independently recode gestures or outcomes from video",
+      "required_action": "Treat source coding as measurement input; keep provenance.",
+      "placeholder_message": "Raw media is not available in the Workbench. Metadata and provenance may be shown, but no preview is synthesized.",
+      "provenance_ids": [
+        "PROV-MEDIA-D0020",
+        "PROV-D0020"
+      ]
+    }
+  ],
+  "evidence_provenance": {
+    "PROV-CLAIM-C0062": {
+      "authority": "ACEB Claims",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Claims:C0062"
+    },
+    "PROV-CLAIM-C0083": {
+      "authority": "ACEB Claims",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Claims:C0083"
+    },
+    "PROV-CLAIM-C0084": {
+      "authority": "ACEB Claims",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Claims:C0084"
+    },
+    "PROV-CLAIM-C0085": {
+      "authority": "ACEB Claims",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Claims:C0085"
+    },
+    "PROV-CLAIM-C0086": {
+      "authority": "ACEB Claims",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Claims:C0086"
+    },
+    "PROV-LINK-L0057": {
+      "authority": "ACEB Claim-Evidence Links",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Claim-Evidence Links:L0057"
+    },
+    "PROV-LINK-L0078": {
+      "authority": "ACEB Claim-Evidence Links",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Claim-Evidence Links:L0078"
+    },
+    "PROV-MEDIA-D0018": {
+      "authority": "D0018 Missingness & Limits",
+      "spreadsheet_id": "1FebOEu5FDjsp5WPsq4b-Ux7ThSL0TfBjg30uINyWibA",
+      "registry": "Missingness & Limits:Raw media"
+    },
+    "PROV-MEDIA-D0020": {
+      "authority": "D0020 Missingness & Limits",
+      "spreadsheet_id": "1ztyGFty1T0eHbxluT4vCyDD8NfM-kcoQZoHbjyqgVqw",
+      "registry": "Missingness & Limits:Raw media"
+    }
+  }
+}

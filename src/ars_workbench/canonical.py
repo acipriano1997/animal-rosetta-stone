@@ -84,12 +84,26 @@ def _record_provenance_ids(snapshot: dict[str, Any]) -> list[str]:
         record = snapshot.get(key)
         if isinstance(record, dict):
             refs.extend(record.get("provenance_ids", []))
-    for key in ("hypotheses", "datasets", "runs", "software_verification", "events"):
+    for key in (
+        "hypotheses",
+        "datasets",
+        "runs",
+        "software_verification",
+        "events",
+        "evidence_items",
+        "corrections",
+        "disagreements",
+        "media_placeholders",
+    ):
         rows = snapshot.get(key)
         if isinstance(rows, list):
             for row in rows:
                 if isinstance(row, dict):
                     refs.extend(row.get("provenance_ids", []))
+                    if key == "evidence_items":
+                        for link in row.get("evidence_links", []):
+                            if isinstance(link, dict):
+                                refs.extend(link.get("provenance_ids", []))
     return refs
 
 
@@ -173,8 +187,88 @@ def canonical_bundle_to_snapshot(
                     + ", ".join(leaked)
                 )
 
+    evidence_provenance = raw_snapshot.get("evidence_provenance", {})
+    if evidence_provenance and not isinstance(evidence_provenance, dict):
+        raise CanonicalReadError("evidence_provenance must be an object")
+
+    evidence_items = raw_snapshot.get("evidence_items", [])
+    if evidence_items:
+        evidence_binding = bindings.get("evidence")
+        if (
+            not isinstance(evidence_binding, dict)
+            or not str(evidence_binding.get("semantic_owner", "")).strip()
+            or not any(
+                evidence_binding.get(key)
+                for key in ("spreadsheet_id", "source", "registry")
+            )
+        ):
+            raise CanonicalReadError(
+                "evidence-enabled canonical bundle lacks complete evidence binding"
+            )
+        if not isinstance(raw_snapshot.get("evidence_registry_status"), dict):
+            raise CanonicalReadError(
+                "evidence-enabled canonical bundle lacks evidence_registry_status"
+            )
+        forbidden_evidence_fields = {
+            "meaning",
+            "translation",
+            "semantic_gloss",
+            "english_gloss",
+        }
+        for item in evidence_items:
+            if not isinstance(item, dict) or not item.get("claim_id"):
+                raise CanonicalReadError("canonical evidence item lacks claim_id")
+            leaked = sorted(forbidden_evidence_fields & set(item))
+            if leaked:
+                raise CanonicalReadError(
+                    f"claim {item.get('claim_id')} contains forbidden semantic fields: "
+                    + ", ".join(leaked)
+                )
+
+    media_placeholders = raw_snapshot.get("media_placeholders", [])
+    if media_placeholders:
+        media_binding = bindings.get("media")
+        if (
+            not isinstance(media_binding, dict)
+            or not str(media_binding.get("semantic_owner", "")).strip()
+            or not any(media_binding.get(key) for key in ("spreadsheet_id", "source", "registry"))
+        ):
+            raise CanonicalReadError(
+                "media-enabled canonical bundle lacks complete media binding"
+            )
+        for media in media_placeholders:
+            if not isinstance(media, dict) or not media.get("dataset_id"):
+                raise CanonicalReadError("media placeholder lacks dataset_id")
+            if media.get("bytes_available") is not False:
+                raise CanonicalReadError(
+                    f"media placeholder {media.get('dataset_id')} cannot expose bytes"
+                )
+            if media.get("preview_allowed") is not False:
+                raise CanonicalReadError(
+                    f"media placeholder {media.get('dataset_id')} cannot enable preview"
+                )
+            forbidden_media_fields = {"media_url", "preview_url", "image_url", "bytes"}
+            leaked = sorted(forbidden_media_fields & set(media))
+            if leaked:
+                raise CanonicalReadError(
+                    f"media placeholder {media.get('dataset_id')} exposes forbidden fields: "
+                    + ", ".join(leaked)
+                )
+
+    registry_status = raw_snapshot.get("evidence_registry_status")
+    if isinstance(registry_status, dict):
+        if (
+            registry_status.get("matching_contradiction_rows") == 0
+            or registry_status.get("matching_disagreement_rows") == 0
+        ) and not str(registry_status.get("absence_rule", "")).strip():
+            raise CanonicalReadError(
+                "zero-row evidence registry state requires explicit absence_rule"
+            )
+
     refs = _record_provenance_ids(raw_snapshot)
-    known_provenance = set(provenance) | set(event_provenance)
+    known_provenance = (
+        set(provenance) | set(event_provenance) | set(evidence_provenance)
+    )
     unresolved = sorted(set(refs) - known_provenance)
     if unresolved:
         raise CanonicalReadError(

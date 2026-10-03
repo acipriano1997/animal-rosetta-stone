@@ -9,6 +9,7 @@ from typing import Any
 
 from .canonical import CANONICAL_READ_CONTRACT, canonical_bundle_to_snapshot
 from .event_projection import build_event_projection
+from .evidence_projection import build_evidence_projection
 
 
 class CanonicalProducerError(RuntimeError):
@@ -171,6 +172,14 @@ class WorkspaceCanonicalProducer:
         events, event_inventory, event_provenance = build_event_projection(
             self.reader, self.manifest
         )
+        (
+            evidence_items,
+            corrections,
+            disagreements,
+            evidence_registry_status,
+            media_placeholders,
+            evidence_provenance,
+        ) = build_evidence_projection(aceb, self.reader, self.manifest)
 
         selection = self.manifest["selection"]
         q = _one(aceb["research_questions"], "Question_ID", selection["question_id"])
@@ -431,6 +440,12 @@ class WorkspaceCanonicalProducer:
             "events": events,
             "event_inventory": event_inventory,
             "event_provenance": event_provenance,
+            "evidence_items": evidence_items,
+            "corrections": corrections,
+            "disagreements": disagreements,
+            "evidence_registry_status": evidence_registry_status,
+            "media_placeholders": media_placeholders,
+            "evidence_provenance": evidence_provenance,
             "provenance": provenance,
         }
 
@@ -459,6 +474,21 @@ class WorkspaceCanonicalProducer:
                 "source": ",".join(
                     self.manifest["event_sources"][dataset_id]["spreadsheet_id"]
                     for dataset_id in ("D0018", "D0020")
+                ),
+            },
+            "evidence": {
+                "semantic_owner": "ACEB Claims / Claim-Evidence Links / Contradictions & Corrections / Disagreement Maps",
+                "spreadsheet_id": self.manifest["aceb"]["spreadsheet_id"],
+                "registry": "Claims;Claim-Evidence Links;Contradictions & Corrections;Disagreement Maps",
+            },
+            "media": {
+                "semantic_owner": "ACEB Datasets + D0018/D0020 Missingness & Limits",
+                "source": ",".join(
+                    [
+                        self.manifest["aceb"]["spreadsheet_id"],
+                        self.manifest["event_sources"]["D0018"]["spreadsheet_id"],
+                        self.manifest["event_sources"]["D0020"]["spreadsheet_id"],
+                    ]
                 ),
             },
             "runs": {

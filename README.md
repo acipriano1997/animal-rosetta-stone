@@ -29,7 +29,7 @@ The Slice 1 fallback displays species activation/gates, RQ0001 and competing hyp
 
 ### Slice 2A — canonical-read adapter boundary
 
-The Workbench can now consume a validated `WORKBENCH-CANONICAL-READ-v0.1` JSON bundle instead of the packaged fixture. Set:
+The Workbench can consume a validated `WORKBENCH-CANONICAL-READ-v0.1` JSON bundle instead of the packaged fixture. Set:
 
 ```bash
 export ARS_WORKBENCH_CANONICAL_SOURCE=/path/to/canonical-read-bundle.json
@@ -40,9 +40,11 @@ The source may be a local path, a `file://` URI, or an HTTP(S) endpoint. File-ba
 
 The adapter fails closed if the authority state is stale/conflicted, required domain bindings are missing, provenance references do not resolve, a dataset attempts to acquire semantic authority, or ZERO_SYNTHETIC software verification is presented as biological evidence.
 
-Slice 2A establishes the transport and validation boundary. Slice 2B adds a read-only canonical producer that can read the pinned Drive/ACEB authorities directly through Google Workspace REST when a short-lived OAuth bearer token is injected at runtime.
+### Slice 2B — canonical Workspace producer
 
-The producer stores no Google credential, accepts no bearer token as a command-line argument, fails closed when any pinned Google Doc revision or the pinned ACEB modified time drifts, and validates its output through the Slice 2A adapter contract before export. CI exercises the entire producer with synthetic Workspace responses and drift failures; public CI does **not** contain a private Google token and therefore does not claim live-Drive operational verification.
+Slice 2B adds a read-only canonical producer that can read the pinned Drive/ACEB authorities directly through Google Workspace REST when a short-lived OAuth bearer token is injected at runtime.
+
+The producer stores no Google credential, accepts no bearer token as a command-line argument, fails closed when any pinned Google Doc revision or ACEB/event-corpus modified-time pin drifts, and validates its output through the Slice 2A adapter contract before export. CI exercises the producer with synthetic Workspace responses and drift failures; public CI does **not** contain a private Google token and therefore does not claim live-Drive operational verification.
 
 To export from the live authorities, inject an approved read-only OAuth token through the environment and run:
 
@@ -56,14 +58,21 @@ The token should be supplied by an approved local secret manager or OAuth flow, 
 
 ### Slice 3 — event and provenance exploration
 
-The Workbench event service now exposes D0018 and D0020 through bounded `events.list` / `events.get` behavior with event-specific provenance resolution. The browser requests event rows separately from the landing snapshot, so the core page stays lightweight even when a canonical bundle carries all 4,259 currently registered event rows.
+The Workbench event service exposes D0018 and D0020 through bounded `events.list` / `events.get` behavior with event-specific provenance resolution. The browser requests event rows separately from the landing snapshot, so the core page stays lightweight even when a canonical bundle carries all 4,259 currently registered event rows.
 
 The packaged fallback contains only four real source-preserved sample rows and is explicitly labeled `STATIC_SAMPLE_ONLY`. The authenticated canonical producer owns full coverage: 36 D0018 events and 4,223 D0020 interaction events. Missingness, locked/development split state, source row/blob locators, D0020 goal anonymization, and the absence of released D0020 gesture forms remain visible. Event rows cannot contain generated meaning/translation/gloss fields.
 
+### Slice 4 — evidence, contradiction and rights navigation
+
+Slice 4 adds bounded claim/evidence navigation for the current RQ0001 presentation set, explicit contradiction/correction and disagreement-registry state, and rights-aware media placeholders.
+
+Claim text, status, confidence, scope, do-not-overclaim ceilings, alternative explanations, and registered Claim-Evidence Links are read from ACEB without browser-local re-grading or ranking. If the canonical contradiction/correction or disagreement registries contain zero matching rows, the Workbench states only that no matching row is currently registered; it must not convert registry absence into evidence that contrary evidence or scientific disagreement does not exist.
+
+D0018/D0020 raw-media surfaces are placeholders only. They expose rights/missingness metadata and scientific consequences while keeping `bytes_available=false` and `preview_allowed=false`. The Workbench does not fabricate thumbnails, reconstructed media, substitute imagery, or previews for unavailable source media.
 
 ## Canonical bindings
 
-`contracts/canonical_bindings.json` pins Drive/ACEB bindings used by executable research paths. `contracts/workbench_canonical_read_contract.json` defines the Workbench adapter envelope and its fail-closed transport semantics. `src/ars_workbench/data/workbench_canonical_sources.json` pins the current Workbench producer and event authorities; `contracts/workbench_canonical_producer_contract.json` defines the credential, drift, projection, and scientific-firewall rules for direct reads; `contracts/workbench_event_explorer_contract.json` owns the Slice 3 event/provenance presentation boundary. If Drive semantic authority changes, code is stale until reconciled; code never silently redefines the scientific rules.
+`contracts/canonical_bindings.json` pins Drive/ACEB bindings used by executable research paths. `contracts/workbench_canonical_read_contract.json` defines the Workbench adapter envelope and fail-closed transport semantics. `src/ars_workbench/data/workbench_canonical_sources.json` pins the current Workbench producer, event, evidence and rights authorities. `contracts/workbench_canonical_producer_contract.json`, `contracts/workbench_event_explorer_contract.json`, and `contracts/workbench_evidence_navigation_contract.json` own the producer, Slice 3, and Slice 4 executable boundaries. If Drive semantic authority changes, code is stale until reconciled; code never silently redefines the scientific rules.
 
 ## Verification
 
@@ -77,13 +86,14 @@ python scripts/verify_workbench_slice1.py
 python scripts/verify_workbench_slice2_adapter.py
 python scripts/verify_workbench_slice2_producer.py
 python scripts/verify_workbench_slice3_events.py
+python scripts/verify_workbench_slice4_evidence.py
 ```
 
 GitHub Actions runs the same verification on pull requests and `main` and uploads exact-head receipts.
 
 ## Scientific boundary
 
-Passing this software suite means only that the executable harness, Workbench adapter, and canonical producer behave as frozen on their registered software inputs. It does **not** establish animal-signal meaning, compositionality, syntax, cross-species generalization, welfare safety, or CRG-C biological credit. Real empirical execution remains rights-, provenance-, preregistration-, and claim-ceiling gated.
+Passing this software suite means only that the executable harness, Workbench adapters, projections and browser surfaces behave as frozen on their registered software inputs. It does **not** establish animal-signal meaning, compositionality, syntax, cross-species generalization, welfare safety, or CRG-C biological credit. Real empirical execution remains rights-, provenance-, preregistration-, and claim-ceiling gated.
 
 ## License
 

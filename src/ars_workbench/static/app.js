@@ -36,6 +36,73 @@ const renderEvents = (datasetId) => {
   });
 };
 
+const claimCard = (c) => card(
+  c.claim_id + ' · ' + c.claim_type,
+  '<p>' + badge(c.status) + badge(c.ars_confidence) + '</p>' +
+  '<p><strong>Claim:</strong> ' + esc(c.claim_short) + '</p>' +
+  '<p><strong>Scope:</strong> ' + esc(c.scope_boundary) + '</p>' +
+  '<p><strong>Behavioral validation:</strong> ' + esc(c.behavioral_validation) + '</p>' +
+  '<p><strong>Independent replication:</strong> ' + esc(c.independent_replication) + '</p>' +
+  '<p><strong>Do not overclaim:</strong> ' + esc(c.do_not_overclaim) + '</p>' +
+  '<p><strong>Alternative explanations:</strong> ' + esc(c.alternative_explanations) + '</p>' +
+  '<p class="muted"><strong>Explicit link state:</strong> ' + esc(c.explicit_link_state) + '</p>' +
+  ((c.evidence_links || []).length ? '<details><summary>Registered claim-evidence links</summary>' + c.evidence_links.map((l) =>
+    '<div class="muted"><strong>' + esc(l.link_id) + ':</strong> ' + esc(l.evidence_direction) + ' · ' + esc(l.evidence_channel) + '<br>' +
+    '<strong>Method:</strong> ' + esc(l.method_scope) + '<br><strong>Independence:</strong> ' + esc(l.independence_level) + '<br>' +
+    '<strong>Basis:</strong> ' + esc(l.weight_or_confidence_basis) + prov(l.provenance_ids) + '</div>'
+  ).join('') + '</details>' : '') +
+  prov(c.provenance_ids)
+);
+
+const mediaCard = (m) => card(
+  m.dataset_id + ' · rights-aware media placeholder',
+  '<p>' + badge(m.media_type) + badge(m.availability_status) + '</p>' +
+  '<p><strong>Rights:</strong> ' + esc(m.rights_state) + '</p>' +
+  '<p><strong>Bytes available:</strong> ' + esc(m.bytes_available) + ' · <strong>Preview allowed:</strong> ' + esc(m.preview_allowed) + '</p>' +
+  '<p><strong>Scientific consequence:</strong> ' + esc(m.scientific_consequence) + '</p>' +
+  '<p><strong>Required action:</strong> ' + esc(m.required_action) + '</p>' +
+  '<p class="muted">' + esc(m.placeholder_message) + '</p>' +
+  prov(m.provenance_ids),
+  'blocked'
+);
+
+const renderEvidence = () => {
+  const target = document.querySelector('#evidence');
+  target.innerHTML = '<h2>Evidence / contradiction navigation</h2><p class="muted">Loading bounded evidence state…</p>';
+  Promise.all([
+    fetch('/api/evidence/RQ0001').then((r) => r.json()),
+    fetch('/api/media-placeholders').then((r) => r.json())
+  ]).then(([evidence, media]) => {
+    const status = evidence.registry_status || {};
+    const registry = card('Registry state',
+      '<p>' + badge('Contradiction rows ' + esc(status.matching_contradiction_rows ?? 'unknown')) +
+      badge('Disagreement rows ' + esc(status.matching_disagreement_rows ?? 'unknown')) + '</p>' +
+      '<p><strong>Interpretation rule:</strong> ' + esc(status.absence_rule || 'Registry state unavailable.') + '</p>' +
+      '<p class="muted"><strong>Selection rule:</strong> ' + esc(status.selection_rule || '') + '</p>');
+
+    const corrections = (evidence.corrections || []).length
+      ? '<h3>Registered contradictions / corrections</h3><div class="grid">' + evidence.corrections.map((x) => card(x.record_id,
+          '<p>' + badge(x.type) + badge(x.status) + '</p><p><strong>Target:</strong> ' + esc(x.target_study_or_claim) + '</p>' +
+          '<p><strong>Changed:</strong> ' + esc(x.what_changed) + '</p><p><strong>Effect:</strong> ' + esc(x.effect_on_conclusion) + '</p>' +
+          '<p><strong>ARS action:</strong> ' + esc(x.ars_action) + '</p>' + prov(x.provenance_ids))).join('') + '</div>'
+      : '<p class="notice"><strong>No matching contradiction/correction row is currently registered for this bounded presentation set.</strong><br>' + esc(status.absence_rule || '') + '</p>';
+
+    const disagreements = (evidence.disagreements || []).length
+      ? '<h3>Registered disagreement maps</h3><div class="grid">' + evidence.disagreements.map((x) => card(x.disagreement_id,
+          '<p>' + badge(x.status) + badge(x.priority) + '</p><p><strong>Dimension:</strong> ' + esc(x.dimension) + '</p>' +
+          '<p><strong>Position A:</strong> ' + esc(x.position_a) + '</p><p><strong>Position B:</strong> ' + esc(x.position_b) + '</p>' +
+          '<p><strong>Evidence needed:</strong> ' + esc(x.evidence_needed) + '</p>' + prov(x.provenance_ids))).join('') + '</div>'
+      : '<p class="notice"><strong>No matching disagreement-map row is currently registered for this bounded presentation set.</strong><br>' + esc(status.absence_rule || '') + '</p>';
+
+    target.innerHTML = '<h2>Evidence / contradiction navigation</h2>' +
+      '<p class="muted">Claims are displayed at their canonical scope and confidence. This surface does not rank or re-grade them.</p>' +
+      registry + '<h3>Bounded claim set</h3><div class="grid">' + (evidence.claims || []).map(claimCard).join('') + '</div>' +
+      corrections + disagreements + '<h3>Rights-aware media placeholders</h3><div class="grid">' + (media || []).map(mediaCard).join('') + '</div>';
+  }).catch((err) => {
+    target.innerHTML = '<h2>Evidence / contradiction navigation</h2><p>Failed to load evidence state: ' + esc(err) + '</p>';
+  });
+};
+
 fetch('/api/snapshot').then((r) => r.json()).then((s) => {
   document.querySelector('#status').innerHTML = '<strong>' + esc(s.snapshot_id) + '</strong> · ' + esc(s.mode) + '<br><span class="muted">' + esc(s.scientific_boundary) + '</span>';
   const sp = s.species;
@@ -71,6 +138,7 @@ fetch('/api/snapshot').then((r) => r.json()).then((s) => {
 
   document.querySelectorAll('[data-event-dataset]').forEach((btn) => btn.addEventListener('click', () => renderEvents(btn.dataset.eventDataset)));
   renderEvents('D0018');
+  renderEvidence();
 
   const empirical = s.runs.map((r) => card(r.run_id + ' · ' + r.dataset_id,
     '<p>' + badge(r.evidence_class) + badge(r.state) + (r.disposition ? badge(r.disposition) : '') + '</p>' +
@@ -81,7 +149,7 @@ fetch('/api/snapshot').then((r) => r.json()).then((s) => {
     '<p>' + badge(v.class) + badge(v.state) + '</p><p>' + esc(v.result) + '</p><p><strong>Biological evidence:</strong> ' + esc(v.biological_evidence) + '</p>' + prov(v.provenance_ids))).join('');
   document.querySelector('#runs').innerHTML = '<h2>Empirical / planned runs</h2><div class="grid">' + empirical + '</div><h2>Software verification — segregated</h2><div class="grid">' + software + '</div>';
 
-  document.querySelector('#provenance').innerHTML = '<h2>Core provenance index</h2><p class="muted">Event-level provenance is resolved on demand from each event card.</p><table><thead><tr><th>ID</th><th>Authority</th><th>Pointer</th></tr></thead><tbody>' +
+  document.querySelector('#provenance').innerHTML = '<h2>Core provenance index</h2><p class="muted">Event- and evidence-level provenance is resolved on demand from its cards.</p><table><thead><tr><th>ID</th><th>Authority</th><th>Pointer</th></tr></thead><tbody>' +
     Object.entries(s.provenance).map(([id,p]) => '<tr><td><a href="/api/provenance/' + encodeURIComponent(id) + '" target="_blank" rel="noopener">' + esc(id) + '</a></td><td>' + esc(p.authority) + '</td><td><code>' + esc(p.drive_id || p.spreadsheet_id || p.github_repo || '') + (p.registry ? ' · ' + esc(p.registry) : '') + '</code></td></tr>').join('') + '</tbody></table>';
 }).catch((err) => { document.querySelector('#status').textContent = 'Failed to load Workbench state: ' + err; });
 
