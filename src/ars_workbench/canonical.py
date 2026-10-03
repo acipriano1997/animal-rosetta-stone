@@ -33,6 +33,20 @@ REQUIRED_SNAPSHOT_KEYS = frozenset(
         "provenance",
     }
 )
+FORBIDDEN_SEMANTIC_KEYS = frozenset(
+    {"meaning", "translation", "semantic_gloss", "english_gloss"}
+)
+DISPLAY_RECORD_LISTS = (
+    "hypotheses",
+    "datasets",
+    "runs",
+    "software_verification",
+    "events",
+    "evidence_items",
+    "corrections",
+    "disagreements",
+    "media_placeholders",
+)
 
 
 class CanonicalReadError(RuntimeError):
@@ -54,57 +68,117 @@ def _read_json_source(source: str) -> dict[str, Any]:
         if parsed.scheme in {"http", "https"}:
             request = Request(
                 source,
-                headers={"Accept": "application/json", "User-Agent": "animal-rosetta-stone-workbench"},
+                headers={
+                    "Accept": "application/json",
+                    "User-Agent": "animal-rosetta-stone-workbench",
+                },
             )
             with urlopen(request, timeout=10) as response:
                 payload = response.read().decode("utf-8")
         elif parsed.scheme == "file":
             payload = Path(unquote(parsed.path)).read_text(encoding="utf-8")
         elif parsed.scheme:
-            raise CanonicalReadError(f"unsupported canonical read source scheme: {parsed.scheme}")
+            raise CanonicalReadError(
+                f"unsupported canonical read source scheme: {parsed.scheme}"
+            )
         else:
             payload = Path(source).read_text(encoding="utf-8")
     except CanonicalReadError:
         raise
     except Exception as exc:
-        raise CanonicalReadError(f"unable to read canonical source {source!r}: {exc}") from exc
+        raise CanonicalReadError(
+            f"unable to read canonical source {source!r}: {exc}"
+        ) from exc
 
     try:
         obj = json.loads(payload)
     except json.JSONDecodeError as exc:
-        raise CanonicalReadError(f"canonical source {source!r} is not valid JSON") from exc
+        raise CanonicalReadError(
+            f"canonical source {source!r} is not valid JSON"
+        ) from exc
     if not isinstance(obj, dict):
         raise CanonicalReadError("canonical read bundle must be a JSON object")
     return obj
 
 
-def _record_provenance_ids(snapshot: dict[str, Any]) -> list[str]:
-    refs: list[str] = []
+def _iter_display_records(snapshot: dict[str, Any]):
     for key in ("species", "question"):
         record = snapshot.get(key)
         if isinstance(record, dict):
-            refs.extend(record.get("provenance_ids", []))
-    for key in (
-        "hypotheses",
-        "datasets",
-        "runs",
-        "software_verification",
-        "events",
-        "evidence_items",
-        "corrections",
-        "disagreements",
-        "media_placeholders",
-    ):
+            yield key, record
+    for key in DISPLAY_RECORD_LISTS:
         rows = snapshot.get(key)
         if isinstance(rows, list):
-            for row in rows:
+            for index, row in enumerate(rows):
                 if isinstance(row, dict):
-                    refs.extend(row.get("provenance_ids", []))
+                    yield f"{key}[{index}]", row
                     if key == "evidence_items":
-                        for link in row.get("evidence_links", []):
+                        for link_index, link in enumerate(row.get("evidence_links", [])):
                             if isinstance(link, dict):
-                                refs.extend(link.get("provenance_ids", []))
+                                yield f"{key}[{index}].evidence_links[{link_index}]", link
+
+
+def _record_provenance_ids(snapshot: dict[str, Any]) -> list[str]:
+    refs: list[str] = []
+    for _, record in _iter_display_records(snapshot):
+        refs.extend(record.get("provenance_ids", []))
     return refs
+
+
+def _require_display_provenance(snapshot: dict[str, Any]) -> None:
+    for label, record in _iter_display_records(snapshot):
+        refs = record.get("provenance_ids")
+        if not isinstance(refs, list) or not refs or any(
+            not isinstance(ref, str) or not ref.strip() for ref in refs
+        ):
+            raise CanonicalReadError(
+                f"displayed scientific record {label} lacks nonempty provenance_ids"
+            )
+
+
+def _semantic_key_paths(value: Any, *, path: str) -> list[str]:
+    leaked: list[str] = []
+    if isinstance(value, dict):
+        for key, child in value.items():
+            child_path = f"{path}.{key}" if path else key
+            if key in FORBIDDEN_SEMANTIC_KEYS:
+                leaked.append(child_path)
+            leaked.extend(_semantic_key_paths(child, path=child_path))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            leaked.extend(_semantic_key_paths(child, path=f"{path}[{index}]"))
+    return leaked
+
+
+def _reject_semantic_key_leakage(snapshot: dict[str, Any]) -> None:
+    for label, record in _iter_display_records(snapshot):
+        leaked = _semantic_key_paths(record, path=label)
+        if leaked:
+            raise CanonicalReadError(
+                "displayed scientific record contains forbidden semantic fields: "
+                + ", ".join(sorted(leaked))
+            )
+
+
+def _require_unique_provenance_namespaces(
+    provenance: dict[str, Any],
+    event_provenance: dict[str, Any],
+    evidence_provenance: dict[str, Any],
+) -> None:
+    indexes = {
+        "provenance": set(provenance),
+        "event_provenance": set(event_provenance),
+        "evidence_provenance": set(evidence_provenance),
+    }
+    names = tuple(indexes)
+    for i, left in enumerate(names):
+        for right in names[i + 1 :]:
+            collisions = sorted(indexes[left] & indexes[right])
+            if collisions:
+                raise CanonicalReadError(
+                    f"provenance namespace collision between {left} and {right}: "
+                    + ", ".join(collisions)
+                )
 
 
 def canonical_bundle_to_snapshot(
@@ -128,12 +202,17 @@ def canonical_bundle_to_snapshot(
     missing_bindings = sorted(REQUIRED_BINDING_DOMAINS - set(bindings))
     if missing_bindings:
         raise CanonicalReadError(
-            "canonical bundle is missing authority bindings: " + ", ".join(missing_bindings)
+            "canonical bundle is missing authority bindings: "
+            + ", ".join(missing_bindings)
         )
     for domain in sorted(REQUIRED_BINDING_DOMAINS):
         binding = bindings[domain]
-        if not isinstance(binding, dict) or not str(binding.get("semantic_owner", "")).strip():
-            raise CanonicalReadError(f"canonical binding {domain!r} lacks semantic_owner")
+        if not isinstance(binding, dict) or not str(
+            binding.get("semantic_owner", "")
+        ).strip():
+            raise CanonicalReadError(
+                f"canonical binding {domain!r} lacks semantic_owner"
+            )
         if not any(
             binding.get(key)
             for key in (
@@ -144,7 +223,9 @@ def canonical_bundle_to_snapshot(
                 "source",
             )
         ):
-            raise CanonicalReadError(f"canonical binding {domain!r} lacks a source locator")
+            raise CanonicalReadError(
+                f"canonical binding {domain!r} lacks a source locator"
+            )
 
     raw_snapshot = bundle.get("snapshot")
     if not isinstance(raw_snapshot, dict):
@@ -152,7 +233,8 @@ def canonical_bundle_to_snapshot(
     missing_keys = sorted(REQUIRED_SNAPSHOT_KEYS - set(raw_snapshot))
     if missing_keys:
         raise CanonicalReadError(
-            "canonical snapshot is missing required keys: " + ", ".join(missing_keys)
+            "canonical snapshot is missing required keys: "
+            + ", ".join(missing_keys)
         )
 
     provenance = raw_snapshot.get("provenance")
@@ -166,26 +248,26 @@ def canonical_bundle_to_snapshot(
     events = raw_snapshot.get("events", [])
     if events:
         if "events" not in bindings:
-            raise CanonicalReadError("event-enabled canonical bundle lacks events binding")
+            raise CanonicalReadError(
+                "event-enabled canonical bundle lacks events binding"
+            )
         event_binding = bindings["events"]
         if (
             not isinstance(event_binding, dict)
             or not str(event_binding.get("semantic_owner", "")).strip()
-            or not any(event_binding.get(key) for key in ("spreadsheet_id", "source", "registry"))
+            or not any(
+                event_binding.get(key)
+                for key in ("spreadsheet_id", "source", "registry")
+            )
         ):
             raise CanonicalReadError("canonical binding 'events' is incomplete")
         if not isinstance(raw_snapshot.get("event_inventory"), dict):
-            raise CanonicalReadError("event-enabled canonical bundle lacks event_inventory")
-        forbidden_event_fields = {"meaning", "translation", "semantic_gloss", "english_gloss"}
+            raise CanonicalReadError(
+                "event-enabled canonical bundle lacks event_inventory"
+            )
         for event in events:
             if not isinstance(event, dict) or not event.get("event_id"):
                 raise CanonicalReadError("canonical event row lacks event_id")
-            leaked = sorted(forbidden_event_fields & set(event))
-            if leaked:
-                raise CanonicalReadError(
-                    f"event {event.get('event_id')} contains forbidden semantic fields: "
-                    + ", ".join(leaked)
-                )
 
     evidence_provenance = raw_snapshot.get("evidence_provenance", {})
     if evidence_provenance and not isinstance(evidence_provenance, dict):
@@ -209,21 +291,9 @@ def canonical_bundle_to_snapshot(
             raise CanonicalReadError(
                 "evidence-enabled canonical bundle lacks evidence_registry_status"
             )
-        forbidden_evidence_fields = {
-            "meaning",
-            "translation",
-            "semantic_gloss",
-            "english_gloss",
-        }
         for item in evidence_items:
             if not isinstance(item, dict) or not item.get("claim_id"):
                 raise CanonicalReadError("canonical evidence item lacks claim_id")
-            leaked = sorted(forbidden_evidence_fields & set(item))
-            if leaked:
-                raise CanonicalReadError(
-                    f"claim {item.get('claim_id')} contains forbidden semantic fields: "
-                    + ", ".join(leaked)
-                )
 
     media_placeholders = raw_snapshot.get("media_placeholders", [])
     if media_placeholders:
@@ -231,7 +301,10 @@ def canonical_bundle_to_snapshot(
         if (
             not isinstance(media_binding, dict)
             or not str(media_binding.get("semantic_owner", "")).strip()
-            or not any(media_binding.get(key) for key in ("spreadsheet_id", "source", "registry"))
+            or not any(
+                media_binding.get(key)
+                for key in ("spreadsheet_id", "source", "registry")
+            )
         ):
             raise CanonicalReadError(
                 "media-enabled canonical bundle lacks complete media binding"
@@ -247,7 +320,12 @@ def canonical_bundle_to_snapshot(
                 raise CanonicalReadError(
                     f"media placeholder {media.get('dataset_id')} cannot enable preview"
                 )
-            forbidden_media_fields = {"media_url", "preview_url", "image_url", "bytes"}
+            forbidden_media_fields = {
+                "media_url",
+                "preview_url",
+                "image_url",
+                "bytes",
+            }
             leaked = sorted(forbidden_media_fields & set(media))
             if leaked:
                 raise CanonicalReadError(
@@ -265,6 +343,12 @@ def canonical_bundle_to_snapshot(
                 "zero-row evidence registry state requires explicit absence_rule"
             )
 
+    _require_display_provenance(raw_snapshot)
+    _reject_semantic_key_leakage(raw_snapshot)
+    _require_unique_provenance_namespaces(
+        provenance, event_provenance, evidence_provenance
+    )
+
     refs = _record_provenance_ids(raw_snapshot)
     known_provenance = (
         set(provenance) | set(event_provenance) | set(evidence_provenance)
@@ -272,7 +356,8 @@ def canonical_bundle_to_snapshot(
     unresolved = sorted(set(refs) - known_provenance)
     if unresolved:
         raise CanonicalReadError(
-            "canonical snapshot has unresolved provenance ids: " + ", ".join(unresolved)
+            "canonical snapshot has unresolved provenance ids: "
+            + ", ".join(unresolved)
         )
 
     for dataset in raw_snapshot.get("datasets", []):
