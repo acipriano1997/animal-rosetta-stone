@@ -1,0 +1,32 @@
+{
+  "contract_id": "WORKBENCH-SLICE5-FIREWALL-v0.1",
+  "phase": "Rosetta Research Workbench Phase I Slice 5",
+  "purpose": "Verify provenance completeness, stale-state fail-closed behavior, semantic-firewall invariants, synthetic/empirical separation, rights/media boundaries, and deterministic rendering across the current Workbench surface.",
+  "provenance_requirements": [
+    "Every displayed scientific record must carry a nonempty provenance_ids list.",
+    "Every displayed provenance ID must resolve through exactly one provenance namespace.",
+    "Core, event and evidence provenance namespaces may not collide.",
+    "Nested Claim-Evidence Link records are displayed scientific records and require resolvable provenance."
+  ],
+  "stale_state_requirements": [
+    "Any authority_state other than CURRENT fails closed.",
+    "Unknown adapter contracts fail closed.",
+    "Missing semantic owners or required authority bindings fail closed.",
+    "The current chimp pilot fallback must keep D0019 at RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION and may not regress to obsolete pre-byte/source-rights-unverified language.",
+    "RUN-005 and RUN-006 remain EMPIRICAL_EXECUTION_HELD with null dispositions until their owning empirical authorities close them.",
+    "CRG-C remains NOT_PASS and overall chimp comparison readiness remains NOT_COMPARISON_READY until the owning comparison gate changes."
+  ],
+  "semantic_firewall_requirements": [
+    "meaning, translation, semantic_gloss and english_gloss keys are forbidden recursively within displayed scientific records.",
+    "D0020 Goal_* values remain anonymized source codes and unreleased gesture form remains NOT_RELEASED_IN_ANON_CSV.",
+    "The D0020 registered null/context-sufficient result remains bounded to its frozen representation/target and may not become a species-wide absence claim.",
+    "ZERO_SYNTHETIC software verification remains biological_evidence=false and stays segregated from empirical runs.",
+    "Empty contradiction/disagreement registries remain registry state only and never become evidence of absence.",
+    "Rights-aware media placeholders expose no bytes, preview, media URL, image URL, preview URL, synthesized thumbnail, reconstructed media or substitute media."
+  ],
+  "determinism_requirement": "Repeated rendering of the same frozen Workbench fixture must yield the same overview, evidence and event service state apart from explicitly live access/status metadata.",
+  "completion_rule": "Slice 5 is software-complete only after the exact branch head passes unit/contract tests, the dedicated Slice 5 receipt, all prior Workbench slice receipts, receiver-harness regressions and exact-head artifact upload, followed by promotion of the identical tested tree to main.",
+  "separate_open_gate": "Slice 5 completion does not satisfy full Slice 2. The authenticated live canonical-producer execution against pinned Drive/ACEB authorities remains a separate operational gate.",
+  "scientific_effect": "NONE",
+  "biological_evidence": false
+}
