@@ -70,9 +70,19 @@ Claim text, status, confidence, scope, do-not-overclaim ceilings, alternative ex
 
 D0018/D0020 raw-media surfaces are placeholders only. They expose rights/missingness metadata and scientific consequences while keeping `bytes_available=false` and `preview_allowed=false`. The Workbench does not fabricate thumbnails, reconstructed media, substitute imagery, or previews for unavailable source media.
 
+### Slice 5 — provenance, stale-state and semantic firewall
+
+Slice 5 is the final Phase I software-verification lane. It hardens the canonical adapter and runs adversarial checks across the complete Workbench surface rather than adding a new scientific feature.
+
+Every displayed scientific record must carry nonempty resolvable provenance. Core, event and evidence provenance namespaces may not collide. Forbidden semantic fields (`meaning`, `translation`, `semantic_gloss`, `english_gloss`) are rejected recursively, including when nested inside event context, interaction structure, or Claim-Evidence Link records. Unknown/stale/conflicted authority, unknown adapter contracts and missing semantic owners fail closed.
+
+The Slice 5 fixture checks also freeze the current chimp pilot’s bounded state: D0019 remains `RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION`; RUN-005/RUN-006 remain `EMPIRICAL_EXECUTION_HELD` with null dispositions; CRG-C remains `NOT_PASS`; ZERO_SYNTHETIC remains non-biological; D0020 goal anonymization/unreleased gesture form and bounded null interpretation remain intact; empty contradiction/disagreement registries remain registry state only; and media placeholders remain no-bytes/no-preview.
+
+Slice 5 completion does not satisfy the separate Slice 2 live-auth gate. Full canonical operational verification still requires one authenticated producer execution against the pinned live Drive/ACEB authorities.
+
 ## Canonical bindings
 
-`contracts/canonical_bindings.json` pins Drive/ACEB bindings used by executable research paths. `contracts/workbench_canonical_read_contract.json` defines the Workbench adapter envelope and fail-closed transport semantics. `src/ars_workbench/data/workbench_canonical_sources.json` pins the current Workbench producer, event, evidence and rights authorities. `contracts/workbench_canonical_producer_contract.json`, `contracts/workbench_event_explorer_contract.json`, and `contracts/workbench_evidence_navigation_contract.json` own the producer, Slice 3, and Slice 4 executable boundaries. If Drive semantic authority changes, code is stale until reconciled; code never silently redefines the scientific rules.
+`contracts/canonical_bindings.json` pins Drive/ACEB bindings used by executable research paths. `contracts/workbench_canonical_read_contract.json` defines the Workbench adapter envelope and fail-closed transport semantics. `src/ars_workbench/data/workbench_canonical_sources.json` pins the current Workbench producer, event, evidence and rights authorities. `contracts/workbench_canonical_producer_contract.json`, `contracts/workbench_event_explorer_contract.json`, `contracts/workbench_evidence_navigation_contract.json`, and `contracts/workbench_slice5_firewall_contract.json` own the producer and Slice 3–5 executable boundaries. If Drive semantic authority changes, code is stale until reconciled; code never silently redefines the scientific rules.
 
 ## Verification
 
@@ -87,13 +97,14 @@ python scripts/verify_workbench_slice2_adapter.py
 python scripts/verify_workbench_slice2_producer.py
 python scripts/verify_workbench_slice3_events.py
 python scripts/verify_workbench_slice4_evidence.py
+python scripts/verify_workbench_slice5_firewall.py
 ```
 
 GitHub Actions runs the same verification on pull requests and `main` and uploads exact-head receipts.
 
 ## Scientific boundary
 
-Passing this software suite means only that the executable harness, Workbench adapters, projections and browser surfaces behave as frozen on their registered software inputs. It does **not** establish animal-signal meaning, compositionality, syntax, cross-species generalization, welfare safety, or CRG-C biological credit. Real empirical execution remains rights-, provenance-, preregistration-, and claim-ceiling gated.
+Passing this software suite means only that the executable harness, Workbench adapters, projections, firewalls and browser surfaces behave as frozen on their registered software inputs. It does **not** establish animal-signal meaning, compositionality, syntax, cross-species generalization, welfare safety, or CRG-C biological credit. Real empirical execution remains rights-, provenance-, preregistration-, and claim-ceiling gated.
 
 ## License
 
