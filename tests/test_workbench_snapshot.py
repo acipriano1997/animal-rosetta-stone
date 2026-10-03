@@ -42,11 +42,14 @@ def test_d0019_never_appears_empirically_executed():
     assert all(r["disposition"] is None for r in runs)
 
 
-def test_d0025_remains_metadata_only():
+def test_d0025_remains_metadata_only_and_h3_held():
     s = WorkbenchStore().snapshot()
     d = next(x for x in s["datasets"] if x["dataset_id"] == "D0025")
     assert d["availability"] == "GATED_METADATA_ONLY"
-    assert d["rights_state"] == "ITEM_LEVEL_LICENSE_UNVERIFIED"
+    assert "CC BY 4.0" in d["rights_state"]
+    assert "not blanket rights adjudication" in d["rights_state"].lower()
+    assert "H3 remains HELD_SCHEMA" in d["gate"]
+    assert "HELD" in d["empirical_state"]
     assert not any(r["dataset_id"] == "D0025" for r in s["runs"])
 
 
