@@ -1,0 +1,46 @@
+{
+  "contract_id": "WORKBENCH-EVIDENCE-NAVIGATION-v0.1",
+  "phase": "Rosetta Research Workbench Phase I Slice 4",
+  "purpose": "Expose bounded claim/evidence, contradiction/correction registry state, disagreement registry state, and rights-aware media placeholders without creating a second evidence grader or synthesizing unavailable media.",
+  "claim_selection": {
+    "research_question_id": "RQ0001",
+    "claim_ids": ["C0062", "C0083", "C0084", "C0085", "C0086"],
+    "rule": "Presentation selection only; claim status, confidence, evidence weight and scientific state remain owned by ACEB."
+  },
+  "evidence_rules": [
+    "Claim text, status, confidence, scope, do-not-overclaim ceilings and alternative explanations are read from ACEB Claims.",
+    "Explicit Claim-Evidence Links are shown where registered; missing link rows are labeled as registry absence and are not synthesized.",
+    "Contradictions & Corrections and Disagreement Maps are projected only from matching canonical rows.",
+    "Zero matching contradiction/disagreement rows means only no matching canonical row is currently registered; it is never evidence that contrary evidence or scientific disagreement does not exist.",
+    "The Workbench never re-ranks claims, recalculates confidence, merges competing interpretations into one verdict, or creates semantic glosses."
+  ],
+  "media_rules": [
+    "Media placeholders are metadata/provenance surfaces only.",
+    "Raw media bytes are never embedded or exposed by the placeholder.",
+    "Preview is always disabled unless a future separately governed rights/media authority explicitly permits it.",
+    "The Workbench never fabricates thumbnails, substitute images, waveform previews, or reconstructed media when source media is unavailable.",
+    "Rights state and missingness/scientific consequence remain visible."
+  ],
+  "service_contract": {
+    "claims.list": "Return the bounded presentation claim set without re-grading.",
+    "claims.get": "Return one bounded canonical claim projection by Claim_ID.",
+    "evidence.get": "Return hypotheses, claims, corrections, disagreements, registry state, media placeholders, runs and segregated software verification for the active research question.",
+    "media-placeholders.list": "Return metadata-only rights-aware placeholders with bytes_available=false and preview_allowed=false.",
+    "provenance.get": "Resolve claim, claim-evidence-link, correction, disagreement and media-placeholder provenance IDs."
+  },
+  "fail_closed_conditions": [
+    "Evidence-enabled bundle lacks a complete evidence binding.",
+    "Evidence registry state is missing.",
+    "Evidence item lacks Claim_ID or contains meaning/translation/semantic_gloss/english_gloss fields.",
+    "Media-enabled bundle lacks a complete media binding.",
+    "Media placeholder lacks Dataset_ID.",
+    "Media placeholder exposes bytes or permits preview.",
+    "Media placeholder contains media_url, preview_url, image_url or bytes fields.",
+    "A zero-row contradiction/disagreement registry state lacks an explicit absence rule.",
+    "Any displayed evidence/media provenance identifier is unresolved."
+  ],
+  "fixture_boundary": "The packaged fallback is a bounded presentation fixture derived from the current canonical RQ0001 claim set and D0018/D0020 rights/missingness state; it does not become a second evidence authority.",
+  "live_boundary": "Full canonical state remains owned by the authenticated canonical producer reading pinned Drive/ACEB authorities; Slice 2 live-auth verification remains a separate operational gate.",
+  "scientific_effect": "NONE",
+  "biological_evidence": false
+}
