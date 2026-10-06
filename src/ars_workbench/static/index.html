@@ -1,29 +1,41 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Rosetta Research Workbench — Chimpanzee RQ0001</title>
+  <title data-i18n="app.title">{{app.title}}</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+<a class="skip-link" href="#workbench" data-i18n="nav.skip">{{nav.skip}}</a>
 <header>
-  <div><p class="eyebrow">Animal Rosetta Stone</p><h1>Rosetta Research Workbench</h1><p>Phase I · read-only scientific workbench</p></div>
-  <div class="boundary">Not a translator · no semantic claim promotion</div>
+  <div><p class="eyebrow" data-i18n="app.project">{{app.project}}</p><h1 data-i18n="app.title">{{app.title}}</h1><p data-i18n="app.subtitle">{{app.subtitle}}</p></div>
+  <div class="boundary" data-i18n="app.boundary">{{app.boundary}}</div>
 </header>
-<main>
-  <nav aria-label="Workbench sections">
-    <button data-target="species">Species</button><button data-target="question">RQ0001</button><button data-target="datasets">Corpora</button><button data-target="events">Events</button><button data-target="evidence">Evidence</button><button data-target="runs">Runs</button><button data-target="provenance">Provenance</button>
+<main id="workbench" tabindex="-1">
+  <div class="locale-controls">
+    <label for="presentation-locale" data-i18n="locale.label">{{locale.label}}</label>
+    <select id="presentation-locale" aria-describedby="locale-help">
+      <option value="en" lang="en" data-i18n="locale.english">{{locale.english}}</option>
+      <option value="en-XA" lang="en" data-i18n="locale.pseudo">{{locale.pseudo}}</option>
+    </select>
+    <p id="locale-help" class="muted" data-i18n="locale.help">{{locale.help}}</p>
+    <p id="locale-status" role="status" aria-live="polite"></p>
+  </div>
+  <nav data-i18n-aria="nav.label" aria-label="{{nav.label}}">
+    <button type="button" data-target="species" data-i18n="nav.species">{{nav.species}}</button><button type="button" data-target="question"><bdi lang="en" dir="ltr" data-canonical translate="no">RQ0001</bdi></button><button type="button" data-target="datasets" data-i18n="nav.datasets">{{nav.datasets}}</button><button type="button" data-target="events" data-i18n="nav.events">{{nav.events}}</button><button type="button" data-target="evidence" data-i18n="nav.evidence">{{nav.evidence}}</button><button type="button" data-target="runs" data-i18n="nav.runs">{{nav.runs}}</button><button type="button" data-target="provenance" data-i18n="nav.provenance">{{nav.provenance}}</button>
   </nav>
-  <section id="status" class="notice">Loading canonical Workbench state…</section>
-  <section id="species"></section>
-  <section id="question"></section>
-  <section id="datasets"></section>
-  <section id="events"></section>
-  <section id="evidence"></section>
-  <section id="runs"></section>
-  <section id="provenance"></section>
+  <section id="status" class="notice" role="status" aria-live="polite"><span data-i18n="app.loading">{{app.loading}}</span></section>
+  <section id="species" tabindex="-1"></section>
+  <section id="question" tabindex="-1"></section>
+  <section id="datasets" tabindex="-1"></section>
+  <section id="events" tabindex="-1"></section>
+  <section id="evidence" tabindex="-1"></section>
+  <section id="runs" tabindex="-1"></section>
+  <section id="provenance" tabindex="-1"></section>
+  <noscript><p>{{app.no_script}}</p></noscript>
 </main>
-<footer>Scientific state is read through bounded adapters; this interface does not recompute evidence grades, meanings, validation status, or schedules.</footer>
-<script src="/app.js"></script>
+<footer data-i18n="app.footer">{{app.footer}}</footer>
+<script id="presentation-messages" type="application/json">{{messages}}</script>
+<script type="module" src="/app.js"></script>
 </body></html>

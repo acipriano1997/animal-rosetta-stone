@@ -7,17 +7,33 @@ import json
 from urllib.parse import parse_qs, urlparse
 
 from .store import WorkbenchStore
+from .presentation import error_page, render_shell
 
 
 STATIC_TYPES = {
     ".html": "text/html; charset=utf-8",
     ".js": "text/javascript; charset=utf-8",
     ".css": "text/css; charset=utf-8",
+    ".json": "application/json; charset=utf-8",
 }
 
 
 class WorkbenchHandler(BaseHTTPRequestHandler):
     store = WorkbenchStore()
+
+    def send_error(self, code, message=None, explain=None):
+        # HTTP diagnostics are English chrome. API payloads never vary by locale.
+        if urlparse(getattr(self, "path", "")).path.startswith("/api/"):
+            return super().send_error(code, message, explain)
+        payload = error_page(int(code)).encode("utf-8")
+        self.send_response(code)
+        self.send_header("Connection", "close")
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Content-Length", str(len(payload)))
+        self.end_headers()
+        if self.command != "HEAD":
+            self.wfile.write(payload)
 
     def _json(self, obj, status=HTTPStatus.OK):
         payload = json.dumps(obj, indent=2).encode()
@@ -35,6 +51,8 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
             self.send_error(HTTPStatus.NOT_FOUND)
             return
         payload = path.read_bytes()
+        if name == "index.html":
+            payload = render_shell(payload.decode("utf-8")).encode("utf-8")
         suffix = "." + name.rsplit(".", 1)[-1] if "." in name else ""
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", STATIC_TYPES.get(suffix, "application/octet-stream"))
@@ -58,7 +76,7 @@ class WorkbenchHandler(BaseHTTPRequestHandler):
 
         if path == "/":
             return self._static("index.html")
-        if path in {"/app.js", "/styles.css"}:
+        if path in {"/app.js", "/i18n.js", "/styles.css", "/locales/en.json", "/locales/en-XA.json"}:
             return self._static(path[1:])
         if path == "/api/authority-status":
             return self._json(self.store.authority_status())

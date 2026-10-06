@@ -57,7 +57,22 @@ def test_workbench_http_surface_smoke():
         status, ctype, body = _get(base, "/app.js")
         assert status == 200
         assert "javascript" in ctype
-        assert b"software verification" in body.lower()
+        assert b"software.only" in body
+
+        status, ctype, body = _get(base, "/locales/en.json")
+        assert status == 200
+        assert "application/json" in ctype
+        assert json.loads(body)["software.only"] == "software verification only"
+
+        status, ctype, body = _get(base, "/i18n.js")
+        assert status == 200
+        assert "javascript" in ctype
+        assert b"export async function initializeLocale" in body
+
+        status, ctype, body = _get(base, "/locales/en-XA.json")
+        assert status == 200
+        assert "application/json" in ctype
+        assert "testing only" in json.loads(body)["locale.pseudo"]
     finally:
         server.shutdown()
         server.server_close()
