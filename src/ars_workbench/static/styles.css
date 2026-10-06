@@ -17,3 +17,15 @@ section{scroll-margin-block-start:.5rem}
 .sr-only{position:absolute;inline-size:1px;block-size:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .skip-link{position:absolute;z-index:1;inset-inline-start:1rem;inset-block-start:-10rem;background:#fff;padding:.5rem}
 .skip-link:focus{inset-block-start:.5rem}
+
+/* Core research-workspace interaction surfaces. */
+.workspace-controls,.pagination,.comparison-controls,.card-actions{display:flex;flex-wrap:wrap;gap:.65rem;align-items:center;margin-block:.75rem}
+.workspace-controls label{display:grid;gap:.25rem;min-inline-size:min(16rem,100%)}
+.workspace-controls input{font:inherit;padding:.4rem;max-inline-size:100%}
+.card-actions label{display:flex;align-items:center;gap:.35rem}
+.selected-event{outline:2px solid currentColor;outline-offset:2px}
+.comparison-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:.75rem;margin-block:1rem}
+.comparison-column{background:#fff;border:1px solid #888;padding:1rem;min-inline-size:0}
+.comparison-column h4,.run-inspector h4{margin-block:.25rem .75rem}
+.run-inspector{margin-block:1rem}
+.pagination span{min-inline-size:5rem;text-align:center}
