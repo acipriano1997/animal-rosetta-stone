@@ -17,13 +17,29 @@ jobs:
         with:
           python-version: '3.13'
           cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Install pinned dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements-lock.txt
           python -m pip install -e .
-      - name: Unit and contract tests
+      - name: Verify deterministic presentation test catalog (offline)
+        run: python scripts/generate_workbench_pseudolocale.py --check
+      - name: Unit, contract and presentation tests
         run: python -m pytest -q
+      - name: Verify packaged presentation assets (offline)
+        run: |
+          python -m pip wheel --no-index --no-deps --no-build-isolation --wheel-dir build/wheels .
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          wheel = next(Path("build/wheels").glob("*.whl"))
+          with ZipFile(wheel) as package:
+              for asset in ("index.html", "app.js", "i18n.js", "styles.css", "locales/en.json", "locales/en-XA.json"):
+                  assert package.read(f"ars_workbench/static/{asset}"), asset
+          PY
       - name: Execute RHF-001..035
         run: |
           mkdir -p build

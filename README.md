@@ -80,16 +80,25 @@ The Slice 5 fixture checks also freeze the current chimp pilot’s bounded state
 
 Slice 5 completion does not satisfy the separate Slice 2 live-auth gate. Full canonical operational verification still requires one authenticated producer execution against the pinned live Drive/ACEB authorities.
 
+### Presentation language
+
+The Workbench defaults to English and offers `en-XA`, a generated test-only pseudo-locale, through an accessible presentation-language selector. Only interface chrome changes; canonical scientific prose, identifiers, states, metrics and every API response remain unchanged. The preference is local to the browser. Unsupported locales fall back to English.
+
+See [presentation ownership and localization procedure](docs/workbench_localization.md) for protected fields, future locale approval, accessibility checks and pseudo-localization verification. Scientific translations require explicit future governance.
+
 ## Canonical bindings
 
 `contracts/canonical_bindings.json` pins Drive/ACEB bindings used by executable research paths. `contracts/workbench_canonical_read_contract.json` defines the Workbench adapter envelope and fail-closed transport semantics. `src/ars_workbench/data/workbench_canonical_sources.json` pins the current Workbench producer, event, evidence and rights authorities. `contracts/workbench_canonical_producer_contract.json`, `contracts/workbench_event_explorer_contract.json`, `contracts/workbench_evidence_navigation_contract.json`, and `contracts/workbench_slice5_firewall_contract.json` own the producer and Slice 3–5 executable boundaries. If Drive semantic authority changes, code is stale until reconciled; code never silently redefines the scientific rules.
 
 ## Verification
 
+Use Python 3.13 and Node.js 22+ on `PATH`. Presentation JavaScript tests use Node's built-in modules, with no npm packages, browser, translation service or sockets.
+
 ```bash
 python -m pip install -r requirements-lock.txt
 python -m pip install -e .
 python -m pytest -q
+python scripts/generate_workbench_pseudolocale.py --check
 python scripts/run_rhf_suite.py --out build/rhf_suite_receipt.json
 python scripts/run_synthetic_verification.py --out-dir build/synthetic_verification
 python scripts/verify_workbench_slice1.py
