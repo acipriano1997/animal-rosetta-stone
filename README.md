@@ -86,6 +86,17 @@ The Workbench defaults to English and offers `en-XA`, a generated test-only pseu
 
 See [presentation ownership and localization procedure](docs/workbench_localization.md) for protected fields, future locale approval, accessibility checks and pseudo-localization verification. Scientific translations require explicit future governance.
 
+
+### Core research workspaces — decipherment and experiment/analysis
+
+The Workbench now exposes the two additional research surfaces defined by the canonical product architecture without adding a new scientific authority.
+
+The **Decipherment Workspace** builds on the existing event service with dataset selection, exact canonical population/group and split filters, bounded pagination, presentation-only deep-link state, and side-by-side alignment of two to four source-preserved events. Alignment does not calculate semantic similarity, infer missing values, generate meanings or translations, or establish communicative equivalence.
+
+The **Experiment & Analysis Workspace** expands canonical run inspection. Empirical and planned runs remain separate from `ZERO_SYNTHETIC` software verification; the inspector shows recorded run state, evidence class, disposition, metrics, interpretation ceiling or gate, associated dataset state, rights and provenance. Protocol/split/control/environment/reproducibility fields that are not present in the canonical run record are displayed as missing rather than invented.
+
+Cross-navigation is identifier-based only: dataset → events/runs, event → dataset/provenance, and run → dataset/provenance. These surfaces have **scientific effect: NONE** and create no biological evidence.
+
 ## Canonical bindings
 
 `contracts/canonical_bindings.json` pins Drive/ACEB bindings used by executable research paths. `contracts/workbench_canonical_read_contract.json` defines the Workbench adapter envelope and fail-closed transport semantics. `src/ars_workbench/data/workbench_canonical_sources.json` pins the current Workbench producer, event, evidence and rights authorities. `contracts/workbench_canonical_producer_contract.json`, `contracts/workbench_event_explorer_contract.json`, `contracts/workbench_evidence_navigation_contract.json`, and `contracts/workbench_slice5_firewall_contract.json` own the producer and Slice 3–5 executable boundaries. If Drive semantic authority changes, code is stale until reconciled; code never silently redefines the scientific rules.

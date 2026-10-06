@@ -1,0 +1,41 @@
+{
+  "contract_id": "WORKBENCH-CORE-RESEARCH-WORKSPACES-v0.1",
+  "status": "EXECUTABLE_PRESENTATION_DERIVATIVE",
+  "canonical_product_owner": "Animal Rosetta Stone \u2014 Presentation & Research Workbench Architecture v1.0",
+  "purpose": "Implement the architecture-defined Decipherment Workspace and Experiment & Analysis Workspace as read-only presentation over existing canonical Workbench services.",
+  "decipherment_workspace": {
+    "allowed": [
+      "dataset, population/group and split filtering through existing events.list",
+      "pagination through existing bounded offset/limit service behavior",
+      "selection of two to four source-preserved events for side-by-side alignment",
+      "presentation-only URL state for filters, pagination and selected event IDs",
+      "event to dataset and provenance navigation"
+    ],
+    "forbidden": [
+      "semantic similarity scoring",
+      "meaning or translation generation",
+      "universal lexicon creation",
+      "missing-value inference",
+      "communicative-equivalence scoring",
+      "browser-local scientific state"
+    ]
+  },
+  "experiment_analysis_workspace": {
+    "allowed": [
+      "canonical empirical/planned run inspection",
+      "deterministic run to dataset navigation",
+      "registered metrics, dispositions, gates and interpretation ceilings",
+      "visible missing state for absent protocol, split, controls, environment or reproducibility fields"
+    ],
+    "forbidden": [
+      "evidence re-grading",
+      "claim promotion",
+      "invented protocol metadata",
+      "synthetic verification presented as empirical evidence"
+    ]
+  },
+  "cross_navigation_rule": "Only canonical identifiers or deterministic identifier joins may establish navigation relationships.",
+  "localization_rule": "Only interface chrome is localized; canonical scientific records remain verbatim.",
+  "scientific_effect": "NONE",
+  "biological_evidence": false
+}
