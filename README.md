@@ -82,7 +82,9 @@ The producer and Slice 2B verifier retain the historical `EMPIRICAL_EXECUTION_HE
 
 Slice 5 completion does not satisfy the separate Slice 2 live-auth gate. Full canonical operational verification still requires one authenticated producer execution against the pinned live Drive/ACEB authorities.
 
-The 2026-10-09 reconciliation verified the supplied ACEB, species, RUN-001/003/004, execution-contract and harness pins through read-only Drive access; D0018/D0020 event pins were unchanged. RUN-002 returned revision `ANLCKQlAepEEbhUCZJypcvlGWmZsA3mbHbGhyfoOXE3bgtB3gSTAJACNjXVOkJ52JXT7U3PjWAzOanX6I82uBwsNhnRkbTXNZ9nWWE5D5OQ` on two reads, conflicting with the supplied expected revision pinned in the manifest. Live export remains blocked by `FAIL_CLOSED_ON_PIN_DRIFT`; no live bundle is claimed. Reconcile that authority mismatch before the separate operational verification.
+The initial 2026-10-09 reconciliation verified the supplied ACEB, species, RUN-001/003/004, execution-contract and harness pins through read-only Drive access; D0018/D0020 event pins were unchanged. RUN-002 returned revision `ANLCKQlAepEEbhUCZJypcvlGWmZsA3mbHbGhyfoOXE3bgtB3gSTAJACNjXVOkJ52JXT7U3PjWAzOanX6I82uBwsNhnRkbTXNZ9nWWE5D5OQ` on two reads, conflicting with the previously supplied pin. A subsequent independent read confirmed this revision and the unchanged September 29 file modified time, so the RUN-002 pin is now reconciled. The stale token remains a rejection regression; `FAIL_CLOSED_ON_PIN_DRIFT` is unchanged.
+
+The subsequent full-manifest audit found a separate harness-verification pin conflict: document `1u9YOZCFWLSm4znq3sg0a1Qo2Nnuo-o0FcLh6ikQ42Rw` returned revision `AHj4eMSSV1cBzJ1kUJBmCl7XR64M16PDwNfqOdClZ-EqOIVmI_Agqr3TEdgk29iBiGWfFgYGw1_5D59uK5b02gwrcxF0VyhqDy2yzsi11Ik` in both metadata-only and full-document reads, differing from the supplied `ANLCKQkT990…` pin. That pin remains unchanged pending authority reconciliation. Live export and merge remain held on this conflict. Runtime Google OAuth credentials were unavailable, so `LIVE_AUTH_VERIFICATION=NOT_AVAILABLE`; no full authenticated producer execution or live bundle is claimed.
 
 ### Presentation language
 

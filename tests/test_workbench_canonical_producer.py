@@ -574,12 +574,12 @@ def test_gate_cannot_promote_overall_or_bonobo_with_unmet_criteria(criterion, st
         WorkspaceCanonicalProducer(reader, manifest).build_bundle()
 
 
-def test_known_run002_authority_pin_conflict_fails_closed():
+def test_reconciled_run002_rejects_stale_authority_pin():
     manifest = _small_manifest()
     reader = _closed_reader(manifest)
     spec = manifest["documents"]["run002"]
     reader.documents[spec["document_id"]]["revisionId"] = (
-        "ANLCKQlAepEEbhUCZJypcvlGWmZsA3mbHbGhyfoOXE3bgtB3gSTAJACNjXVOkJ52JXT7U3PjWAzOanX6I82uBwsNhnRkbTXNZ9nWWE5D5OQ"
+        "AHj4eMSvYZO_us2Cw9AwqLIL_jL97qUpKP_sFgTL8UvPzYe6tBGFO3l5euq9aYVkDlgLNEgIehTaDKY-G3mLDyQop3BsVviukktu3DGsGlo"
     )
     with pytest.raises(CanonicalProducerError, match="run002 authority revision drift"):
         WorkspaceCanonicalProducer(reader, manifest).build_bundle()
