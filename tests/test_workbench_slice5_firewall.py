@@ -68,23 +68,29 @@ def test_fixture_current_pilot_stale_state_invariants_remain_bounded():
     run006 = store.run_get("RUN-PT-RQ0001-006")
 
     assert species["comparison_readiness"]["overall"] == "NOT_COMPARISON_READY"
-    assert species["comparison_readiness"]["CRG-C"] == "NOT_PASS"
+    assert species["comparison_readiness"]["CRG-C"] == "PASS"
+    assert species["comparison_readiness"]["CRG-D"] == "PARTIAL"
+    assert species["comparison_readiness"]["controlling_criterion"] == "CRG-D"
+    assert species["comparison_readiness"]["bonobo_activation"] == "DEFERRED"
     assert species["receiver_harness"]["empirical_exercise_state"] == "UNEARNED"
 
     assert d0019["availability"] == "GATED_METADATA_ONLY"
     assert (
         d0019["empirical_state"]
-        == "RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION"
+        == "D0019_PR0005_EMPIRICAL_CLOSED_MIXED"
     )
     assert (
         d0019["rights_state"]
         == "APPROVED_LOCAL_RESEARCH_REUSE_WITH_ATTRIBUTION_RAW_REDISTRIBUTION_NOT_NEEDED"
     )
-    assert "HMAC_KEY" in d0019["gate"]
+    assert "access-controlled" in d0019["gate"]
 
     for run in (run005, run006):
-        assert run["state"] == "EMPIRICAL_EXECUTION_HELD"
-        assert run["disposition"] is None
+        assert run["state"] == "CLOSED"
+        assert run["disposition"] == "MIXED"
+        assert "no replicated H0001 support" in run["interpretation_ceiling"]
+    assert run006["model_refit"] is False
+    assert run006["preprocessing_refit"] is False
 
 
 def test_all_fixture_display_records_have_resolvable_provenance():

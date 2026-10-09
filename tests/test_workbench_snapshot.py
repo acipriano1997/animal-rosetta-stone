@@ -29,17 +29,38 @@ def test_d0020_null_is_bounded_not_global():
     assert "only" in ceiling
 
 
-def test_d0019_never_appears_empirically_executed():
+def test_d0019_closed_mixed_remains_aggregate_only_and_nonsemantic():
     s = WorkbenchStore().snapshot()
     d = next(x for x in s["datasets"] if x["dataset_id"] == "D0019")
     assert d["availability"] == "GATED_METADATA_ONLY"
-    assert d["empirical_state"] == "RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION"
+    assert d["empirical_state"] == "D0019_PR0005_EMPIRICAL_CLOSED_MIXED"
     assert d["rights_state"] == "APPROVED_LOCAL_RESEARCH_REUSE_WITH_ATTRIBUTION_RAW_REDISTRIBUTION_NOT_NEEDED"
-    assert "READY_FOR_SECRET_BACKED_MATERIALIZATION" in d["gate"]
+    assert "access-controlled" in d["gate"]
     runs = [r for r in s["runs"] if r["dataset_id"] == "D0019"]
     assert runs
-    assert all(r["state"] == "EMPIRICAL_EXECUTION_HELD" for r in runs)
-    assert all(r["disposition"] is None for r in runs)
+    assert all(r["state"] == "CLOSED" for r in runs)
+    assert all(r["disposition"] == "MIXED" for r in runs)
+    assert all(r["disposition_scope"] == "PR0005_FULL_PATH" for r in runs)
+    assert all("no replicated H0001 support" in r["interpretation_ceiling"] for r in runs)
+    assert all("translation, causal claim or species-wide compositionality" in r["interpretation_ceiling"] for r in runs)
+    dev, locked = runs
+    assert (dev["eligible_rows"], dev["unordered_dyads"]) == (104, 69)
+    assert dev["metrics"]["delta_log_loss"] == -0.08026925235617471
+    assert locked["eligible_rows"] == 68
+    assert locked["model_refit"] is locked["preprocessing_refit"] is False
+    assert locked["metrics"] == {
+        "B1_log_loss": 0.6361435247748188,
+        "B2_log_loss": 0.6847920995625079,
+        "delta_log_loss": 0.048648574787689025,
+    }
+    assert d["semantic_authority"] == "NONE"
+    gate = s["species"]["comparison_readiness"]
+    assert gate["CRG-A"] == gate["CRG-B"] == gate["CRG-C"] == "PASS"
+    assert gate["CRG-D"] == "PARTIAL"
+    assert gate["controlling_criterion"] == "CRG-D"
+    assert gate["controlling_reason"].startswith("CRG-D:")
+    assert gate["overall"] == "NOT_COMPARISON_READY"
+    assert gate["bonobo_activation"] == "DEFERRED"
 
 
 def test_d0025_remains_metadata_only_and_h3_held():

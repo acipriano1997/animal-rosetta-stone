@@ -1,10 +1,10 @@
 # D0019 persistent HMAC and materialization runbook
 
-Status: operational runbook only. This document contains no secret value and must never be used to store one.
+Status: historical pre-materialization procedure. D0019 PR0005 is now empirically CLOSED/MIXED through RUN-005 and the locked no-refit RUN-006 transfer. The procedure below preserves the original gates; it is not a current instruction to repeat execution. This document contains no secret value and must never be used to store one.
 
 ## Purpose
 
-D0019 has passed the scientific, provenance, eligibility, and grouped-split pre-model gates, but the canonical 104-row Group-2 normalized corpus is intentionally not created until a persistent identity namespace exists. The same namespace must later be reused for the locked Group-1 transfer so that pseudonymized individual and dyad identifiers are stable across RUN-005 and RUN-006.
+Before empirical execution, D0019 had passed the scientific, provenance, eligibility, and grouped-split pre-model gates, while the canonical 104-row Group-2 normalized corpus was held until a persistent identity namespace existed. The same namespace was required for the locked Group-1 transfer so that pseudonymized individual and dyad identifiers remained stable across RUN-005 and RUN-006.
 
 ## Required secret
 

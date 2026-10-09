@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 from copy import deepcopy
 from datetime import datetime, timezone
@@ -124,24 +125,190 @@ def _metric_triplet(lines: list[str]) -> dict[str, float]:
     }
 
 
+def _comparison_readiness(rows: list[dict[str, str]]) -> dict[str, Any]:
+    criteria = [_one(rows, "Criterion_ID", f"CRG-{letter}") for letter in "ABCDEFGHI"]
+    overall = _one(rows, "Criterion_ID", "CRG-OVERALL")["Current_Status"]
+    bonobo = _one(rows, "Criterion_ID", "BONOBO-ACT")["Current_Status"]
+    unmet = [row for row in criteria if row["Current_Status"] != "PASS"]
+    if overall not in {"NOT_COMPARISON_READY", "COMPARISON_READY_BOUNDED"} or (
+        (overall == "NOT_COMPARISON_READY") != bool(unmet)
+    ):
+        raise CanonicalProducerError("comparison gate criteria/overall disagree; fail closed")
+    if unmet and bonobo != "DEFERRED":
+        raise CanonicalProducerError("Bonobo activation before comparison readiness; fail closed")
+    controlling = unmet[0] if unmet else None
+    if controlling and not controlling["Current_Evidence"]:
+        raise CanonicalProducerError("controlling comparison criterion lacks evidence")
+    return {
+        "overall": overall,
+        **{row["Criterion_ID"]: row["Current_Status"] for row in criteria},
+        "controlling_criterion": controlling["Criterion_ID"] if controlling else None,
+        "controlling_reason": (
+            f"{controlling['Criterion_ID']}: {controlling['Current_Evidence']}"
+            if controlling else "All mandatory comparison criteria pass."
+        ),
+        "bonobo_activation": bonobo,
+    }
+
+
+def _d0019_runs(
+    lines: list[str], dataset_state: str, propagation: dict[str, dict[str, str]]
+) -> list[dict[str, Any]]:
+    """Project only reviewed HELD or CLOSED/MIXED authority shapes, never infer closure."""
+    status = _after_heading(lines, "Status")
+    status_code = status.split(".", 1)[0]
+    closed_state = "D0019_PR0005_EMPIRICAL_CLOSED_MIXED"
+    common = {
+        "dataset_id": "D0019",
+        "source_status": status,
+        "provenance_ids": [
+            "PROV-D0019-EXECUTION-CONTRACT", "PROV-D0019", "PROV-CLAIM-PROPAGATION"
+        ],
+    }
+    if status_code == "FROZEN_EXECUTION_CONTRACT / EMPIRICAL_RUN_HELD_AT_SECRET_BACKED_MATERIALIZATION":
+        if "CLOSED" in dataset_state:
+            raise CanonicalProducerError("D0019 dataset/contract state disagreement")
+        disposition = "EMPIRICAL_EXECUTION_HELD"
+        if disposition not in propagation:
+            raise CanonicalProducerError(f"claim-propagation disposition missing: {disposition}")
+        return [
+            {
+                **common,
+                "run_id": run_id,
+                "evidence_class": evidence_class,
+                "state": disposition,
+                "disposition": None,
+                "claim_propagation_disposition": disposition,
+                "gate": _after_heading(lines, "Current external blocker"),
+            }
+            for run_id, evidence_class in (
+                ("RUN-PT-RQ0001-005", "PLANNED_PREREGISTERED_EMPIRICAL"),
+                ("RUN-PT-RQ0001-006", "PLANNED_LOCKED_TRANSFER"),
+            )
+        ]
+    if status_code != "FROZEN_EXECUTION_CONTRACT / EMPIRICAL_RUNS_CLOSED_MIXED":
+        raise CanonicalProducerError("unreviewed D0019 execution status; fail closed")
+    if dataset_state != closed_state:
+        raise CanonicalProducerError("D0019 dataset/contract state disagreement")
+    if not propagation.get("MIXED", {}).get("Permitted_Core_Interpretation"):
+        raise CanonicalProducerError("claim-propagation disposition missing: MIXED")
+
+    # Read the closure paragraph, not planned decision rules or synthetic preflight.
+    closure = _after_heading(lines, "Empirical closure")
+
+    def match(pattern: str) -> re.Match[str]:
+        matches = list(re.finditer(pattern, closure))
+        if len(matches) != 1:
+            raise CanonicalProducerError("D0019 empirical closure missing or ambiguous aggregate facts")
+        return matches[0]
+
+    development = match(r"Group 2 materialization yielded (\d+) eligible development rows across (\d+) unordered dyads\.")
+    transfer = match(r"RUN-006 opened the one-time Group 1 holdout: (\d+) eligible rows")
+    number = r"([+-]?[0-9]+\.[0-9]+)"
+    dev_delta = float(match(r"RUN-005 favored B2 over B1 .*?\(B2[−–-]B1 = " + number + r"\)").group(1))
+    locked = match(r"B1 log loss was " + number + r" and B2 log loss was " + number + r",.*?\(B2[−–-]B1 = " + number + r"\)")
+    b1, b2, delta = (float(value) for value in locked.groups())
+    match(r"No model or preprocessing refit occurred on Group 1\.")
+    match(r"The registered final PR0005 disposition is MIXED\.")
+    ceiling = match(r"This result is scientifically admissible only within [^.]+; it does not establish replicated H0001 support, literal signal meaning, translation, causal signal effects, or species-wide compositionality\.").group(0)
+    rows, dyads = (int(value) for value in development.groups())
+    locked_rows = int(transfer.group(1))
+    if not (
+        all(math.isfinite(value) for value in (dev_delta, b1, b2, delta))
+        and 0 < dyads <= rows and locked_rows > 0 and b1 >= 0 and b2 >= 0
+        and dev_delta < 0 < delta
+        and math.isclose(b2 - b1, delta, rel_tol=0, abs_tol=1e-12)
+    ):
+        raise CanonicalProducerError("D0019 closure aggregates inconsistent with registered MIXED result")
+    common.update({
+        "state": "CLOSED",
+        "disposition": "MIXED",
+        "disposition_scope": "PR0005_FULL_PATH",
+        "claim_propagation_disposition": "MIXED",
+        "interpretation_ceiling": propagation["MIXED"]["Permitted_Core_Interpretation"] + " " + ceiling,
+    })
+    return [
+        {
+            **common,
+            "run_id": "RUN-PT-RQ0001-005",
+            "evidence_class": "PREREGISTERED_EMPIRICAL_DEVELOPMENT",
+            "evaluation_partition": "GROUP_2_DEVELOPMENT",
+            "eligible_rows": rows,
+            "unordered_dyads": dyads,
+            "metrics": {"delta_log_loss": dev_delta},
+        },
+        {
+            **common,
+            "run_id": "RUN-PT-RQ0001-006",
+            "evidence_class": "LOCKED_TRANSFER",
+            "evaluation_partition": "GROUP_1_LOCKED_TRANSFER",
+            "eligible_rows": locked_rows,
+            "model_refit": False,
+            "preprocessing_refit": False,
+            "metrics": {"B1_log_loss": b1, "B2_log_loss": b2, "delta_log_loss": delta},
+        },
+    ]
+
+
 class WorkspaceCanonicalProducer:
     """Build the Workbench read bundle from pinned Drive/ACEB authorities."""
 
     def __init__(self, reader: Any, manifest: dict[str, Any] | None = None) -> None:
         self.reader = reader
-        self.manifest = deepcopy(manifest or load_source_manifest())
+        self.manifest = deepcopy(load_source_manifest() if manifest is None else manifest)
+        if (
+            self.manifest.get("manifest_id") != "WORKBENCH-CANONICAL-SOURCES-v0.2"
+            or self.manifest.get("authority_policy") != "FAIL_CLOSED_ON_PIN_DRIFT"
+        ):
+            raise CanonicalProducerError("unsupported canonical authority manifest; fail closed")
+        documents = self.manifest.get("documents")
+        if not isinstance(documents, dict) or not documents:
+            raise CanonicalProducerError("canonical document authorities are missing; fail closed")
+        for key, spec in documents.items():
+            if not isinstance(spec, dict) or "revision_id" in spec or any(
+                not isinstance(spec.get(field), str) or not spec[field].strip()
+                for field in ("document_id", "title", "drive_revision_id", "observed_modified_time")
+            ):
+                raise CanonicalProducerError(f"{key} requires explicit durable Drive authority pins")
+
+    def _check_document_drive_state(self, key: str) -> None:
+        spec = self.manifest["documents"][key]
+        metadata = self.reader.drive_metadata(spec["document_id"])
+        if metadata.get("id") != spec["document_id"]:
+            raise CanonicalProducerError(f"{key} authority file identity drift; fail closed")
+        if metadata.get("mimeType") != "application/vnd.google-apps.document":
+            raise CanonicalProducerError(f"{key} authority is not a native Google Doc; fail closed")
+        if metadata.get("name") != spec["title"]:
+            raise CanonicalProducerError(f"{key} authority Drive title drift; fail closed")
+        if metadata.get("modifiedTime") != spec["observed_modified_time"]:
+            raise CanonicalProducerError(f"{key} authority Drive modified-time drift; fail closed")
+        if self.reader.drive_head_revision(spec["document_id"]) != spec["drive_revision_id"]:
+            raise CanonicalProducerError(f"{key} authority Drive revision drift; fail closed")
+
+    def _document_provenance(self, key: str) -> dict[str, str]:
+        spec = self.manifest["documents"][key]
+        return {
+            "authority": spec["title"],
+            "drive_id": spec["document_id"],
+            "drive_revision_id": spec["drive_revision_id"],
+            "observed_modified_time": spec["observed_modified_time"],
+        }
 
     def _read_pinned_document(self, key: str) -> dict[str, Any]:
         spec = self.manifest["documents"][key]
+        self._check_document_drive_state(key)
         document = self.reader.document(spec["document_id"])
+        if document.get("documentId") != spec["document_id"]:
+            raise CanonicalProducerError(f"{key} authority document identity drift; fail closed")
         if document.get("title") != spec["title"]:
             raise CanonicalProducerError(
                 f"{key} authority title drift: expected {spec['title']!r}, got {document.get('title')!r}"
             )
-        if document.get("revisionId") != spec["revision_id"]:
-            raise CanonicalProducerError(
-                f"{key} authority revision drift; reconcile semantic authority before export"
-            )
+        if not extract_google_doc_text(document).strip():
+            raise CanonicalProducerError(f"{key} authority document content is empty; fail closed")
+        # Docs revisionId is ephemeral and never a durable pin. Recheck actual
+        # Drive state after extraction to reject edits during this bounded read.
+        self._check_document_drive_state(key)
         return document
 
     def _aceb_rows(self) -> dict[str, list[dict[str, str]]]:
@@ -191,9 +358,7 @@ class WorkspaceCanonicalProducer:
             _one(aceb["datasets"], "Dataset_ID", dataset_id)
             for dataset_id in selection["dataset_ids"]
         ]
-        crg_c = _one(aceb["comparison_gate"], "Criterion_ID", "CRG-C")
-        crg_d = _one(aceb["comparison_gate"], "Criterion_ID", "CRG-D")
-        crg_overall = _one(aceb["comparison_gate"], "Criterion_ID", "CRG-OVERALL")
+        comparison_readiness = _comparison_readiness(aceb["comparison_gate"])
         propagation = {
             row["Disposition"]: row
             for row in aceb["claim_propagation"]
@@ -202,7 +367,6 @@ class WorkspaceCanonicalProducer:
         for required in (
             "KNOWN_SIDE_CALIBRATION",
             "NULL_OR_COMPONENTS_CONTEXT_SUFFICIENT",
-            "EMPIRICAL_EXECUTION_HELD",
         ):
             if required not in propagation:
                 raise CanonicalProducerError(
@@ -225,15 +389,11 @@ class WorkspaceCanonicalProducer:
         harness_result = _line_starting(harness_lines, "RHF result:")
 
         provenance: dict[str, dict[str, Any]] = {
-            "PROV-SPECIES": {
-                "authority": self.manifest["documents"]["species"]["title"],
-                "drive_id": self.manifest["documents"]["species"]["document_id"],
-                "revision_id": self.manifest["documents"]["species"]["revision_id"],
-            },
+            "PROV-SPECIES": self._document_provenance("species"),
             "PROV-COMPARISON-GATE": {
                 "authority": "ACEB Chimp Comparison Gate",
                 "spreadsheet_id": self.manifest["aceb"]["spreadsheet_id"],
-                "registry": "Chimp Comparison Gate:CRG-C,CRG-D,CRG-OVERALL",
+                "registry": "Chimp Comparison Gate:CRG-A..I,CRG-OVERALL,BONOBO-ACT",
             },
             "PROV-RQ0001": {
                 "authority": "ACEB Research Questions",
@@ -246,9 +406,7 @@ class WorkspaceCanonicalProducer:
                 "registry": "RQ0001 Claim Propagation",
             },
             "PROV-HARNESS-VERIFY": {
-                "authority": self.manifest["documents"]["harness_verify"]["title"],
-                "drive_id": self.manifest["documents"]["harness_verify"]["document_id"],
-                "revision_id": self.manifest["documents"]["harness_verify"]["revision_id"],
+                **self._document_provenance("harness_verify"),
                 "github_repo": "acipriano1997/animal-rosetta-stone",
             },
         }
@@ -294,7 +452,7 @@ class WorkspaceCanonicalProducer:
                 "semantic_authority": "NONE",
                 "provenance_ids": [prov_id],
             }
-            if "HELD" in status or "READY" in status:
+            if "HELD" in status or "READY" in status or "HELD_SCHEMA" in row["Notes"]:
                 item["gate"] = row["Notes"]
             dataset_view.append(item)
 
@@ -309,11 +467,7 @@ class WorkspaceCanonicalProducer:
             run_lines = lines[key]
             run_id = _label(run_lines, "Run_ID")
             prov_id = f"PROV-{run_id}"
-            provenance[prov_id] = {
-                "authority": self.manifest["documents"][key]["title"],
-                "drive_id": self.manifest["documents"][key]["document_id"],
-                "revision_id": self.manifest["documents"][key]["revision_id"],
-            }
+            provenance[prov_id] = self._document_provenance(key)
             source_status = _label(run_lines, "Status")
             item: dict[str, Any] = {
                 "run_id": run_id,
@@ -349,36 +503,12 @@ class WorkspaceCanonicalProducer:
                 item["provenance_ids"].append("PROV-CLAIM-PROPAGATION")
             run_view.append(item)
 
-        held_lines = lines["run005006"]
-        held_status = _after_heading(held_lines, "Status")
-        held_gate = _after_heading(held_lines, "Current external blocker")
-        held_prov = "PROV-D0019-EXECUTION-CONTRACT"
-        provenance[held_prov] = {
-            "authority": self.manifest["documents"]["run005006"]["title"],
-            "drive_id": self.manifest["documents"]["run005006"]["document_id"],
-            "revision_id": self.manifest["documents"]["run005006"]["revision_id"],
-        }
-        for run_id, evidence_class in (
-            ("RUN-PT-RQ0001-005", "PLANNED_PREREGISTERED_EMPIRICAL"),
-            ("RUN-PT-RQ0001-006", "PLANNED_LOCKED_TRANSFER"),
-        ):
-            run_view.append(
-                {
-                    "run_id": run_id,
-                    "dataset_id": "D0019",
-                    "evidence_class": evidence_class,
-                    "state": "EMPIRICAL_EXECUTION_HELD",
-                    "source_status": held_status,
-                    "disposition": None,
-                    "claim_propagation_disposition": "EMPIRICAL_EXECUTION_HELD",
-                    "gate": held_gate,
-                    "provenance_ids": [
-                        held_prov,
-                        "PROV-D0019",
-                        "PROV-CLAIM-PROPAGATION",
-                    ],
-                }
-            )
+        provenance["PROV-D0019-EXECUTION-CONTRACT"] = self._document_provenance("run005006")
+        run_view.extend(_d0019_runs(
+            lines["run005006"],
+            _one(datasets, "Dataset_ID", "D0019")["Ingestion_Status"],
+            propagation,
+        ))
 
         software_verification = [
             {
@@ -407,12 +537,7 @@ class WorkspaceCanonicalProducer:
                 "activation_state": activation,
                 "population_scope": [populations],
                 "active_question_ids": [selection["question_id"]],
-                "comparison_readiness": {
-                    "overall": crg_overall["Current_Status"],
-                    "CRG-C": crg_c["Current_Status"],
-                    "CRG-D": crg_d["Current_Status"],
-                    "controlling_reason": crg_c["Current_Evidence"],
-                },
+                "comparison_readiness": comparison_readiness,
                 "receiver_harness": {
                     "implementation_state": harness_state,
                     "empirical_exercise_state": empirical_harness_state,

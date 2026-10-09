@@ -74,19 +74,24 @@ def main() -> None:
         "d0019_current_readiness_not_stale": (
             d0019["availability"] == "GATED_METADATA_ONLY"
             and d0019["empirical_state"]
-            == "RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION"
+            == "D0019_PR0005_EMPIRICAL_CLOSED_MIXED"
             and d0019["rights_state"]
             == "APPROVED_LOCAL_RESEARCH_REUSE_WITH_ATTRIBUTION_RAW_REDISTRIBUTION_NOT_NEEDED"
         ),
-        "d0019_empirical_runs_still_held": all(
-            run["state"] == "EMPIRICAL_EXECUTION_HELD"
-            and run["disposition"] is None
+        "d0019_empirical_runs_closed_mixed": all(
+            run["state"] == "CLOSED"
+            and run["disposition"] == "MIXED"
+            and "no replicated H0001 support" in run["interpretation_ceiling"]
             for run in (run005, run006)
         ),
         "comparison_gate_not_promoted": (
             species["comparison_readiness"]["overall"] == "NOT_COMPARISON_READY"
-            and species["comparison_readiness"]["CRG-C"] == "NOT_PASS"
+            and species["comparison_readiness"]["CRG-C"] == "PASS"
+            and species["comparison_readiness"]["CRG-D"] == "PARTIAL"
+            and species["comparison_readiness"]["controlling_criterion"] == "CRG-D"
+            and species["comparison_readiness"]["bonobo_activation"] == "DEFERRED"
         ),
+        "locked_transfer_no_refit": run006["model_refit"] is False and run006["preprocessing_refit"] is False,
         "synthetic_stays_nonevidentiary": all(
             item["class"] == "ZERO_SYNTHETIC"
             and item["biological_evidence"] is False

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode
@@ -84,6 +85,53 @@ class GoogleWorkspaceRESTReader:
         return self._get_json(
             f"{self._docs_base}/documents/{quote(document_id, safe='')}?{params}"
         )
+
+    def drive_head_revision(self, file_id: str) -> str:
+        """Find the unique newest Drive revision across all history pages.
+
+        Revision IDs are opaque: neither numeric order nor response order is
+        authority. Ambiguous or incomplete history fails closed.
+        """
+        revisions: dict[str, datetime] = {}
+        page_token = ""
+        seen_tokens: set[str] = set()
+        for _ in range(100):
+            params = {"fields": "nextPageToken,revisions(id,modifiedTime)", "pageSize": "1000"}
+            if page_token:
+                params["pageToken"] = page_token
+            obj = self._get_json(
+                f"{self._drive_base}/files/{quote(file_id, safe='')}/revisions?{urlencode(params)}"
+            )
+            rows = obj.get("revisions")
+            if not isinstance(rows, list):
+                raise GoogleWorkspaceReadError("Drive revision history is malformed")
+            for row in rows:
+                if not isinstance(row, dict) or not isinstance(row.get("id"), str) or not row["id"].strip():
+                    raise GoogleWorkspaceReadError("Drive revision identity is invalid")
+                try:
+                    stamp = datetime.fromisoformat(row["modifiedTime"].replace("Z", "+00:00"))
+                    if stamp.tzinfo is None:
+                        raise ValueError("timezone missing")
+                except (KeyError, AttributeError, TypeError, ValueError) as exc:
+                    raise GoogleWorkspaceReadError("Drive revision time is invalid") from exc
+                if row["id"] in revisions and revisions[row["id"]] != stamp:
+                    raise GoogleWorkspaceReadError("Drive revision history changed during pagination")
+                revisions[row["id"]] = stamp
+            page_token = obj.get("nextPageToken", "")
+            if not isinstance(page_token, str) or page_token in seen_tokens:
+                raise GoogleWorkspaceReadError("Drive revision pagination is invalid")
+            if not page_token:
+                break
+            seen_tokens.add(page_token)
+        else:
+            raise GoogleWorkspaceReadError("Drive revision history exceeds bounded read limit")
+        if not revisions:
+            raise GoogleWorkspaceReadError("Drive revision history is empty")
+        newest = max(revisions.values())
+        heads = [rid for rid, stamp in revisions.items() if stamp == newest]
+        if len(heads) != 1:
+            raise GoogleWorkspaceReadError("Drive head revision is ambiguous")
+        return heads[0]
 
     def spreadsheet_values(self, spreadsheet_id: str, range_name: str) -> list[list[Any]]:
         encoded_range = quote(range_name, safe="")
