@@ -12,9 +12,9 @@
     "Any authority_state other than CURRENT fails closed.",
     "Unknown adapter contracts fail closed.",
     "Missing semantic owners or required authority bindings fail closed.",
-    "The current chimp pilot fallback must keep D0019 at RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION and may not regress to obsolete pre-byte/source-rights-unverified language.",
-    "RUN-005 and RUN-006 remain EMPIRICAL_EXECUTION_HELD with null dispositions until their owning empirical authorities close them.",
-    "CRG-C remains NOT_PASS and overall chimp comparison readiness remains NOT_COMPARISON_READY until the owning comparison gate changes."
+    "The current chimp pilot fallback must project D0019_PR0005_EMPIRICAL_CLOSED_MIXED with aggregate results only; restricted source bytes, identities and row-level artifacts remain unavailable.",
+    "RUN-005 and RUN-006 are CLOSED with full-path MIXED disposition and no Group-1 model or preprocessing refit. Historical EMPIRICAL_EXECUTION_HELD with null dispositions remains a producer regression case.",
+    "CRG-C is PASS; CRG-D is PARTIAL and controlling; overall chimp comparison readiness remains NOT_COMPARISON_READY and Bonobo activation remains DEFERRED. Closure earns no replicated H0001, semantic, translation, causal or species-wide compositionality claim."
   ],
   "semantic_firewall_requirements": [
     "meaning, translation, semantic_gloss and english_gloss keys are forbidden recursively within displayed scientific records.",

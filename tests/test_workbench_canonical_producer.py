@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import json
+from pathlib import Path
 
 import pytest
 
@@ -203,9 +205,14 @@ def _fake_payloads(manifest):
             )
         ]),
         (aceb_id, r["comparison_gate"]): _table([
+            *[
+                {"Criterion_ID": f"CRG-{letter}", "Current_Status": "PASS", "Current_Evidence": "bounded"}
+                for letter in "ABEFGHI"
+            ],
             {"Criterion_ID": "CRG-C", "Current_Status": "NOT_PASS", "Current_Evidence": "empirical held"},
             {"Criterion_ID": "CRG-D", "Current_Status": "PARTIAL", "Current_Evidence": "partial"},
             {"Criterion_ID": "CRG-OVERALL", "Current_Status": "NOT_COMPARISON_READY", "Current_Evidence": "CRG-C"},
+            {"Criterion_ID": "BONOBO-ACT", "Current_Status": "DEFERRED", "Current_Evidence": "gate held"},
         ]),
         (aceb_id, r["claim_propagation"]): _table([
             {"Disposition": "KNOWN_SIDE_CALIBRATION", "Permitted_Core_Interpretation": "known-side only"},
@@ -435,6 +442,147 @@ def test_producer_builds_adapter_valid_bundle_with_event_evidence_and_rights_lay
         r["state"] == "EMPIRICAL_EXECUTION_HELD" and r["disposition"] is None
         for r in held
     )
+    gate = snapshot["species"]["comparison_readiness"]
+    assert gate["CRG-C"] == "NOT_PASS"
+    assert gate["controlling_criterion"] == "CRG-C"
+    assert gate["controlling_reason"] == "CRG-C: empirical held"
+    assert gate["bonobo_activation"] == "DEFERRED"
+
+
+def _closed_reader(manifest):
+    fixture = json.loads((Path(__file__).parent / "fixtures/workbench_d0019_closed_mixed.json").read_text())
+    reader = FakeReader(manifest)
+    spec = manifest["documents"]["run005006"]
+    assert fixture["source_document_id"] == spec["document_id"]
+    assert fixture["source_revision_id"] == spec["revision_id"]
+    reader.documents[spec["document_id"]] = _doc(spec, fixture["execution_lines"], tabbed=True)
+    aceb = manifest["aceb"]["spreadsheet_id"]
+    ranges = manifest["aceb"]["ranges"]
+    table = reader.ranges[(aceb, ranges["datasets"])]
+    d0019 = next(row for row in table[1:] if row[table[0].index("Dataset_ID")] == "D0019")
+    d0019[table[0].index("Ingestion_Status")] = fixture["dataset_state"]
+    reader.ranges[(aceb, ranges["comparison_gate"])] = _table(fixture["comparison_gate"])
+    reader.ranges[(aceb, ranges["claim_propagation"])].append(list(fixture["claim_propagation"].values()))
+    return reader
+
+
+def test_producer_projects_current_closed_mixed_with_bounded_claims_and_no_refit():
+    manifest = _small_manifest()
+    snapshot = WorkspaceCanonicalProducer(_closed_reader(manifest), manifest).build_bundle()["snapshot"]
+    runs = {r["run_id"]: r for r in snapshot["runs"]}
+    dev, locked = (runs[f"RUN-PT-RQ0001-{suffix}"] for suffix in ("005", "006"))
+    for run in (dev, locked):
+        assert run["state"] == "CLOSED"
+        assert run["disposition"] == "MIXED"
+        assert run["disposition_scope"] == "PR0005_FULL_PATH"
+        assert run["claim_propagation_disposition"] == "MIXED"
+        assert "gate" not in run
+        assert "does not establish replicated H0001 support" in run["interpretation_ceiling"]
+        for phrase in ("literal signal meaning", "translation", "causal signal effects", "species-wide compositionality"):
+            assert phrase in run["interpretation_ceiling"]
+        assert "PROV-D0019-EXECUTION-CONTRACT" in run["provenance_ids"]
+    assert dev["eligible_rows"] == 104
+    assert dev["unordered_dyads"] == 69
+    assert dev["metrics"]["delta_log_loss"] == -0.08026925235617471
+    assert locked["eligible_rows"] == 68
+    assert locked["model_refit"] is False
+    assert locked["preprocessing_refit"] is False
+    assert locked["metrics"] == {
+        "B1_log_loss": 0.6361435247748188,
+        "B2_log_loss": 0.6847920995625079,
+        "delta_log_loss": 0.048648574787689025,
+    }
+    gate = snapshot["species"]["comparison_readiness"]
+    assert gate["CRG-A"] == gate["CRG-B"] == gate["CRG-C"] == "PASS"
+    assert gate["CRG-D"] == "PARTIAL"
+    assert gate["controlling_criterion"] == "CRG-D"
+    assert gate["controlling_reason"].startswith("CRG-D:")
+    assert gate["overall"] == "NOT_COMPARISON_READY"
+    assert gate["bonobo_activation"] == "DEFERRED"
+    assert all(not v["biological_evidence"] for v in snapshot["software_verification"])
+    assert all(d["semantic_authority"] == "NONE" for d in snapshot["datasets"])
+
+
+@pytest.mark.parametrize("old,new", [
+    ("EMPIRICAL_RUNS_CLOSED_MIXED", "EMPIRICAL_RUNS_CLOSED_UNKNOWN"),
+    ("Empirical closure", "Synthetic preflight"),
+    ("No model or preprocessing refit occurred on Group 1.", "Model refit occurred on Group 1."),
+    ("The registered final PR0005 disposition is MIXED.", "The registered final PR0005 disposition is BOUNDED_H0001_SUPPORT."),
+    ("+0.048648574787689025", "-0.048648574787689025"),
+    ("0.6361435247748188", "0.1"),
+    ("69 unordered dyads", "105 unordered dyads"),
+    ("it does not establish replicated H0001 support", "it establishes replicated H0001 support"),
+])
+def test_incomplete_or_conflicted_closure_fails_closed(old, new):
+    manifest = _small_manifest()
+    reader = _closed_reader(manifest)
+    spec = manifest["documents"]["run005006"]
+    text = extract_google_doc_text(reader.documents[spec["document_id"]])
+    assert old in text
+    reader.documents[spec["document_id"]] = _doc(spec, text.replace(old, new).splitlines())
+    with pytest.raises(CanonicalProducerError):
+        WorkspaceCanonicalProducer(reader, manifest).build_bundle()
+
+
+@pytest.mark.parametrize("closed", [False, True])
+def test_d0019_dataset_contract_disagreement_fails_closed(closed):
+    manifest = _small_manifest()
+    reader = _closed_reader(manifest) if closed else FakeReader(manifest)
+    table = reader.ranges[(manifest["aceb"]["spreadsheet_id"], manifest["aceb"]["ranges"]["datasets"])]
+    row = next(row for row in table[1:] if row[0] == "D0019")
+    row[table[0].index("Ingestion_Status")] = (
+        "READY_FOR_SECRET_BACKED_MATERIALIZATION" if closed else "D0019_PR0005_EMPIRICAL_CLOSED_MIXED"
+    )
+    with pytest.raises(CanonicalProducerError, match="dataset/contract state disagreement"):
+        WorkspaceCanonicalProducer(reader, manifest).build_bundle()
+
+
+def test_mixed_claim_propagation_cannot_be_omitted():
+    manifest = _small_manifest()
+    reader = _closed_reader(manifest)
+    table = reader.ranges[(manifest["aceb"]["spreadsheet_id"], manifest["aceb"]["ranges"]["claim_propagation"])]
+    table[:] = [row for row in table if row[0] != "MIXED"]
+    with pytest.raises(CanonicalProducerError, match="disposition missing: MIXED"):
+        WorkspaceCanonicalProducer(reader, manifest).build_bundle()
+
+
+@pytest.mark.parametrize("criterion,status,controlling", [
+    ("CRG-A", "NOT_PASS", "CRG-A"),
+    ("CRG-C", "NOT_PASS", "CRG-C"),
+    ("CRG-D", "PASS", "CRG-E"),
+])
+def test_controlling_criterion_tracks_authority_not_a_hard_coded_gate(criterion, status, controlling):
+    manifest = _small_manifest()
+    reader = _closed_reader(manifest)
+    table = reader.ranges[(manifest["aceb"]["spreadsheet_id"], manifest["aceb"]["ranges"]["comparison_gate"])]
+    next(row for row in table[1:] if row[0] == criterion)[1] = status
+    gate = WorkspaceCanonicalProducer(reader, manifest).build_bundle()["snapshot"]["species"]["comparison_readiness"]
+    assert gate["controlling_criterion"] == controlling
+    assert gate["controlling_reason"].startswith(controlling + ":")
+
+
+@pytest.mark.parametrize("criterion,status", [
+    ("CRG-OVERALL", "COMPARISON_READY_BOUNDED"),
+    ("BONOBO-ACT", "ACTIVE_COMPARATOR"),
+])
+def test_gate_cannot_promote_overall_or_bonobo_with_unmet_criteria(criterion, status):
+    manifest = _small_manifest()
+    reader = _closed_reader(manifest)
+    table = reader.ranges[(manifest["aceb"]["spreadsheet_id"], manifest["aceb"]["ranges"]["comparison_gate"])]
+    next(row for row in table[1:] if row[0] == criterion)[1] = status
+    with pytest.raises(CanonicalProducerError, match="fail closed"):
+        WorkspaceCanonicalProducer(reader, manifest).build_bundle()
+
+
+def test_known_run002_authority_pin_conflict_fails_closed():
+    manifest = _small_manifest()
+    reader = _closed_reader(manifest)
+    spec = manifest["documents"]["run002"]
+    reader.documents[spec["document_id"]]["revisionId"] = (
+        "ANLCKQlAepEEbhUCZJypcvlGWmZsA3mbHbGhyfoOXE3bgtB3gSTAJACNjXVOkJ52JXT7U3PjWAzOanX6I82uBwsNhnRkbTXNZ9nWWE5D5OQ"
+    )
+    with pytest.raises(CanonicalProducerError, match="run002 authority revision drift"):
+        WorkspaceCanonicalProducer(reader, manifest).build_bundle()
 
 
 def test_aceb_modified_time_drift_fails_closed():

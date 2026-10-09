@@ -120,9 +120,14 @@ class VerificationReader:
             )
         ])
         self.ranges[(aceb, r["comparison_gate"])] = _table([
+            *[
+                {"Criterion_ID":f"CRG-{letter}","Current_Status":"PASS","Current_Evidence":"bounded"}
+                for letter in "ABEFGHI"
+            ],
             {"Criterion_ID":"CRG-C","Current_Status":"NOT_PASS","Current_Evidence":"held"},
             {"Criterion_ID":"CRG-D","Current_Status":"PARTIAL","Current_Evidence":"partial"},
             {"Criterion_ID":"CRG-OVERALL","Current_Status":"NOT_COMPARISON_READY","Current_Evidence":"CRG-C"},
+            {"Criterion_ID":"BONOBO-ACT","Current_Status":"DEFERRED","Current_Evidence":"gate held"},
         ])
         self.ranges[(aceb, r["claim_propagation"])] = _table([
             {"Disposition":"KNOWN_SIDE_CALIBRATION","Permitted_Core_Interpretation":"known-side only"},
@@ -251,6 +256,20 @@ def main() -> None:
         r for r in snapshot["runs"] if r["run_id"] == "RUN-PT-RQ0001-004"
     )
 
+    fixture = json.loads((Path(__file__).resolve().parents[1] / "tests/fixtures/workbench_d0019_closed_mixed.json").read_text())
+    current_reader = VerificationReader(manifest)
+    spec = manifest["documents"]["run005006"]
+    current_reader.docs[spec["document_id"]] = _doc(spec, fixture["execution_lines"])
+    aceb, ranges = manifest["aceb"]["spreadsheet_id"], manifest["aceb"]["ranges"]
+    table = current_reader.ranges[(aceb, ranges["datasets"])]
+    next(row for row in table[1:] if row[0] == "D0019")[table[0].index("Ingestion_Status")] = fixture["dataset_state"]
+    current_reader.ranges[(aceb, ranges["comparison_gate"])] = _table(fixture["comparison_gate"])
+    current_reader.ranges[(aceb, ranges["claim_propagation"])].append(list(fixture["claim_propagation"].values()))
+    current_bundle = WorkspaceCanonicalProducer(current_reader, manifest).build_bundle()
+    current, _ = canonical_bundle_to_snapshot(current_bundle, source="<memory>")
+    dev, transfer = [r for r in current["runs"] if r["dataset_id"] == "D0019"]
+    gate = current["species"]["comparison_readiness"]
+
     checks = {
         "producer_manifest_bound": bundle["producer_manifest"] == manifest["manifest_id"],
         "authority_current": bundle["authority_state"] == "CURRENT",
@@ -260,6 +279,35 @@ def main() -> None:
         "held_empirical_runs_remain_unexecuted": all(
             r["state"] == "EMPIRICAL_EXECUTION_HELD" and r["disposition"] is None
             for r in snapshot["runs"] if r["dataset_id"] == "D0019"
+        ),
+        "historical_crg_c_controls": snapshot["species"]["comparison_readiness"]["controlling_criterion"] == "CRG-C",
+        "current_d0019_closed_mixed": all(
+            run["state"] == "CLOSED" and run["disposition"] == "MIXED"
+            and run["disposition_scope"] == "PR0005_FULL_PATH"
+            for run in (dev, transfer)
+        ),
+        "current_registered_aggregates": (
+            dev["eligible_rows"] == 104 and dev["unordered_dyads"] == 69
+            and dev["metrics"]["delta_log_loss"] == -0.08026925235617471
+            and transfer["eligible_rows"] == 68
+            and transfer["metrics"] == {
+                "B1_log_loss": 0.6361435247748188,
+                "B2_log_loss": 0.6847920995625079,
+                "delta_log_loss": 0.048648574787689025,
+            }
+        ),
+        "locked_transfer_no_refit": transfer["model_refit"] is False and transfer["preprocessing_refit"] is False,
+        "current_claim_ceiling_bounded": all(
+            "does not establish replicated H0001 support" in run["interpretation_ceiling"]
+            and "translation, causal signal effects, or species-wide compositionality" in run["interpretation_ceiling"]
+            for run in (dev, transfer)
+        ),
+        "current_crg_d_controls_bonobo_deferred": (
+            gate["CRG-C"] == "PASS" and gate["CRG-D"] == "PARTIAL"
+            and gate["controlling_criterion"] == "CRG-D"
+            and gate["controlling_reason"].startswith("CRG-D:")
+            and gate["overall"] == "NOT_COMPARISON_READY"
+            and gate["bonobo_activation"] == "DEFERRED"
         ),
         "event_projection_present": len(snapshot["events"]) == 2,
         "event_provenance_resolves": all(

@@ -1,0 +1,74 @@
+{
+  "fixture_role": "WORKSPACE_RESPONSE_TEST_FIXTURE_NOT_SCIENTIFIC_AUTHORITY",
+  "biological_evidence": false,
+  "source_document_id": "1bZ2fU66fMYSTKPOf08yTxpYnc-GwKyWIxiyhz-RVyjk",
+  "source_revision_id": "ANLCKQk6kaBl-4gTmhVb9pgOrZCyvLcQpf3XDGcopBVVVzBZ7n9NYXuVrD2YDvkdFT0km9axNjzsRN8OoOznuEV8QoE8TQQV4MuCPw4PhV4",
+  "execution_lines": [
+    "Status",
+    "FROZEN_EXECUTION_CONTRACT / EMPIRICAL_RUNS_CLOSED_MIXED. D0019 was materialized under the persistent secret-backed identity namespace, RUN-005 was frozen on eligible Group 2 development data, and the one-time locked RUN-006 transfer was executed on eligible Group 1 without model or preprocessing refit. The registered full-path disposition is MIXED.",
+    "Empirical closure",
+    "D0019 PR0005 empirical execution is complete under the frozen contract. Group 2 materialization yielded 104 eligible development rows across 69 unordered dyads. RUN-005 favored B2 over B1 on the registered development log-loss comparison (B2−B1 = -0.08026925235617471). After that development package and full-Group-2 B1/B2 pipelines were frozen, RUN-006 opened the one-time Group 1 holdout: 68 eligible rows from 103 source rows before exclusions. B1 log loss was 0.6361435247748188 and B2 log loss was 0.6847920995625079, so the locked transfer reversed the development direction (B2−B1 = +0.048648574787689025). No model or preprocessing refit occurred on Group 1. The registered final PR0005 disposition is MIXED. This result is scientifically admissible only within D0019's source-coded recipient-response endpoint and registered representation; it does not establish replicated H0001 support, literal signal meaning, translation, causal signal effects, or species-wide compositionality. CRG-C is eligible for PASS because a rights-cleared receiver/component analysis validly closed under a frozen contract; CRG-D remains unresolved pending independent biological-source evidence, so overall chimpanzee comparison readiness remains NOT_COMPARISON_READY and Bonobo activation remains deferred."
+  ],
+  "dataset_state": "D0019_PR0005_EMPIRICAL_CLOSED_MIXED",
+  "claim_propagation": {
+    "Disposition": "MIXED",
+    "Permitted_Core_Interpretation": "Evidence is inconsistent across registered evaluation components; no single positive or negative summary replaces disagreement map"
+  },
+  "comparison_gate": [
+    {
+      "Criterion_ID": "CRG-A",
+      "Current_Status": "PASS",
+      "Current_Evidence": "Q0001/Q0002 complete backbones; active maps and source registry"
+    },
+    {
+      "Criterion_ID": "CRG-B",
+      "Current_Status": "PASS",
+      "Current_Evidence": "D0020 RUN-003/RUN-004; Waibira locked transfer; NULL_OR_CONTEXT_SUFFICIENT"
+    },
+    {
+      "Criterion_ID": "CRG-C",
+      "Current_Status": "PASS",
+      "Current_Evidence": "D0019 PR0005 closed empirically under the frozen source-specific contract. Secret-backed Group-2 materialization yielded 104 eligible development rows across 69 unordered dyads. RUN-005 favored B2 over B1 on registered development log loss (B2−B1 = -0.08026925235617471). The one-time locked Group-1 transfer used 68 eligible rows from 103 source rows before exclusions and reversed direction (B2−B1 = +0.048648574787689025); no model or preprocessing refit occurred. Final PR0005 disposition: MIXED."
+    },
+    {
+      "Criterion_ID": "CRG-D",
+      "Current_Status": "PARTIAL",
+      "Current_Evidence": "Multi-population literature exists; S0083 fallback would provide wild Kanyawara independent source if acquired/executed; D0019 is separate semi-wild source"
+    },
+    {
+      "Criterion_ID": "CRG-E",
+      "Current_Status": "PROVISIONAL_PASS",
+      "Current_Evidence": "D0020 null preserved; S0083 limitation background; contradictions/corrections infrastructure active"
+    },
+    {
+      "Criterion_ID": "CRG-F",
+      "Current_Status": "PROVISIONAL_PASS",
+      "Current_Evidence": "H0002 active; source-specific contracts preserve context/state/coverage"
+    },
+    {
+      "Criterion_ID": "CRG-G",
+      "Current_Status": "PROVISIONAL_PASS",
+      "Current_Evidence": "RQ0001 Result-to-Claim Propagation Rules v0.1 canonical"
+    },
+    {
+      "Criterion_ID": "CRG-H",
+      "Current_Status": "PARTIAL",
+      "Current_Evidence": "D0018/D0020 strong provenance; future receiver run pending"
+    },
+    {
+      "Criterion_ID": "CRG-I",
+      "Current_Status": "PARTIAL",
+      "Current_Evidence": "Current passive work gated; D0019/S0083 pending rights/data access"
+    },
+    {
+      "Criterion_ID": "CRG-OVERALL",
+      "Current_Status": "NOT_COMPARISON_READY",
+      "Current_Evidence": "A PASS; B PASS; C PASS via completed D0019 PR0005 MIXED closure; D PARTIAL and now controlling; E/F/G provisional pending bounded package freeze; H/I partial pending final package review"
+    },
+    {
+      "Criterion_ID": "BONOBO-ACT",
+      "Current_Status": "DEFERRED",
+      "Current_Evidence": "Current chimp state NOT_COMPARISON_READY"
+    }
+  ]
+}

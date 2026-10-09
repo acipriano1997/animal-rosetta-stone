@@ -34,8 +34,16 @@ checks = {
     "event_rows_semantics_free": not paths(d0018["items"]) and not paths(d0020["items"]),
     "event_provenance_visible": all(x.get("provenance_ids") for x in d0018["items"] + d0020["items"]),
     "run_dataset_joins_resolve": all(r.get("dataset_id") in datasets for r in runs),
-    "held_runs_remain_held": store.run_get("RUN-PT-RQ0001-005")["state"] == "EMPIRICAL_EXECUTION_HELD",
-    "held_run_disposition_unearned": store.run_get("RUN-PT-RQ0001-005")["disposition"] is None,
+    "d0019_runs_closed_mixed": all(
+        store.run_get(f"RUN-PT-RQ0001-{suffix}")["state"] == "CLOSED"
+        and store.run_get(f"RUN-PT-RQ0001-{suffix}")["disposition"] == "MIXED"
+        for suffix in ("005", "006")
+    ),
+    "locked_transfer_no_refit": (
+        store.run_get("RUN-PT-RQ0001-006")["model_refit"] is False
+        and store.run_get("RUN-PT-RQ0001-006")["preprocessing_refit"] is False
+    ),
+    "crg_d_controls": store.species_get("SP001")["comparison_readiness"]["controlling_criterion"] == "CRG-D",
     "d0020_null_remains_bounded": store.run_get("RUN-PT-RQ0001-004")["disposition"] == "NULL_OR_CONTEXT_SUFFICIENT",
     "zero_synthetic_separate": all(not x["biological_evidence"] for x in store.software_verification_list()),
 }

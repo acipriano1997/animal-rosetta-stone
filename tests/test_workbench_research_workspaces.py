@@ -61,9 +61,13 @@ def test_experiment_workspace_can_deterministically_join_runs_to_datasets():
         assert run["state"]
         assert run["provenance_ids"]
 
-    held = store.run_get("RUN-PT-RQ0001-005")
-    assert held["state"] == "EMPIRICAL_EXECUTION_HELD"
-    assert held["disposition"] is None
+    for suffix in ("005", "006"):
+        mixed = store.run_get(f"RUN-PT-RQ0001-{suffix}")
+        assert mixed["state"] == "CLOSED"
+        assert mixed["disposition"] == "MIXED"
+        assert "no replicated H0001 support" in mixed["interpretation_ceiling"]
+    transfer = store.run_get("RUN-PT-RQ0001-006")
+    assert transfer["model_refit"] is transfer["preprocessing_refit"] is False
     closed = store.run_get("RUN-PT-RQ0001-004")
     assert closed["state"] == "CLOSED"
     assert closed["disposition"] == "NULL_OR_CONTEXT_SUFFICIENT"

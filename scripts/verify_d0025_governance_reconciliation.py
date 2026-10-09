@@ -46,9 +46,16 @@ def main() -> None:
         ),
         "no_scientific_promotion": (
             d0025["semantic_authority"] == "NONE"
-            and species["comparison_readiness"]["CRG-C"] == "NOT_PASS"
+            and species["comparison_readiness"]["CRG-C"] == "PASS"
+            and species["comparison_readiness"]["CRG-D"] == "PARTIAL"
+            and species["comparison_readiness"]["controlling_criterion"] == "CRG-D"
             and species["comparison_readiness"]["overall"]
             == "NOT_COMPARISON_READY"
+        ),
+        "parallel_crg_d_route_remains_held": (
+            d0025["role"] == "PARALLEL_INDEPENDENT_SOURCE_CRG_D_ROUTE"
+            and "HELD" in d0025["empirical_state"]
+            and "PR0006 remains NOT_RUN" in d0025["gate"]
         ),
     }
 

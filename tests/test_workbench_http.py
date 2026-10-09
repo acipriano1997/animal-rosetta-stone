@@ -35,7 +35,11 @@ def test_workbench_http_surface_smoke():
         assert status == 200
         species = json.loads(body)
         assert species["activation_state"] == "ACTIVE"
-        assert species["comparison_readiness"]["CRG-C"] == "NOT_PASS"
+        assert species["comparison_readiness"]["CRG-C"] == "PASS"
+        assert species["comparison_readiness"]["CRG-D"] == "PARTIAL"
+        assert species["comparison_readiness"]["controlling_criterion"] == "CRG-D"
+        assert species["comparison_readiness"]["overall"] == "NOT_COMPARISON_READY"
+        assert species["comparison_readiness"]["bonobo_activation"] == "DEFERRED"
 
         status, _, body = _get(base, "/api/questions/RQ0001")
         assert status == 200
@@ -46,8 +50,17 @@ def test_workbench_http_surface_smoke():
         assert status == 200
         d0019 = json.loads(body)
         assert d0019["availability"] == "GATED_METADATA_ONLY"
-        assert d0019["empirical_state"] == "RDC004_PREMODEL_GATES_PASS_READY_FOR_SECRET_BACKED_MATERIALIZATION"
+        assert d0019["empirical_state"] == "D0019_PR0005_EMPIRICAL_CLOSED_MIXED"
         assert d0019["rights_state"] == "APPROVED_LOCAL_RESEARCH_REUSE_WITH_ATTRIBUTION_RAW_REDISTRIBUTION_NOT_NEEDED"
+
+        for suffix in ("005", "006"):
+            status, _, body = _get(base, f"/api/runs/RUN-PT-RQ0001-{suffix}")
+            assert status == 200
+            run = json.loads(body)
+            assert run["state"] == "CLOSED"
+            assert run["disposition"] == "MIXED"
+            assert "no replicated H0001 support" in run["interpretation_ceiling"]
+        assert run["model_refit"] is run["preprocessing_refit"] is False
 
         status, _, body = _get(base, "/api/software-verification")
         assert status == 200
