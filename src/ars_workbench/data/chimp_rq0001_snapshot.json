@@ -195,10 +195,10 @@
   ],
   "provenance": {
     "PROV-CLAIM-PROPAGATION": {"authority": "ACEB RQ0001 Claim Propagation", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "RQ0001 Claim Propagation:MIXED", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-D0019-EXECUTION-CONTRACT": {"authority": "Animal Rosetta Stone — RQ0001 D0019 RUN-005/RUN-006 Execution Contract v0.1", "drive_id": "1bZ2fU66fMYSTKPOf08yTxpYnc-GwKyWIxiyhz-RVyjk", "revision_id": "ANLCKQk6kaBl-4gTmhVb9pgOrZCyvLcQpf3XDGcopBVVVzBZ7n9NYXuVrD2YDvkdFT0km9axNjzsRN8OoOznuEV8QoE8TQQV4MuCPw4PhV4"},
-    "PROV-SPECIES": {"authority": "Chimpanzee — Species Activation Record v0.2", "drive_id": "1KYlWfx-aD39DledKlF8xZdHOEKBdrMyXcQJwhHqAbic", "revision_id": "ANLCKQlv4kWsfvZSwaIqz0GGaHOUbm6h5OxJUv5QVioN32OWv10N0x82Kjl0YeGZFtfCjhrnGgI5EdowscPtv5R0NNE096mhemdbYID-E2U"},
+    "PROV-D0019-EXECUTION-CONTRACT": {"authority": "Animal Rosetta Stone — RQ0001 D0019 RUN-005/RUN-006 Execution Contract v0.1", "drive_id": "1bZ2fU66fMYSTKPOf08yTxpYnc-GwKyWIxiyhz-RVyjk", "drive_revision_id": "9", "observed_modified_time": "2026-10-08T04:36:22.141Z"},
+    "PROV-SPECIES": {"authority": "Chimpanzee — Species Activation Record v0.2", "drive_id": "1KYlWfx-aD39DledKlF8xZdHOEKBdrMyXcQJwhHqAbic", "drive_revision_id": "37", "observed_modified_time": "2026-10-08T04:46:52.198Z"},
     "PROV-COMPARISON-GATE": {"authority": "ACEB Chimp Comparison Gate + Chimpanzee Comparison-Ready Gate v0.1", "drive_id": "1a7tBCV6OODbJ5mx6v0qwzarISlEu38c67MSSxgQ5tuo", "registry": "ACEB: Chimp Comparison Gate", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-HARNESS-VERIFY": {"authority": "Animal Rosetta Stone — Receiver Harness GitHub Operational Verification — 2026-09-30", "drive_id": "1u9YOZCFWLSm4znq3sg0a1Qo2Nnuo-o0FcLh6ikQ42Rw", "github_repo": "acipriano1997/animal-rosetta-stone", "revision_id": "AHj4eMSSV1cBzJ1kUJBmCl7XR64M16PDwNfqOdClZ-EqOIVmI_Agqr3TEdgk29iBiGWfFgYGw1_5D59uK5b02gwrcxF0VyhqDy2yzsi11Ik"},
+    "PROV-HARNESS-VERIFY": {"authority": "Animal Rosetta Stone — Receiver Harness GitHub Operational Verification — 2026-09-30", "drive_id": "1u9YOZCFWLSm4znq3sg0a1Qo2Nnuo-o0FcLh6ikQ42Rw", "github_repo": "acipriano1997/animal-rosetta-stone", "drive_revision_id": "4", "observed_modified_time": "2026-09-30T11:43:23.971Z"},
     "PROV-RQ0001": {"authority": "ACEB Research Questions", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Research Questions:RQ0001", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
     "PROV-H0001": {"authority": "ACEB Hypotheses", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Hypotheses:H0001", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
     "PROV-H0002": {"authority": "ACEB Hypotheses", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Hypotheses:H0002", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
@@ -207,8 +207,8 @@
     "PROV-D0019": {"authority": "ACEB Datasets", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Datasets:D0019", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
     "PROV-D0020": {"authority": "ACEB Datasets", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Datasets:D0020", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
     "PROV-D0025": {"authority": "ACEB Datasets", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Datasets:D0025", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-RUN003": {"authority": "Animal Rosetta Stone — RQ0001 RUN-003 Development-Only Sequence Analysis v0.1", "drive_id": "18DGI71VY_yPPgY4GQe0_-DCQNTqw48ydjcBNelbeL60", "revision_id": "ANLCKQlPcjhiBSvQZGGG8TP68q8dcG5I2M3TcS5tI3cAuZ2bTagOge8SF9IDdCQWXGHeGfFdEvp8YMk6cJwXqoFItXzkJX_D2jWnB7-Y7qs"},
-    "PROV-RUN004": {"authority": "Animal Rosetta Stone — RQ0001 RUN-004 Locked Waibira Sequence Evaluation v0.1", "drive_id": "1u8Xom-fKKc1h7oXfW_Bd0A-km2l7zc0nz-i68eg3ujY", "revision_id": "ANLCKQlTFg7Ve06qvpZn48Py6EgGrFvsimhgZ_xtBw366PmPO15d7wjyzCPQ1WLVmrvNT7NBEHbt_bcIo6csx644nPQuzBbhgkCnl-BR7ao"},
+    "PROV-RUN003": {"authority": "Animal Rosetta Stone — RQ0001 RUN-003 Development-Only Sequence Analysis v0.1", "drive_id": "18DGI71VY_yPPgY4GQe0_-DCQNTqw48ydjcBNelbeL60", "drive_revision_id": "1", "observed_modified_time": "2026-09-29T19:00:14.499Z"},
+    "PROV-RUN004": {"authority": "Animal Rosetta Stone — RQ0001 RUN-004 Locked Waibira Sequence Evaluation v0.1", "drive_id": "1u8Xom-fKKc1h7oXfW_Bd0A-km2l7zc0nz-i68eg3ujY", "drive_revision_id": "1", "observed_modified_time": "2026-09-29T19:02:00.467Z"},
     "PROV-PR0006": {"authority": "PRER-RQ0001-D0025 Receiver Modality Reanalysis v0.1", "drive_id": "1UcKKgG32fpwXHiYkMDLqiwrcb19Ix8sr47aAsz0GYno"}
   }
 }

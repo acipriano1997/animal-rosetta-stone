@@ -12,7 +12,7 @@ from ars_workbench.producer import WorkspaceCanonicalProducer, load_source_manif
 def _doc(spec, lines):
     return {
         "title": spec["title"],
-        "revisionId": spec["revision_id"],
+        "documentId": spec["document_id"], "revisionId": "transient-test-token",
         "body": {
             "content": [
                 {"paragraph": {"elements": [{"textRun": {"content": line + "\n"}}]}}
@@ -223,6 +223,13 @@ class VerificationReader:
             }])
 
     def drive_metadata(self, file_id):
+        for spec in self.m["documents"].values():
+            if file_id == spec["document_id"]:
+                return {
+                    "id": file_id, "name": spec["title"],
+                    "mimeType": "application/vnd.google-apps.document",
+                    "modifiedTime": spec["observed_modified_time"],
+                }
         if file_id == self.m["aceb"]["spreadsheet_id"]:
             return {
                 "id":file_id,"name":self.m["aceb"]["title"],
@@ -238,6 +245,10 @@ class VerificationReader:
 
     def document(self, document_id):
         return deepcopy(self.docs[document_id])
+
+    def drive_head_revision(self, document_id):
+        return next(spec["drive_revision_id"] for spec in self.m["documents"].values()
+                    if spec["document_id"] == document_id)
 
     def spreadsheet_values(self, spreadsheet_id, range_name):
         return deepcopy(self.ranges[(spreadsheet_id, range_name)])

@@ -1,5 +1,5 @@
 {
-  "manifest_id": "WORKBENCH-CANONICAL-SOURCES-v0.1",
+  "manifest_id": "WORKBENCH-CANONICAL-SOURCES-v0.2",
   "authority_policy": "FAIL_CLOSED_ON_PIN_DRIFT",
   "aceb": {
     "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
@@ -21,37 +21,44 @@
     "species": {
       "document_id": "1KYlWfx-aD39DledKlF8xZdHOEKBdrMyXcQJwhHqAbic",
       "title": "Chimpanzee — Species Activation Record v0.2",
-      "revision_id": "ANLCKQlv4kWsfvZSwaIqz0GGaHOUbm6h5OxJUv5QVioN32OWv10N0x82Kjl0YeGZFtfCjhrnGgI5EdowscPtv5R0NNE096mhemdbYID-E2U"
+      "drive_revision_id": "37",
+      "observed_modified_time": "2026-10-08T04:46:52.198Z"
     },
     "run001": {
       "document_id": "1DvbLNfCyAyZMy2kHuQfb_Rkq01TcagCHrI9jl_qe2U4",
       "title": "Animal Rosetta Stone — RQ0001 RUN-001 Development-Only Known-Side Recovery v0.1",
-      "revision_id": "ANLCKQmYJPy8IoDbk3p8FjsMy6q1a-vkS18yZs7X0JEKURpmxr7QroAO2LF0bAsXCnm9eeoysAx37xk18rmoVz5jukMGgl-7gq9X_aNtkmg"
+      "drive_revision_id": "2",
+      "observed_modified_time": "2026-09-29T16:25:04.010Z"
     },
     "run002": {
       "document_id": "12PVauFUgQAR_pvN0Zz5h9jyp-BvmtBQjYAMIw7Qqbh8",
       "title": "Animal Rosetta Stone — RQ0001 RUN-002 Locked Internal Evaluation v0.1",
-      "revision_id": "ANLCKQlAepEEbhUCZJypcvlGWmZsA3mbHbGhyfoOXE3bgtB3gSTAJACNjXVOkJ52JXT7U3PjWAzOanX6I82uBwsNhnRkbTXNZ9nWWE5D5OQ"
+      "drive_revision_id": "2",
+      "observed_modified_time": "2026-09-29T16:26:56.532Z"
     },
     "run003": {
       "document_id": "18DGI71VY_yPPgY4GQe0_-DCQNTqw48ydjcBNelbeL60",
       "title": "Animal Rosetta Stone — RQ0001 RUN-003 Development-Only Sequence Analysis v0.1",
-      "revision_id": "ANLCKQlPcjhiBSvQZGGG8TP68q8dcG5I2M3TcS5tI3cAuZ2bTagOge8SF9IDdCQWXGHeGfFdEvp8YMk6cJwXqoFItXzkJX_D2jWnB7-Y7qs"
+      "drive_revision_id": "1",
+      "observed_modified_time": "2026-09-29T19:00:14.499Z"
     },
     "run004": {
       "document_id": "1u8Xom-fKKc1h7oXfW_Bd0A-km2l7zc0nz-i68eg3ujY",
       "title": "Animal Rosetta Stone — RQ0001 RUN-004 Locked Waibira Sequence Evaluation v0.1",
-      "revision_id": "ANLCKQlTFg7Ve06qvpZn48Py6EgGrFvsimhgZ_xtBw366PmPO15d7wjyzCPQ1WLVmrvNT7NBEHbt_bcIo6csx644nPQuzBbhgkCnl-BR7ao"
+      "drive_revision_id": "1",
+      "observed_modified_time": "2026-09-29T19:02:00.467Z"
     },
     "run005006": {
       "document_id": "1bZ2fU66fMYSTKPOf08yTxpYnc-GwKyWIxiyhz-RVyjk",
       "title": "Animal Rosetta Stone — RQ0001 D0019 RUN-005/RUN-006 Execution Contract v0.1",
-      "revision_id": "ANLCKQk6kaBl-4gTmhVb9pgOrZCyvLcQpf3XDGcopBVVVzBZ7n9NYXuVrD2YDvkdFT0km9axNjzsRN8OoOznuEV8QoE8TQQV4MuCPw4PhV4"
+      "drive_revision_id": "9",
+      "observed_modified_time": "2026-10-08T04:36:22.141Z"
     },
     "harness_verify": {
       "document_id": "1u9YOZCFWLSm4znq3sg0a1Qo2Nnuo-o0FcLh6ikQ42Rw",
       "title": "Animal Rosetta Stone — Receiver Harness GitHub Operational Verification — 2026-09-30",
-      "revision_id": "AHj4eMSSV1cBzJ1kUJBmCl7XR64M16PDwNfqOdClZ-EqOIVmI_Agqr3TEdgk29iBiGWfFgYGw1_5D59uK5b02gwrcxF0VyhqDy2yzsi11Ik"
+      "drive_revision_id": "4",
+      "observed_modified_time": "2026-09-30T11:43:23.971Z"
     }
   },
   "selection": {

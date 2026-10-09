@@ -2,7 +2,8 @@
   "fixture_role": "WORKSPACE_RESPONSE_TEST_FIXTURE_NOT_SCIENTIFIC_AUTHORITY",
   "biological_evidence": false,
   "source_document_id": "1bZ2fU66fMYSTKPOf08yTxpYnc-GwKyWIxiyhz-RVyjk",
-  "source_revision_id": "ANLCKQk6kaBl-4gTmhVb9pgOrZCyvLcQpf3XDGcopBVVVzBZ7n9NYXuVrD2YDvkdFT0km9axNjzsRN8OoOznuEV8QoE8TQQV4MuCPw4PhV4",
+  "source_drive_revision_id": "9",
+  "source_observed_modified_time": "2026-10-08T04:36:22.141Z",
   "execution_lines": [
     "Status",
     "FROZEN_EXECUTION_CONTRACT / EMPIRICAL_RUNS_CLOSED_MIXED. D0019 was materialized under the persistent secret-backed identity namespace, RUN-005 was frozen on eligible Group 2 development data, and the one-time locked RUN-006 transfer was executed on eligible Group 1 without model or preprocessing refit. The registered full-path disposition is MIXED.",

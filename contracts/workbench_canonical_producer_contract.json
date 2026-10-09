@@ -1,5 +1,5 @@
 {
-  "contract_id": "WORKBENCH-CANONICAL-PRODUCER-v0.1",
+  "contract_id": "WORKBENCH-CANONICAL-PRODUCER-v0.2",
   "phase": "Rosetta Research Workbench Phase I Slice 2B",
   "purpose": "Read pinned Google Drive and ACEB semantic authorities and emit WORKBENCH-CANONICAL-READ-v0.1 without creating a second scientific authority.",
   "credential_policy": {
@@ -20,10 +20,11 @@
   },
   "authority_policy": {
     "mode": "FAIL_CLOSED_ON_PIN_DRIFT",
-    "google_docs": "exact document ID, title, and revisionId must match the producer source manifest",
+    "google_docs": "Exact document ID, native Google Doc MIME type, title, drive_revision_id from current Drive revision history, and observed_modified_time must match WORKBENCH-CANONICAL-SOURCES-v0.2 before and after content extraction. Docs API revisionId is ephemeral, never a persistent pin.",
     "aceb": "exact spreadsheet ID, title, and observed modifiedTime must match the producer source manifest",
     "effect_of_drift": "No bundle is emitted until the source manifest and compatibility tests are reviewed.",
-    "event_corpora": "D0018 and D0020 exact spreadsheet ID, title, and observed modifiedTime must match the producer source manifest"
+    "event_corpora": "D0018 and D0020 exact spreadsheet ID, title, and observed modifiedTime must match the producer source manifest",
+    "legacy_manifest": "Version v0.1 and legacy revision_id fields are rejected; fixture migration is explicit."
   },
   "projection_rules": [
     "Question, hypotheses, datasets, comparison-gate states, and claim-propagation rules are projected from ACEB rows.",

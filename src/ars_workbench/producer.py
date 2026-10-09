@@ -255,19 +255,60 @@ class WorkspaceCanonicalProducer:
 
     def __init__(self, reader: Any, manifest: dict[str, Any] | None = None) -> None:
         self.reader = reader
-        self.manifest = deepcopy(manifest or load_source_manifest())
+        self.manifest = deepcopy(load_source_manifest() if manifest is None else manifest)
+        if (
+            self.manifest.get("manifest_id") != "WORKBENCH-CANONICAL-SOURCES-v0.2"
+            or self.manifest.get("authority_policy") != "FAIL_CLOSED_ON_PIN_DRIFT"
+        ):
+            raise CanonicalProducerError("unsupported canonical authority manifest; fail closed")
+        documents = self.manifest.get("documents")
+        if not isinstance(documents, dict) or not documents:
+            raise CanonicalProducerError("canonical document authorities are missing; fail closed")
+        for key, spec in documents.items():
+            if not isinstance(spec, dict) or "revision_id" in spec or any(
+                not isinstance(spec.get(field), str) or not spec[field].strip()
+                for field in ("document_id", "title", "drive_revision_id", "observed_modified_time")
+            ):
+                raise CanonicalProducerError(f"{key} requires explicit durable Drive authority pins")
+
+    def _check_document_drive_state(self, key: str) -> None:
+        spec = self.manifest["documents"][key]
+        metadata = self.reader.drive_metadata(spec["document_id"])
+        if metadata.get("id") != spec["document_id"]:
+            raise CanonicalProducerError(f"{key} authority file identity drift; fail closed")
+        if metadata.get("mimeType") != "application/vnd.google-apps.document":
+            raise CanonicalProducerError(f"{key} authority is not a native Google Doc; fail closed")
+        if metadata.get("name") != spec["title"]:
+            raise CanonicalProducerError(f"{key} authority Drive title drift; fail closed")
+        if metadata.get("modifiedTime") != spec["observed_modified_time"]:
+            raise CanonicalProducerError(f"{key} authority Drive modified-time drift; fail closed")
+        if self.reader.drive_head_revision(spec["document_id"]) != spec["drive_revision_id"]:
+            raise CanonicalProducerError(f"{key} authority Drive revision drift; fail closed")
+
+    def _document_provenance(self, key: str) -> dict[str, str]:
+        spec = self.manifest["documents"][key]
+        return {
+            "authority": spec["title"],
+            "drive_id": spec["document_id"],
+            "drive_revision_id": spec["drive_revision_id"],
+            "observed_modified_time": spec["observed_modified_time"],
+        }
 
     def _read_pinned_document(self, key: str) -> dict[str, Any]:
         spec = self.manifest["documents"][key]
+        self._check_document_drive_state(key)
         document = self.reader.document(spec["document_id"])
+        if document.get("documentId") != spec["document_id"]:
+            raise CanonicalProducerError(f"{key} authority document identity drift; fail closed")
         if document.get("title") != spec["title"]:
             raise CanonicalProducerError(
                 f"{key} authority title drift: expected {spec['title']!r}, got {document.get('title')!r}"
             )
-        if document.get("revisionId") != spec["revision_id"]:
-            raise CanonicalProducerError(
-                f"{key} authority revision drift; reconcile semantic authority before export"
-            )
+        if not extract_google_doc_text(document).strip():
+            raise CanonicalProducerError(f"{key} authority document content is empty; fail closed")
+        # Docs revisionId is ephemeral and never a durable pin. Recheck actual
+        # Drive state after extraction to reject edits during this bounded read.
+        self._check_document_drive_state(key)
         return document
 
     def _aceb_rows(self) -> dict[str, list[dict[str, str]]]:
@@ -348,11 +389,7 @@ class WorkspaceCanonicalProducer:
         harness_result = _line_starting(harness_lines, "RHF result:")
 
         provenance: dict[str, dict[str, Any]] = {
-            "PROV-SPECIES": {
-                "authority": self.manifest["documents"]["species"]["title"],
-                "drive_id": self.manifest["documents"]["species"]["document_id"],
-                "revision_id": self.manifest["documents"]["species"]["revision_id"],
-            },
+            "PROV-SPECIES": self._document_provenance("species"),
             "PROV-COMPARISON-GATE": {
                 "authority": "ACEB Chimp Comparison Gate",
                 "spreadsheet_id": self.manifest["aceb"]["spreadsheet_id"],
@@ -369,9 +406,7 @@ class WorkspaceCanonicalProducer:
                 "registry": "RQ0001 Claim Propagation",
             },
             "PROV-HARNESS-VERIFY": {
-                "authority": self.manifest["documents"]["harness_verify"]["title"],
-                "drive_id": self.manifest["documents"]["harness_verify"]["document_id"],
-                "revision_id": self.manifest["documents"]["harness_verify"]["revision_id"],
+                **self._document_provenance("harness_verify"),
                 "github_repo": "acipriano1997/animal-rosetta-stone",
             },
         }
@@ -432,11 +467,7 @@ class WorkspaceCanonicalProducer:
             run_lines = lines[key]
             run_id = _label(run_lines, "Run_ID")
             prov_id = f"PROV-{run_id}"
-            provenance[prov_id] = {
-                "authority": self.manifest["documents"][key]["title"],
-                "drive_id": self.manifest["documents"][key]["document_id"],
-                "revision_id": self.manifest["documents"][key]["revision_id"],
-            }
+            provenance[prov_id] = self._document_provenance(key)
             source_status = _label(run_lines, "Status")
             item: dict[str, Any] = {
                 "run_id": run_id,
@@ -472,11 +503,7 @@ class WorkspaceCanonicalProducer:
                 item["provenance_ids"].append("PROV-CLAIM-PROPAGATION")
             run_view.append(item)
 
-        provenance["PROV-D0019-EXECUTION-CONTRACT"] = {
-            "authority": self.manifest["documents"]["run005006"]["title"],
-            "drive_id": self.manifest["documents"]["run005006"]["document_id"],
-            "revision_id": self.manifest["documents"]["run005006"]["revision_id"],
-        }
+        provenance["PROV-D0019-EXECUTION-CONTRACT"] = self._document_provenance("run005006")
         run_view.extend(_d0019_runs(
             lines["run005006"],
             _one(datasets, "Dataset_ID", "D0019")["Ingestion_Status"],

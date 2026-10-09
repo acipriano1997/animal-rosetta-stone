@@ -21,7 +21,7 @@ def _doc(spec, lines, *, tabbed=False):
         {"paragraph": {"elements": [{"textRun": {"content": line + "\n"}}]}}
         for line in lines
     ]
-    base = {"title": spec["title"], "revisionId": spec["revision_id"]}
+    base = {"title": spec["title"], "documentId": spec["document_id"], "revisionId": "transient-test-token"}
     if tabbed:
         base["tabs"] = [{"documentTab": {"body": {"content": content}}}]
     else:
@@ -376,6 +376,18 @@ class FakeReader:
     def __init__(self, manifest):
         self.manifest = manifest
         self.documents, self.ranges = _fake_payloads(manifest)
+        self.document_metadata = {
+            spec["document_id"]: {
+                "id": spec["document_id"], "name": spec["title"],
+                "mimeType": "application/vnd.google-apps.document",
+                "modifiedTime": spec["observed_modified_time"],
+            }
+            for spec in manifest["documents"].values()
+        }
+        self.document_revisions = {
+            spec["document_id"]: spec["drive_revision_id"]
+            for spec in manifest["documents"].values()
+        }
         self.aceb_modified_time = manifest["aceb"]["observed_modified_time"]
         self.event_modified_times = {
             did: spec["observed_modified_time"]
@@ -383,6 +395,8 @@ class FakeReader:
         }
 
     def drive_metadata(self, file_id):
+        if file_id in self.document_metadata:
+            return deepcopy(self.document_metadata[file_id])
         if file_id == self.manifest["aceb"]["spreadsheet_id"]:
             return {
                 "id": file_id,
@@ -402,6 +416,9 @@ class FakeReader:
 
     def document(self, document_id):
         return deepcopy(self.documents[document_id])
+
+    def drive_head_revision(self, document_id):
+        return self.document_revisions[document_id]
 
     def spreadsheet_values(self, spreadsheet_id, range_name):
         return deepcopy(self.ranges[(spreadsheet_id, range_name)])
@@ -454,7 +471,8 @@ def _closed_reader(manifest):
     reader = FakeReader(manifest)
     spec = manifest["documents"]["run005006"]
     assert fixture["source_document_id"] == spec["document_id"]
-    assert fixture["source_revision_id"] == spec["revision_id"]
+    assert fixture["source_drive_revision_id"] == spec["drive_revision_id"]
+    assert fixture["source_observed_modified_time"] == spec["observed_modified_time"]
     reader.documents[spec["document_id"]] = _doc(spec, fixture["execution_lines"], tabbed=True)
     aceb = manifest["aceb"]["spreadsheet_id"]
     ranges = manifest["aceb"]["ranges"]
@@ -574,15 +592,20 @@ def test_gate_cannot_promote_overall_or_bonobo_with_unmet_criteria(criterion, st
         WorkspaceCanonicalProducer(reader, manifest).build_bundle()
 
 
-def test_reconciled_run002_rejects_stale_authority_pin():
+@pytest.mark.parametrize("key", list(load_source_manifest()["documents"]))
+def test_changed_ephemeral_docs_token_with_same_durable_state_passes(key):
     manifest = _small_manifest()
     reader = _closed_reader(manifest)
-    spec = manifest["documents"]["run002"]
-    reader.documents[spec["document_id"]]["revisionId"] = (
-        "AHj4eMSvYZO_us2Cw9AwqLIL_jL97qUpKP_sFgTL8UvPzYe6tBGFO3l5euq9aYVkDlgLNEgIehTaDKY-G3mLDyQop3BsVviukktu3DGsGlo"
-    )
-    with pytest.raises(CanonicalProducerError, match="run002 authority revision drift"):
-        WorkspaceCanonicalProducer(reader, manifest).build_bundle()
+    producer = WorkspaceCanonicalProducer(reader, manifest)
+    before = producer.build_bundle()["snapshot"]
+    spec = manifest["documents"][key]
+    reader.documents[spec["document_id"]]["revisionId"] = "different-format-next-day-user-token"
+    after = producer.build_bundle()["snapshot"]
+    # Only the capture timestamp can differ; no ephemeral token enters authority.
+    before.pop("captured_date", None)
+    after.pop("captured_date", None)
+    assert before == after
+    assert "different-format-next-day-user-token" not in json.dumps(after)
 
 
 def test_aceb_modified_time_drift_fails_closed():
@@ -601,10 +624,69 @@ def test_event_source_modified_time_drift_fails_closed():
         WorkspaceCanonicalProducer(reader, manifest).build_bundle()
 
 
-def test_document_revision_drift_fails_closed():
+@pytest.mark.parametrize("key", list(load_source_manifest()["documents"]))
+def test_drive_revision_drift_fails_closed(key):
     manifest = _small_manifest()
     reader = FakeReader(manifest)
-    species_id = manifest["documents"]["species"]["document_id"]
-    reader.documents[species_id]["revisionId"] = "DRIFTED"
-    with pytest.raises(CanonicalProducerError, match="species authority revision drift"):
+    reader.document_revisions[manifest["documents"][key]["document_id"]] = "changed-drive-revision"
+    with pytest.raises(CanonicalProducerError, match=f"{key} authority Drive revision drift"):
         WorkspaceCanonicalProducer(reader, manifest).build_bundle()
+
+
+@pytest.mark.parametrize("field,value,message", [
+    ("modifiedTime", "2099-01-01T00:00:00.000Z", "modified-time drift"),
+    ("id", "wrong-document-id", "file identity drift"),
+    ("name", "Wrong authority", "Drive title drift"),
+    ("mimeType", "application/pdf", "not a native Google Doc"),
+])
+def test_invalid_drive_authority_fails_closed(field, value, message):
+    manifest = _small_manifest()
+    reader = FakeReader(manifest)
+    sid = manifest["documents"]["species"]["document_id"]
+    reader.document_metadata[sid][field] = value
+    with pytest.raises(CanonicalProducerError, match=message):
+        WorkspaceCanonicalProducer(reader, manifest)._read_pinned_document("species")
+
+
+@pytest.mark.parametrize("field,value,message", [
+    ("documentId", "wrong-document-id", "document identity drift"),
+    ("title", "Wrong authority", "authority title drift"),
+    ("body", {}, "content is empty"),
+])
+def test_invalid_docs_response_fails_closed(field, value, message):
+    manifest = _small_manifest()
+    reader = FakeReader(manifest)
+    sid = manifest["documents"]["species"]["document_id"]
+    reader.documents[sid][field] = value
+    reader.documents[sid].pop("tabs", None)
+    with pytest.raises(CanonicalProducerError, match=message):
+        WorkspaceCanonicalProducer(reader, manifest)._read_pinned_document("species")
+
+
+@pytest.mark.parametrize("change", ["modified_time", "drive_revision"])
+def test_document_change_during_bounded_read_fails_closed(change):
+    manifest = _small_manifest()
+    class EditingReader(FakeReader):
+        def document(self, document_id):
+            content = super().document(document_id)
+            if change == "modified_time":
+                self.document_metadata[document_id]["modifiedTime"] = "2099-01-01T00:00:00.000Z"
+            else:
+                self.document_revisions[document_id] = "changed-during-extraction"
+            return content
+    with pytest.raises(CanonicalProducerError, match="authority Drive .*drift"):
+        WorkspaceCanonicalProducer(EditingReader(manifest), manifest)._read_pinned_document("species")
+
+
+@pytest.mark.parametrize("legacy", ["version", "field", "missing_durable_pin"])
+def test_legacy_transient_authority_manifest_is_not_silently_reinterpreted(legacy):
+    manifest = _small_manifest()
+    reader = FakeReader(manifest)
+    if legacy == "version":
+        manifest["manifest_id"] = "WORKBENCH-CANONICAL-SOURCES-v0.1"
+    elif legacy == "field":
+        manifest["documents"]["species"]["revision_id"] = "legacy-docs-token"
+    else:
+        del manifest["documents"]["species"]["drive_revision_id"]
+    with pytest.raises(CanonicalProducerError, match="manifest|durable Drive"):
+        WorkspaceCanonicalProducer(reader, manifest)
