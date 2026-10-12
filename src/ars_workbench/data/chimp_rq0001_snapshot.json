@@ -1,6 +1,6 @@
 {
-  "snapshot_id": "WORKBENCH-CHIMP-RQ0001-v0.4",
-  "captured_date": "2026-10-09",
+  "snapshot_id": "WORKBENCH-CHIMP-RQ0001-v0.5",
+  "captured_date": "2026-10-12",
   "mode": "STATIC_CANONICAL_VIEW_MODEL_FIXTURE",
   "scientific_boundary": "Evidence structure and provenance only; no translation, semantic gloss generation, evidence grading, or claim promotion.",
   "species": {
@@ -8,22 +8,29 @@
     "taxon": "Pan troglodytes",
     "common_name": "Chimpanzee",
     "activation_state": "ACTIVE",
-    "population_scope": ["Budongo/Sonso", "Taï", "Kanyawara", "other communities retained for validation"],
-    "active_question_ids": ["RQ0001"],
+    "population_scope": [
+      "Budongo/Sonso",
+      "Taï",
+      "Kanyawara",
+      "other communities retained for validation"
+    ],
+    "active_question_ids": [
+      "RQ0001"
+    ],
     "comparison_readiness": {
-      "overall": "NOT_COMPARISON_READY",
+      "overall": "COMPARISON_READY_BOUNDED",
       "CRG-A": "PASS",
       "CRG-B": "PASS",
       "CRG-C": "PASS",
-      "CRG-D": "PARTIAL",
-      "CRG-E": "PROVISIONAL_PASS",
-      "CRG-F": "PROVISIONAL_PASS",
-      "CRG-G": "PROVISIONAL_PASS",
-      "CRG-H": "PARTIAL",
-      "CRG-I": "PARTIAL",
-      "controlling_criterion": "CRG-D",
-      "controlling_reason": "CRG-D: Independent biological-source evidence remains partial. D0019 PR0005 closed MIXED and satisfies CRG-C methodologically. D0025/PR0006 remains a parallel independent-source route held at HELD_SCHEMA. Bonobo activation remains deferred.",
-      "bonobo_activation": "DEFERRED"
+      "CRG-D": "PASS",
+      "CRG-E": "PASS",
+      "CRG-F": "PASS",
+      "CRG-G": "PASS",
+      "CRG-H": "PASS",
+      "CRG-I": "PASS",
+      "controlling_criterion": null,
+      "controlling_reason": "All mandatory comparison criteria pass. CHIMP-COMP-v1.0-2026-10-12 is frozen; D0020 research-use rights are resolved for the bounded public-data analysis with citation required, while row-level redistribution remains unasserted and non-required.",
+      "bonobo_activation": "ACTIVE_COMPARATOR"
     },
     "receiver_harness": {
       "implementation_state": "OPERATIONALLY_VERIFIED_ZERO_SYNTHETIC",
@@ -31,7 +38,11 @@
       "fixture_result": "RHF-001..035 = 35/35 PASS",
       "biological_evidence": false
     },
-    "provenance_ids": ["PROV-SPECIES", "PROV-COMPARISON-GATE", "PROV-HARNESS-VERIFY"]
+    "provenance_ids": [
+      "PROV-SPECIES",
+      "PROV-COMPARISON-GATE",
+      "PROV-HARNESS-VERIFY"
+    ]
   },
   "question": {
     "question_id": "RQ0001",
@@ -39,7 +50,9 @@
     "phase": "active_exploratory",
     "primary_discriminator": "Out-of-sample improvement in predicting recipient response/outcome when combination/sequence features are added beyond component-signal + context + identity baselines, with replication across individuals/populations.",
     "ethics_boundary": "Passive/archive-data synthesis initially. Any new animal-facing playback or manipulation remains blocked by the canonical ethics/welfare gate.",
-    "provenance_ids": ["PROV-RQ0001"]
+    "provenance_ids": [
+      "PROV-RQ0001"
+    ]
   },
   "hypotheses": [
     {
@@ -47,21 +60,27 @@
       "type": "primary",
       "statement": "Multimodal combinations and ordered signal sequences carry interaction-relevant information beyond their component signals and observable context alone.",
       "current_scope": "PR0004/D0020: NULL_OR_CONTEXT_SUFFICIENT for the registered coarse sequence features and source-coded outcome in development and locked Waibira transfer. PR0005/D0019: MIXED — B2 improved over B1 on registered Group-2 development log loss, but the direction reversed on the one-time locked Group-1 transfer without refit. H0001 therefore lacks replicated support under D0019; multimodal/component effects remain an open, bounded question rather than a semantic conclusion.",
-      "provenance_ids": ["PROV-H0001"]
+      "provenance_ids": [
+        "PROV-H0001"
+      ]
     },
     {
       "hypothesis_id": "H0002",
       "type": "alternative",
       "statement": "Apparent multimodal or sequence effects primarily reflect social/ecological context, arousal, audience structure or individual identity rather than integrated communicative information.",
       "current_scope": "PR0004/D0020 remains compatible with context/state sufficiency for the registered coarse sequence features. PR0005/D0019 closed MIXED: the richer B2 representation improved on Group-2 development but failed to generalize to the locked Group-1 transfer. This keeps context/state and source-specific structure live as explanations without establishing H0002 as a general mechanism.",
-      "provenance_ids": ["PROV-H0002"]
+      "provenance_ids": [
+        "PROV-H0002"
+      ]
     },
     {
       "hypothesis_id": "H0003",
       "type": "null",
       "statement": "Component signals plus measured context are sufficient to explain recipient responses and outcomes; multimodal combination/order terms add no reproducible information.",
       "current_scope": "PR0004/D0020 supports component/context sufficiency only for its registered coarse sequence representation and outcome. PR0005/D0019 closed MIXED: B2 improved on development but not on locked transfer, so the full pathway does not provide replicated evidence against the component/context baseline. This is not a species-wide null and does not establish absence of multimodal integration.",
-      "provenance_ids": ["PROV-H0003"]
+      "provenance_ids": [
+        "PROV-H0003"
+      ]
     }
   ],
   "datasets": [
@@ -74,7 +93,9 @@
       "rights_state": "DERIVED_PUBLIC_SOURCE_CONTEXT_WITH_UPSTREAM_RIGHTS_NUANCE",
       "scope": "36 events; vocal/controlled receiver-outcome calibration; internal regression and event-schema validation.",
       "semantic_authority": "NONE",
-      "provenance_ids": ["PROV-D0018"]
+      "provenance_ids": [
+        "PROV-D0018"
+      ]
     },
     {
       "dataset_id": "D0020",
@@ -82,10 +103,14 @@
       "role": "ORDERED_SEQUENCE_VALIDATION",
       "availability": "BROWSABLE_CORPUS_METADATA",
       "empirical_state": "RUN_003_RUN_004_CLOSED_NULL_OR_CONTEXT_SUFFICIENT",
-      "rights_state": "PUBLIC_SOURCE_DERIVATIVE_INTERNAL_USE; REPOSITORY_LICENSE_NOT_STATED",
+      "rights_state": "APPROVED_BOUNDED_RESEARCH_USE_WITH_CITATION; RAW_ROW_AND_ROW_LEVEL_DERIVATIVE_REDISTRIBUTION_UNASSERTED",
       "scope": "4,223 interaction events across five wild communities; coarse exchange/order features.",
       "semantic_authority": "NONE",
-      "provenance_ids": ["PROV-D0020", "PROV-RUN003", "PROV-RUN004"]
+      "provenance_ids": [
+        "PROV-D0020",
+        "PROV-RUN003",
+        "PROV-RUN004"
+      ]
     },
     {
       "dataset_id": "D0019",
@@ -96,19 +121,24 @@
       "rights_state": "APPROVED_LOCAL_RESEARCH_REUSE_WITH_ATTRIBUTION_RAW_REDISTRIBUTION_NOT_NEEDED",
       "gate": "Empirical execution closed with final PR0005 disposition MIXED. Restricted row-level data, identity bridges and source bytes remain access-controlled outside the repository/common sync paths. Aggregate results earn no replicated H0001 support, semantic meaning, translation, causal or species-wide compositionality claim.",
       "semantic_authority": "NONE",
-      "provenance_ids": ["PROV-D0019"]
+      "provenance_ids": [
+        "PROV-D0019"
+      ]
     },
     {
       "dataset_id": "D0025",
       "name": "Damjanovic 2022 Wild Chimp Multimodal Receiver-Response Corpus",
-      "role": "PARALLEL_INDEPENDENT_SOURCE_CRG_D_ROUTE",
+      "role": "OPTIONAL_REPLICATION_EXPANSION_HELD_SOURCE_MAPPING",
       "availability": "GATED_METADATA_ONLY",
       "empirical_state": "D0025_V1_H1_SHA256_VERIFIED_H2_ROW3_HEADERS_LOCATED_H3_PR0006_FULL_PRIMARY_SCHEMA_NOT_DEMONSTRATED_HELD",
       "rights_state": "Figshare item-level CC BY 4.0 license metadata is verified from the source API/H1 snapshot. This is not blanket rights adjudication: preserve attribution and review source-specific third-party/ethical restrictions, field-site context, and any redistribution constraints before empirical execution.",
-      "gate": "H1 source identity/checksums and source-reported item-level CC BY 4.0 metadata are verified. H2 located analysis-specific row-3 headers and reviewed bounded supplementary codebook cues, but H3 remains HELD_SCHEMA because the frozen PR0006 primary modality/bond/recipient-response schema is not demonstrated in one safely joinable event-level source. Do not join on animal identities or relabel secondary endpoints; require the original unfiltered event-level extract or author-certified unique event IDs/mapping before empirical PR0006 execution. Source-authoritative clarification on 2026-10-04 could not supply or reconstruct the master mapping. PR0006 remains NOT_RUN. This is a parallel independent-source route relevant to CRG-D; D0019 already satisfies CRG-C.",
+      "gate": "H1 source identity/checksums and source-reported item-level CC BY 4.0 metadata are verified. H2 located analysis-specific row-3 headers and reviewed bounded supplementary codebook cues, but H3 remains HELD_SCHEMA because the frozen PR0006 primary modality/bond/recipient-response schema is not demonstrated in one safely joinable event-level source. Do not join on animal identities or relabel secondary endpoints; require the original unfiltered event-level extract or author-certified unique event IDs/mapping before empirical PR0006 execution. Source-authoritative clarification on 2026-10-04 could not supply or reconstruct the master mapping. PR0006 remains NOT_RUN. It is not required for frozen package CHIMP-COMP-v1.0-2026-10-12 and may reopen only as an optional replication/expansion lane under a new or reopened package version.",
       "known_exposure": "Published aggregate modality-response direction is known; PR0006 is not blind discovery.",
       "semantic_authority": "NONE",
-      "provenance_ids": ["PROV-D0025", "PROV-PR0006"]
+      "provenance_ids": [
+        "PROV-D0025",
+        "PROV-PR0006"
+      ]
     }
   ],
   "runs": [
@@ -119,7 +149,10 @@
       "state": "CLOSED",
       "disposition": "CALIBRATION_ONLY",
       "interpretation_ceiling": "Known-side/internal calibration; no species-wide or semantic promotion.",
-      "provenance_ids": ["PROV-D0018", "PROV-RQ0001"]
+      "provenance_ids": [
+        "PROV-D0018",
+        "PROV-RQ0001"
+      ]
     },
     {
       "run_id": "RUN-PT-RQ0001-002",
@@ -128,7 +161,10 @@
       "state": "CLOSED",
       "disposition": "CALIBRATION_ONLY",
       "interpretation_ceiling": "Known-side/internal calibration; does not satisfy CRG-C.",
-      "provenance_ids": ["PROV-D0018", "PROV-RQ0001"]
+      "provenance_ids": [
+        "PROV-D0018",
+        "PROV-RQ0001"
+      ]
     },
     {
       "run_id": "RUN-PT-RQ0001-003",
@@ -136,9 +172,15 @@
       "evidence_class": "PREREGISTERED_SECONDARY_ANALYSIS",
       "state": "CLOSED",
       "disposition": "DEVELOPMENT_SEQUENCE_CRITERION_NOT_MET",
-      "metrics": {"B0_log_loss": 0.455698, "B1_log_loss": 0.460562, "delta_log_loss": 0.004864},
+      "metrics": {
+        "B0_log_loss": 0.455698,
+        "B1_log_loss": 0.460562,
+        "delta_log_loss": 0.004864
+      },
       "interpretation_ceiling": "Sequence features did not improve the registered development target; not a global rejection of sequence structure.",
-      "provenance_ids": ["PROV-RUN003"]
+      "provenance_ids": [
+        "PROV-RUN003"
+      ]
     },
     {
       "run_id": "RUN-PT-RQ0001-004",
@@ -146,9 +188,15 @@
       "evidence_class": "LOCKED_CROSS_COMMUNITY_SECONDARY_ANALYSIS",
       "state": "CLOSED",
       "disposition": "NULL_OR_CONTEXT_SUFFICIENT",
-      "metrics": {"B0_log_loss": 0.445215, "B1_log_loss": 0.452642, "delta_log_loss": 0.007428},
+      "metrics": {
+        "B0_log_loss": 0.445215,
+        "B1_log_loss": 0.452642,
+        "delta_log_loss": 0.007428
+      },
       "interpretation_ceiling": "Bounded null/context-sufficient result for Waibira under the frozen target and coarse sequence representation only.",
-      "provenance_ids": ["PROV-RUN004"]
+      "provenance_ids": [
+        "PROV-RUN004"
+      ]
     },
     {
       "run_id": "RUN-PT-RQ0001-005",
@@ -161,9 +209,15 @@
       "evaluation_partition": "GROUP_2_DEVELOPMENT",
       "eligible_rows": 104,
       "unordered_dyads": 69,
-      "metrics": {"delta_log_loss": -0.08026925235617471},
+      "metrics": {
+        "delta_log_loss": -0.08026925235617471
+      },
       "interpretation_ceiling": "Bounded to D0019's source-coded recipient-response endpoint and registered representation only. Development favored B2 over B1; locked Group-1 transfer reversed direction without model or preprocessing refit. Final PR0005 disposition MIXED earns no replicated H0001 support, semantic meaning, translation, causal claim or species-wide compositionality.",
-      "provenance_ids": ["PROV-D0019", "PROV-D0019-EXECUTION-CONTRACT", "PROV-CLAIM-PROPAGATION"]
+      "provenance_ids": [
+        "PROV-D0019",
+        "PROV-D0019-EXECUTION-CONTRACT",
+        "PROV-CLAIM-PROPAGATION"
+      ]
     },
     {
       "run_id": "RUN-PT-RQ0001-006",
@@ -177,9 +231,17 @@
       "eligible_rows": 68,
       "model_refit": false,
       "preprocessing_refit": false,
-      "metrics": {"B1_log_loss": 0.6361435247748188, "B2_log_loss": 0.6847920995625079, "delta_log_loss": 0.048648574787689025},
+      "metrics": {
+        "B1_log_loss": 0.6361435247748188,
+        "B2_log_loss": 0.6847920995625079,
+        "delta_log_loss": 0.048648574787689025
+      },
       "interpretation_ceiling": "Bounded to D0019's source-coded recipient-response endpoint and registered representation only. Development favored B2 over B1; locked Group-1 transfer reversed direction without model or preprocessing refit. Final PR0005 disposition MIXED earns no replicated H0001 support, semantic meaning, translation, causal claim or species-wide compositionality.",
-      "provenance_ids": ["PROV-D0019", "PROV-D0019-EXECUTION-CONTRACT", "PROV-CLAIM-PROPAGATION"]
+      "provenance_ids": [
+        "PROV-D0019",
+        "PROV-D0019-EXECUTION-CONTRACT",
+        "PROV-CLAIM-PROPAGATION"
+      ]
     }
   ],
   "software_verification": [
@@ -190,25 +252,107 @@
       "result": "RHF-001..035 = 35/35 PASS; HA-001..016 structural bundle present.",
       "biological_evidence": false,
       "repository_main_sha": "29a7190f3202605730b406f575514d1e1810b26d",
-      "provenance_ids": ["PROV-HARNESS-VERIFY"]
+      "provenance_ids": [
+        "PROV-HARNESS-VERIFY"
+      ]
     }
   ],
   "provenance": {
-    "PROV-CLAIM-PROPAGATION": {"authority": "ACEB RQ0001 Claim Propagation", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "RQ0001 Claim Propagation:MIXED", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-D0019-EXECUTION-CONTRACT": {"authority": "Animal Rosetta Stone — RQ0001 D0019 RUN-005/RUN-006 Execution Contract v0.1", "drive_id": "1bZ2fU66fMYSTKPOf08yTxpYnc-GwKyWIxiyhz-RVyjk", "drive_revision_id": "9", "observed_modified_time": "2026-10-08T04:36:22.141Z"},
-    "PROV-SPECIES": {"authority": "Chimpanzee — Species Activation Record v0.2", "drive_id": "1KYlWfx-aD39DledKlF8xZdHOEKBdrMyXcQJwhHqAbic", "drive_revision_id": "37", "observed_modified_time": "2026-10-08T04:46:52.198Z"},
-    "PROV-COMPARISON-GATE": {"authority": "ACEB Chimp Comparison Gate + Chimpanzee Comparison-Ready Gate v0.1", "drive_id": "1a7tBCV6OODbJ5mx6v0qwzarISlEu38c67MSSxgQ5tuo", "registry": "ACEB: Chimp Comparison Gate", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-HARNESS-VERIFY": {"authority": "Animal Rosetta Stone — Receiver Harness GitHub Operational Verification — 2026-09-30", "drive_id": "1u9YOZCFWLSm4znq3sg0a1Qo2Nnuo-o0FcLh6ikQ42Rw", "github_repo": "acipriano1997/animal-rosetta-stone", "drive_revision_id": "4", "observed_modified_time": "2026-09-30T11:43:23.971Z"},
-    "PROV-RQ0001": {"authority": "ACEB Research Questions", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Research Questions:RQ0001", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-H0001": {"authority": "ACEB Hypotheses", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Hypotheses:H0001", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-H0002": {"authority": "ACEB Hypotheses", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Hypotheses:H0002", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-H0003": {"authority": "ACEB Hypotheses", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Hypotheses:H0003", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-D0018": {"authority": "ACEB Datasets", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Datasets:D0018", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-D0019": {"authority": "ACEB Datasets", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Datasets:D0019", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-D0020": {"authority": "ACEB Datasets", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Datasets:D0020", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-D0025": {"authority": "ACEB Datasets", "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ", "registry": "Datasets:D0025", "observed_modified_time": "2026-10-08T14:12:48.112Z"},
-    "PROV-RUN003": {"authority": "Animal Rosetta Stone — RQ0001 RUN-003 Development-Only Sequence Analysis v0.1", "drive_id": "18DGI71VY_yPPgY4GQe0_-DCQNTqw48ydjcBNelbeL60", "drive_revision_id": "1", "observed_modified_time": "2026-09-29T19:00:14.499Z"},
-    "PROV-RUN004": {"authority": "Animal Rosetta Stone — RQ0001 RUN-004 Locked Waibira Sequence Evaluation v0.1", "drive_id": "1u8Xom-fKKc1h7oXfW_Bd0A-km2l7zc0nz-i68eg3ujY", "drive_revision_id": "1", "observed_modified_time": "2026-09-29T19:02:00.467Z"},
-    "PROV-PR0006": {"authority": "PRER-RQ0001-D0025 Receiver Modality Reanalysis v0.1", "drive_id": "1UcKKgG32fpwXHiYkMDLqiwrcb19Ix8sr47aAsz0GYno"}
+    "PROV-CLAIM-PROPAGATION": {
+      "authority": "ACEB RQ0001 Claim Propagation",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "RQ0001 Claim Propagation:MIXED",
+      "observed_modified_time": "2026-10-12T11:57:51.945Z"
+    },
+    "PROV-D0019-EXECUTION-CONTRACT": {
+      "authority": "Animal Rosetta Stone — RQ0001 D0019 RUN-005/RUN-006 Execution Contract v0.1",
+      "drive_id": "1bZ2fU66fMYSTKPOf08yTxpYnc-GwKyWIxiyhz-RVyjk",
+      "drive_revision_id": "9",
+      "observed_modified_time": "2026-10-08T04:36:22.141Z"
+    },
+    "PROV-SPECIES": {
+      "authority": "Chimpanzee — Species Activation Record v0.2",
+      "drive_id": "1KYlWfx-aD39DledKlF8xZdHOEKBdrMyXcQJwhHqAbic",
+      "drive_revision_id": "37",
+      "observed_modified_time": "2026-10-08T04:46:52.198Z"
+    },
+    "PROV-COMPARISON-GATE": {
+      "authority": "ACEB Chimp Comparison Gate + Chimpanzee Comparison-Ready Gate v0.1",
+      "drive_id": "1a7tBCV6OODbJ5mx6v0qwzarISlEu38c67MSSxgQ5tuo",
+      "registry": "ACEB: Chimp Comparison Gate",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "observed_modified_time": "2026-10-12T11:57:51.945Z"
+    },
+    "PROV-HARNESS-VERIFY": {
+      "authority": "Animal Rosetta Stone — Receiver Harness GitHub Operational Verification — 2026-09-30",
+      "drive_id": "1u9YOZCFWLSm4znq3sg0a1Qo2Nnuo-o0FcLh6ikQ42Rw",
+      "github_repo": "acipriano1997/animal-rosetta-stone",
+      "drive_revision_id": "4",
+      "observed_modified_time": "2026-09-30T11:43:23.971Z"
+    },
+    "PROV-RQ0001": {
+      "authority": "ACEB Research Questions",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Research Questions:RQ0001",
+      "observed_modified_time": "2026-10-12T11:57:51.945Z"
+    },
+    "PROV-H0001": {
+      "authority": "ACEB Hypotheses",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Hypotheses:H0001",
+      "observed_modified_time": "2026-10-12T11:57:51.945Z"
+    },
+    "PROV-H0002": {
+      "authority": "ACEB Hypotheses",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Hypotheses:H0002",
+      "observed_modified_time": "2026-10-12T11:57:51.945Z"
+    },
+    "PROV-H0003": {
+      "authority": "ACEB Hypotheses",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Hypotheses:H0003",
+      "observed_modified_time": "2026-10-12T11:57:51.945Z"
+    },
+    "PROV-D0018": {
+      "authority": "ACEB Datasets",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Datasets:D0018",
+      "observed_modified_time": "2026-10-12T11:57:51.945Z"
+    },
+    "PROV-D0019": {
+      "authority": "ACEB Datasets",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Datasets:D0019",
+      "observed_modified_time": "2026-10-12T11:57:51.945Z"
+    },
+    "PROV-D0020": {
+      "authority": "ACEB Datasets",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Datasets:D0020",
+      "observed_modified_time": "2026-10-12T11:57:51.945Z"
+    },
+    "PROV-D0025": {
+      "authority": "ACEB Datasets",
+      "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+      "registry": "Datasets:D0025",
+      "observed_modified_time": "2026-10-12T11:57:51.945Z"
+    },
+    "PROV-RUN003": {
+      "authority": "Animal Rosetta Stone — RQ0001 RUN-003 Development-Only Sequence Analysis v0.1",
+      "drive_id": "18DGI71VY_yPPgY4GQe0_-DCQNTqw48ydjcBNelbeL60",
+      "drive_revision_id": "1",
+      "observed_modified_time": "2026-09-29T19:00:14.499Z"
+    },
+    "PROV-RUN004": {
+      "authority": "Animal Rosetta Stone — RQ0001 RUN-004 Locked Waibira Sequence Evaluation v0.1",
+      "drive_id": "1u8Xom-fKKc1h7oXfW_Bd0A-km2l7zc0nz-i68eg3ujY",
+      "drive_revision_id": "1",
+      "observed_modified_time": "2026-09-29T19:02:00.467Z"
+    },
+    "PROV-PR0006": {
+      "authority": "PRER-RQ0001-D0025 Receiver Modality Reanalysis v0.1",
+      "drive_id": "1UcKKgG32fpwXHiYkMDLqiwrcb19Ix8sr47aAsz0GYno"
+    }
   }
 }

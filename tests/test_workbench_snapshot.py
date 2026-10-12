@@ -29,6 +29,19 @@ def test_d0020_null_is_bounded_not_global():
     assert "only" in ceiling
 
 
+def test_d0020_rights_are_bounded_and_redistribution_is_not_claimed():
+    s = WorkbenchStore().snapshot()
+    d = next(x for x in s["datasets"] if x["dataset_id"] == "D0020")
+    assert d["rights_state"] == (
+        "APPROVED_BOUNDED_RESEARCH_USE_WITH_CITATION; "
+        "RAW_ROW_AND_ROW_LEVEL_DERIVATIVE_REDISTRIBUTION_UNASSERTED"
+    )
+    gate = s["species"]["comparison_readiness"]
+    assert gate["CRG-I"] == "PASS"
+    assert "citation required" in gate["controlling_reason"]
+    assert "redistribution remains unasserted" in gate["controlling_reason"]
+
+
 def test_d0019_closed_mixed_remains_aggregate_only_and_nonsemantic():
     s = WorkbenchStore().snapshot()
     d = next(x for x in s["datasets"] if x["dataset_id"] == "D0019")
@@ -55,21 +68,21 @@ def test_d0019_closed_mixed_remains_aggregate_only_and_nonsemantic():
     }
     assert d["semantic_authority"] == "NONE"
     gate = s["species"]["comparison_readiness"]
-    assert gate["CRG-A"] == gate["CRG-B"] == gate["CRG-C"] == "PASS"
-    assert gate["CRG-D"] == "PARTIAL"
-    assert gate["controlling_criterion"] == "CRG-D"
-    assert gate["controlling_reason"].startswith("CRG-D:")
-    assert gate["overall"] == "NOT_COMPARISON_READY"
-    assert gate["bonobo_activation"] == "DEFERRED"
+    assert all(gate[f"CRG-{letter}"] == "PASS" for letter in "ABCDEFGHI")
+    assert gate["controlling_criterion"] is None
+    assert gate["overall"] == "COMPARISON_READY_BOUNDED"
+    assert gate["bonobo_activation"] == "ACTIVE_COMPARATOR"
 
 
-def test_d0025_remains_metadata_only_and_h3_held():
+def test_d0025_remains_metadata_only_and_h3_held_but_is_not_a_readiness_blocker():
     s = WorkbenchStore().snapshot()
     d = next(x for x in s["datasets"] if x["dataset_id"] == "D0025")
     assert d["availability"] == "GATED_METADATA_ONLY"
     assert "CC BY 4.0" in d["rights_state"]
     assert "not blanket rights adjudication" in d["rights_state"].lower()
     assert "H3 remains HELD_SCHEMA" in d["gate"]
+    assert "not required for frozen package CHIMP-COMP-v1.0-2026-10-12" in d["gate"]
+    assert d["role"] == "OPTIONAL_REPLICATION_EXPANSION_HELD_SOURCE_MAPPING"
     assert "HELD" in d["empirical_state"]
     assert not any(r["dataset_id"] == "D0025" for r in s["runs"])
 
