@@ -297,7 +297,7 @@ def test_rendered_chrome_is_catalog_owned_and_canonical_records_are_verbatim(js_
     text = "\n".join(canonical["en"])
     for protected in (
         "Pan troglodytes", "RQ0001", "H0001", "D0019", "RUN-PT-RQ0001-005",
-        "CRG-C PASS", "CRG-D PARTIAL", "CRG-D:", "NOT_COMPARISON_READY", "CLOSED", "MIXED",
+        "CRG-C PASS", "CRG-D PASS", "COMPARISON_READY_BOUNDED", "CLOSED", "MIXED",
         "no replicated H0001 support", "without model or preprocessing refit",
         "D0019_PR0005_EMPIRICAL_CLOSED_MIXED",
         "HELD_SCHEMA", "NULL_OR_CONTEXT_SUFFICIENT", "ZERO_SYNTHETIC",

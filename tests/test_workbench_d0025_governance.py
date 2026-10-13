@@ -49,9 +49,9 @@ def test_d0025_governance_reconciliation_does_not_promote_scientific_state():
     assert d0025["semantic_authority"] == "NONE"
     assert "HELD" in d0025["empirical_state"]
     assert species["comparison_readiness"]["CRG-C"] == "PASS"
-    assert species["comparison_readiness"]["CRG-D"] == "PARTIAL"
-    assert species["comparison_readiness"]["controlling_criterion"] == "CRG-D"
-    assert d0025["role"] == "PARALLEL_INDEPENDENT_SOURCE_CRG_D_ROUTE"
+    assert species["comparison_readiness"]["CRG-D"] == "PASS"
+    assert species["comparison_readiness"]["controlling_criterion"] is None
+    assert d0025["role"] == "OPTIONAL_REPLICATION_EXPANSION_HELD_SOURCE_MAPPING"
     assert "PR0006 remains NOT_RUN" in d0025["gate"]
-    assert species["comparison_readiness"]["overall"] == "NOT_COMPARISON_READY"
+    assert species["comparison_readiness"]["overall"] == "COMPARISON_READY_BOUNDED"
     assert "PR0006 is not blind discovery" in d0025["known_exposure"]

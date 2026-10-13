@@ -36,10 +36,10 @@ def test_workbench_http_surface_smoke():
         species = json.loads(body)
         assert species["activation_state"] == "ACTIVE"
         assert species["comparison_readiness"]["CRG-C"] == "PASS"
-        assert species["comparison_readiness"]["CRG-D"] == "PARTIAL"
-        assert species["comparison_readiness"]["controlling_criterion"] == "CRG-D"
-        assert species["comparison_readiness"]["overall"] == "NOT_COMPARISON_READY"
-        assert species["comparison_readiness"]["bonobo_activation"] == "DEFERRED"
+        assert species["comparison_readiness"]["CRG-D"] == "PASS"
+        assert species["comparison_readiness"]["controlling_criterion"] is None
+        assert species["comparison_readiness"]["overall"] == "COMPARISON_READY_BOUNDED"
+        assert species["comparison_readiness"]["bonobo_activation"] == "ACTIVE_COMPARATOR"
 
         status, _, body = _get(base, "/api/questions/RQ0001")
         assert status == 200

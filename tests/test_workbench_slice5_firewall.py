@@ -67,11 +67,11 @@ def test_fixture_current_pilot_stale_state_invariants_remain_bounded():
     run005 = store.run_get("RUN-PT-RQ0001-005")
     run006 = store.run_get("RUN-PT-RQ0001-006")
 
-    assert species["comparison_readiness"]["overall"] == "NOT_COMPARISON_READY"
+    assert species["comparison_readiness"]["overall"] == "COMPARISON_READY_BOUNDED"
     assert species["comparison_readiness"]["CRG-C"] == "PASS"
-    assert species["comparison_readiness"]["CRG-D"] == "PARTIAL"
-    assert species["comparison_readiness"]["controlling_criterion"] == "CRG-D"
-    assert species["comparison_readiness"]["bonobo_activation"] == "DEFERRED"
+    assert species["comparison_readiness"]["CRG-D"] == "PASS"
+    assert species["comparison_readiness"]["controlling_criterion"] is None
+    assert species["comparison_readiness"]["bonobo_activation"] == "ACTIVE_COMPARATOR"
     assert species["receiver_harness"]["empirical_exercise_state"] == "UNEARNED"
 
     assert d0019["availability"] == "GATED_METADATA_ONLY"
