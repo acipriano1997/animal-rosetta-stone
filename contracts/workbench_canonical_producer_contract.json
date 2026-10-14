@@ -32,7 +32,7 @@
     "RUN-004 registered run disposition and claim-propagation disposition remain separate fields.",
     "RUN-005/RUN-006 support the historical EMPIRICAL_EXECUTION_HELD path with null disposition and the pinned D0019_PR0005_EMPIRICAL_CLOSED_MIXED path with CLOSED state and full-path MIXED disposition. Unknown or inconsistent authority shapes fail closed.",
     "D0019 empirical closure projects only registered aggregate counts/metrics, explicit no-model/no-preprocessing-refit transfer and the bounded non-semantic claim ceiling; synthetic preflight or planned decision rules cannot establish closure.",
-    "Comparison readiness projects CRG-A..I and selects the first unmet criterion in registry order. Current CRG-C is PASS; CRG-D is PARTIAL and controlling; overall remains NOT_COMPARISON_READY and Bonobo remains DEFERRED.",
+    "Comparison readiness projects CRG-A..I directly from ACEB and selects the first unmet criterion in registry order when one exists. Under frozen package CHIMP-COMP-v1.0-2026-10-12, CRG-A through CRG-I are PASS, no criterion controls, overall is COMPARISON_READY_BOUNDED, and Bonobo is ACTIVE_COMPARATOR. Any later reopened criterion must again fail closed to NOT_COMPARISON_READY/DEFERRED unless the canonical authority itself records a valid new bounded-ready state.",
     "Dataset semantic_authority is always NONE in the Workbench projection.",
     "ZERO_SYNTHETIC verification is always biological_evidence=false.",
     "D0018 and D0020 events are projected from their canonical event sheets with source-preserved identifiers, missingness, split state, source locators, and event/source provenance.",
