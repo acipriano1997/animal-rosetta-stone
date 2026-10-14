@@ -4,7 +4,7 @@
   "aceb": {
     "spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
     "title": "Animal Rosetta Stone — Experimental Evidence Bank v1.0",
-    "observed_modified_time": "2026-10-12T11:57:51.945Z",
+    "observed_modified_time": "2026-10-14T14:35:49.553Z",
     "ranges": {
       "research_questions": "Research Questions!A1:Q20",
       "hypotheses": "Hypotheses!A1:Q20",
@@ -21,8 +21,8 @@
     "species": {
       "document_id": "1KYlWfx-aD39DledKlF8xZdHOEKBdrMyXcQJwhHqAbic",
       "title": "Chimpanzee — Species Activation Record v0.2",
-      "drive_revision_id": "37",
-      "observed_modified_time": "2026-10-08T04:46:52.198Z"
+      "drive_revision_id": "38",
+      "observed_modified_time": "2026-10-13T00:35:31.414Z"
     },
     "run001": {
       "document_id": "1DvbLNfCyAyZMy2kHuQfb_Rkq01TcagCHrI9jl_qe2U4",
