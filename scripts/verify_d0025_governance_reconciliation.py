@@ -44,16 +44,16 @@ def main() -> None:
             "PREBYTE" not in d0025["empirical_state"]
             and "ITEM_LEVEL_LICENSE_UNVERIFIED" not in d0025["rights_state"]
         ),
-        "no_scientific_promotion": (
+        "d0025_not_promoted_by_chimp_gate_closure": (
             d0025["semantic_authority"] == "NONE"
             and species["comparison_readiness"]["CRG-C"] == "PASS"
-            and species["comparison_readiness"]["CRG-D"] == "PARTIAL"
-            and species["comparison_readiness"]["controlling_criterion"] == "CRG-D"
+            and species["comparison_readiness"]["CRG-D"] == "PASS"
+            and species["comparison_readiness"]["controlling_criterion"] is None
             and species["comparison_readiness"]["overall"]
-            == "NOT_COMPARISON_READY"
+            == "COMPARISON_READY_BOUNDED"
         ),
-        "parallel_crg_d_route_remains_held": (
-            d0025["role"] == "PARALLEL_INDEPENDENT_SOURCE_CRG_D_ROUTE"
+        "optional_replication_route_remains_held": (
+            d0025["role"] == "OPTIONAL_REPLICATION_EXPANSION_HELD_SOURCE_MAPPING"
             and "HELD" in d0025["empirical_state"]
             and "PR0006 remains NOT_RUN" in d0025["gate"]
         ),
