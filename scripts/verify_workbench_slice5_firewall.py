@@ -84,12 +84,12 @@ def main() -> None:
             and "no replicated H0001 support" in run["interpretation_ceiling"]
             for run in (run005, run006)
         ),
-        "comparison_gate_not_promoted": (
-            species["comparison_readiness"]["overall"] == "NOT_COMPARISON_READY"
+        "comparison_gate_bounded_ready": (
+            species["comparison_readiness"]["overall"] == "COMPARISON_READY_BOUNDED"
             and species["comparison_readiness"]["CRG-C"] == "PASS"
-            and species["comparison_readiness"]["CRG-D"] == "PARTIAL"
-            and species["comparison_readiness"]["controlling_criterion"] == "CRG-D"
-            and species["comparison_readiness"]["bonobo_activation"] == "DEFERRED"
+            and species["comparison_readiness"]["CRG-D"] == "PASS"
+            and species["comparison_readiness"]["controlling_criterion"] is None
+            and species["comparison_readiness"]["bonobo_activation"] == "ACTIVE_COMPARATOR"
         ),
         "locked_transfer_no_refit": run006["model_refit"] is False and run006["preprocessing_refit"] is False,
         "synthetic_stays_nonevidentiary": all(
