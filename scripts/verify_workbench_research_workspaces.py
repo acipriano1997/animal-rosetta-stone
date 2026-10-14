@@ -43,7 +43,12 @@ checks = {
         store.run_get("RUN-PT-RQ0001-006")["model_refit"] is False
         and store.run_get("RUN-PT-RQ0001-006")["preprocessing_refit"] is False
     ),
-    "crg_d_controls": store.species_get("SP001")["comparison_readiness"]["controlling_criterion"] == "CRG-D",
+    "comparison_gate_bounded_ready": (
+        store.species_get("SP001")["comparison_readiness"]["overall"] == "COMPARISON_READY_BOUNDED"
+        and store.species_get("SP001")["comparison_readiness"]["CRG-D"] == "PASS"
+        and store.species_get("SP001")["comparison_readiness"]["controlling_criterion"] is None
+        and store.species_get("SP001")["comparison_readiness"]["bonobo_activation"] == "ACTIVE_COMPARATOR"
+    ),
     "d0020_null_remains_bounded": store.run_get("RUN-PT-RQ0001-004")["disposition"] == "NULL_OR_CONTEXT_SUFFICIENT",
     "zero_synthetic_separate": all(not x["biological_evidence"] for x in store.software_verification_list()),
 }
