@@ -311,15 +311,22 @@ class WorkspaceCanonicalProducer:
         self._check_document_drive_state(key)
         return document
 
-    def _aceb_rows(self) -> dict[str, list[dict[str, str]]]:
-        spec = self.manifest["aceb"]
+    def _check_spreadsheet_state(self, spec: dict[str, Any], label: str) -> None:
         metadata = self.reader.drive_metadata(spec["spreadsheet_id"])
+        if metadata.get("id") != spec["spreadsheet_id"]:
+            raise CanonicalProducerError(f"{label} file identity drift; fail closed")
+        if metadata.get("mimeType") != "application/vnd.google-apps.spreadsheet":
+            raise CanonicalProducerError(f"{label} is not a native Google Sheet; fail closed")
         if metadata.get("name") != spec["title"]:
-            raise CanonicalProducerError("ACEB title drift; fail closed")
+            raise CanonicalProducerError(f"{label} title drift; fail closed")
         if metadata.get("modifiedTime") != spec["observed_modified_time"]:
             raise CanonicalProducerError(
-                "ACEB modified time drift; reconcile semantic authority before export"
+                f"{label} modified time drift; reconcile semantic authority before export"
             )
+
+    def _aceb_rows(self) -> dict[str, list[dict[str, str]]]:
+        spec = self.manifest["aceb"]
+        self._check_spreadsheet_state(spec, "ACEB")
         return {
             key: _rows(
                 self.reader.spreadsheet_values(
@@ -521,10 +528,11 @@ class WorkspaceCanonicalProducer:
             }
         ]
 
+        captured_at = datetime.now(timezone.utc)
         snapshot = {
             "snapshot_id": "WORKBENCH-CHIMP-RQ0001-CANONICAL-"
-            + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"),
-            "captured_date": datetime.now(timezone.utc).date().isoformat(),
+            + captured_at.strftime("%Y%m%dT%H%M%SZ"),
+            "captured_date": captured_at.date().isoformat(),
             "mode": "CANONICAL_PRODUCER_OUTPUT",
             "scientific_boundary": (
                 "Evidence structure and provenance only; no translation, semantic gloss "
@@ -638,9 +646,16 @@ class WorkspaceCanonicalProducer:
             "adapter_contract": CANONICAL_READ_CONTRACT,
             "producer_manifest": self.manifest["manifest_id"],
             "authority_state": "CURRENT",
-            "captured_at_utc": datetime.now(timezone.utc).isoformat(),
+            "captured_at_utc": captured_at.isoformat(),
             "bindings": bindings,
             "snapshot": snapshot,
         }
         canonical_bundle_to_snapshot(bundle, source="<memory>")
+        # No CURRENT bundle escapes if any source changed after its first read,
+        # including edits to an earlier document while later sources were read.
+        self._check_spreadsheet_state(self.manifest["aceb"], "ACEB")
+        for dataset_id, spec in self.manifest["event_sources"].items():
+            self._check_spreadsheet_state(spec, dataset_id)
+        for key in self.manifest["documents"]:
+            self._check_document_drive_state(key)
         return bundle

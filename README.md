@@ -56,6 +56,13 @@ ars-workbench --host 127.0.0.1 --port 8765
 
 The token should be supplied by an approved local secret manager or OAuth flow, not typed into the command line, committed, written to Drive documentation, or placed in CI artifacts. Full Slice 2 remains open until the authenticated producer is exercised against the live pinned authorities and that exact-head result is recorded.
 
+For the final operational gate, use `--verify-live` on a clean committed checkout
+and unused output paths. It executes the same REST producer twice, checks every
+source again before returning, rejects credential-bearing output, compares all
+authority/scientific content excluding only capture metadata, and writes private
+bundles plus an exact-commit/hash receipt. The procedure works in approved local
+or remote Python runtimes; see [the live-auth runbook](docs/workbench_live_auth_runbook.md).
+
 ### Slice 3 — event and provenance exploration
 
 The Workbench event service exposes D0018 and D0020 through bounded `events.list` / `events.get` behavior with event-specific provenance resolution. The browser requests event rows separately from the landing snapshot, so the core page stays lightweight even when a canonical bundle carries all 4,259 currently registered event rows.
@@ -86,7 +93,15 @@ The initial 2026-10-09 reconciliation repeatedly encountered changing opaque Doc
 
 `WORKBENCH-CANONICAL-SOURCES-v0.2` now pins all seven current documents by `document_id`, `title`, `drive_revision_id` and `observed_modified_time`. Drive revision IDs come from the newest unambiguous revision across all revision-history pages; they are not Docs API tokens. Legacy manifests/fields are rejected explicitly. The producer rechecks durable Drive state after extracting content to reject edits during the bounded read, while a different ephemeral Docs token with unchanged Drive state passes. Current snapshot provenance and response fixtures use the same durable fields. `FAIL_CLOSED_ON_PIN_DRIFT` remains active.
 
-All seven durable document pins remain as independently verified through the canonical personal Drive. The ACEB modification-time pin was reconciled to the legitimate 2026-10-12 semantic update that records Catherine Hobaiter’s GestureConversations reuse clarification and freezes the bounded chimp comparison package; D0018/D0020 event-corpus modification-time pins remain unchanged. Runtime Google OAuth credentials were unavailable during the prior verification, so `LIVE_AUTH_VERIFICATION=NOT_AVAILABLE`; connector verification of document authorities does not by itself claim a full authenticated ACEB/event bundle export.
+All seven durable document pins remain independently verified through canonical
+personal Drive. The ACEB modification-time pin was reconciled to the 2026-10-14
+project-control and D0026 metadata-admission updates; the frozen chimp scientific
+projection and D0018/D0020 event-corpus pins remain unchanged. Full connector
+responses project all 36 D0018 and 4,223 D0020 events, five bounded claims and the
+CLOSED/MIXED comparison state deterministically through the existing producer.
+`contracts/workbench_connector_response_compatibility_receipt.json` explicitly
+records this as an offline response-compatibility replay. Runtime bearer
+authorization remains unavailable; it does not close the authenticated REST gate.
 
 ### Presentation language
 

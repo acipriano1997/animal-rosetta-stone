@@ -1,143 +1,122 @@
 # Workbench live-authenticated canonical producer runbook
 
-Status: operator procedure only. This document does not change scientific state, authority, evidence, or the canonical-producer contract.
+Status: operator procedure only. Scientific effect: NONE. A missing credential,
+connector read, fixture pass or metadata audit does not close Phase I.
 
-## Purpose
+## Runtime and authorization
 
-Close the remaining Workbench Phase I operational gate by executing the existing canonical producer against the live, pinned Google Drive/ACEB authorities with a short-lived OAuth bearer token. The producer must continue to fail closed on authority-pin drift.
+Use Python 3.13 and Node.js 22+ on any approved local or remote runtime. The
+existing REST producer is platform-independent. It reads a short-lived Google
+OAuth bearer token only from `ARS_GOOGLE_OAUTH_ACCESS_TOKEN` (or the explicitly
+named environment variable passed via `--access-token-env`). It does not need a
+Mac, browser login, refresh token, service account, embedded credential or new
+authentication architecture.
 
-## Security boundary
+The approved token must permit read-only Drive metadata/revision-history,
+Docs content and Sheets values requests for the manifest's seven documents and
+three spreadsheets in the canonical personal Drive. Use read-only Workspace
+scopes through an approved OAuth flow/secret injector. A connected Drive chat
+session provides connector reads; it does not supply a bearer token to this
+process. Do not extract connector credentials or substitute a connector replay
+for the live REST run. Never send credentials through chat, Git, Drive documents,
+command-line arguments, shell-history assignments or CI artifacts.
 
-- Use a short-lived Google OAuth access token that is authorized for the Drive/Docs/Sheets reads required by the canonical producer.
-- Never place the token on the command line, in Git, in a shell-history-visible assignment, in a receipt, or in an issue/PR comment.
-- The canonical exporter reads the token only from `ARS_GOOGLE_OAUTH_ACCESS_TOKEN`.
-- The exported canonical bundle and verification metadata must not contain the credential.
-- Unset the environment variable immediately after the run.
+## Repository-side preparation
 
-## Preconditions
+From a clean canonical checkout, synchronize current main, install pinned
+dependencies and run the credential-independent gates before supplying a token:
 
-1. Use the canonical local repository checkout.
-2. Fetch `origin` and require local `main` to fast-forward cleanly to current `origin/main`.
-3. Confirm there are no local changes that would contaminate the operator run.
-4. Activate the project Python environment and install only the repository-pinned dependencies if they are not already present.
-5. Recheck the live canonical authority pins immediately before authenticated execution. Any pin drift is a stop condition; reconcile the source authority and repository pins before retrying.
-
-## Bounded operator sequence
-
-From the project root:
-
-```zsh
-set -euo pipefail
-
+```bash
 git fetch origin
 git checkout main
 git pull --ff-only origin main
 test -z "$(git status --porcelain)"
-
-if [[ -f .venv/bin/activate ]]; then
-  source .venv/bin/activate
-fi
-
 python -m pip install -r requirements-lock.txt
 python -m pip install -e .
-
-# Offline structural gate first. This must pass before any live credential is used.
+python -m pytest -q
 python scripts/verify_workbench_slice2_producer.py
+python scripts/verify_workbench_document_authority.py
+python scripts/verify_workbench_slice5_firewall.py
+```
 
-mkdir -p build/live_authority
+Use the latest complete GitHub CI result for that exact commit as complementary
+evidence. Do not silently update authority pins: inspect legitimate source edits,
+review the projection, reconcile the manifest and tests, and commit the change
+before retrying. The authenticated producer itself checks exact live pins before
+source reads and rechecks all authorities before returning each bundle, including
+rights/missingness reads and edits to earlier documents during later reads.
 
-# Enter the short-lived token without echoing it or putting it on the command line.
-read -s "ARS_GOOGLE_OAUTH_ACCESS_TOKEN?Paste short-lived Google OAuth access token: "
-print
-export ARS_GOOGLE_OAUTH_ACCESS_TOKEN
+## Final authenticated run
 
-cleanup_token() {
-  unset ARS_GOOGLE_OAUTH_ACCESS_TOKEN
-}
-trap cleanup_token EXIT INT TERM
+With the approved secret already injected into the environment:
 
-python scripts/export_workbench_canonical_bundle.py \
+```bash
+python scripts/export_workbench_canonical_bundle.py --verify-live \
   --out build/live_authority/workbench_canonical_bundle.json
-
 unset ARS_GOOGLE_OAUTH_ACCESS_TOKEN
-trap - EXIT INT TERM
+```
 
+If an interactive approved runtime is used, this portable hidden-input sequence
+avoids shell-history-visible assignments and removes the token after the child
+process exits, including failures:
+
+```bash
 python - <<'PY'
-import hashlib
-import json
+import getpass
+import os
 import subprocess
-from pathlib import Path
+import sys
 
-path = Path("build/live_authority/workbench_canonical_bundle.json")
-bundle = json.loads(path.read_text(encoding="utf-8"))
-
-assert bundle["authority_state"] == "CURRENT", bundle["authority_state"]
-assert bundle.get("snapshot", {}).get("snapshot_id")
-assert bundle.get("producer_manifest")
-
-# Defensive credential-leak check: canonical output must not expose bearer/header/token fields.
-def walk(value, prefix=""):
-    if isinstance(value, dict):
-        for key, child in value.items():
-            here = f"{prefix}.{key}" if prefix else key
-            lowered = key.lower()
-            assert lowered not in {
-                "authorization",
-                "access_token",
-                "oauth_access_token",
-                "bearer_token",
-            }, here
-            walk(child, here)
-    elif isinstance(value, list):
-        for i, child in enumerate(value):
-            walk(child, f"{prefix}[{i}]")
-walk(bundle)
-
-sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
-repo_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
-receipt = {
-    "verification": "Workbench live-authenticated canonical producer",
-    "repository_sha": repo_sha,
-    "snapshot_id": bundle["snapshot"]["snapshot_id"],
-    "authority_state": bundle["authority_state"],
-    "producer_manifest": bundle["producer_manifest"],
-    "bundle_sha256": sha256,
-    "credentials_embedded": False,
-    "scientific_effect": "NONE",
-    "biological_evidence": False,
-}
-receipt_path = Path("build/live_authority/workbench_live_auth_receipt.json")
-receipt_path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+os.environ["ARS_GOOGLE_OAUTH_ACCESS_TOKEN"] = getpass.getpass(
+    "Short-lived approved Google OAuth access token: "
+)
 try:
-    receipt_path.chmod(0o600)
-except OSError:
-    pass
-print(json.dumps(receipt, indent=2))
+    subprocess.run([
+        sys.executable, "scripts/export_workbench_canonical_bundle.py",
+        "--verify-live", "--out",
+        "build/live_authority/workbench_canonical_bundle.json",
+    ], check=True)
+finally:
+    os.environ.pop("ARS_GOOGLE_OAUTH_ACCESS_TOKEN", None)
 PY
 ```
 
-## Acceptance criteria
+`--verify-live` uses the same canonical REST producer twice, validates each output
+through the existing adapter/provenance firewall, checks credential-bearing fields
+and actual token values before writing, and compares every output field except
+`captured_at_utc`, `snapshot.snapshot_id` and `snapshot.captured_date` (capture
+metadata). Source identity, pins, bindings, events, metrics, rights and provenance
+remain part of the deterministic comparison. Each capture uses one UTC timestamp.
 
-The live gate passes only if all of the following are true:
+The output paths must be unused. Success writes the first bundle, an independent
+`*_rerun.json` capture and a `*_receipt.json` containing the clean repository SHA,
+manifest digest, two byte hashes, deterministic-content hash and event inventory.
+Files are atomically written at mode 0600. A failed read, drift, rerun difference,
+credential check or changed checkout produces no success receipt. An existing
+receipt is never overwritten/reused as proof of a new attempt; use a fresh output
+basename after resolving a failed attempt. Keep bundles private: canonical event
+rows have source-rights restrictions and are not Git/CI publication artifacts.
 
-- the local repository was clean and synchronized to current canonical `main` before execution;
-- the offline producer-boundary verifier passed;
-- the live producer completed without authority-pin drift or source-read failure;
-- `authority_state` is `CURRENT`;
-- a non-empty `snapshot_id` and `producer_manifest` were produced;
-- the bundle contains no credential-bearing fields;
-- the bundle and bounded receipt are persisted with an exact repository SHA and bundle SHA-256;
-- the resulting receipt is reviewed before project-control surfaces are changed from gate-open to gate-closed.
+## Gate review and persistence
 
-## Fail-closed outcomes
+Review the receipt together with the exact-commit automated test/CI results and
+private artifacts. Require CURRENT authority; D0018=36 and D0020=4,223 full event
+rows; source-preserved identifiers/locators; all required bindings; no unresolved
+provenance; ZERO_SYNTHETIC non-biological segregation; no preview/media invention;
+and a passing deterministic rerun. Verify the recorded SHA-256 hashes against the
+private files. Exercise the Workbench from that exported file as an as-of bundle:
 
-Do **not** reinterpret these as software success:
+```bash
+ARS_WORKBENCH_CANONICAL_SOURCE=build/live_authority/workbench_canonical_bundle.json \
+  ars-workbench --host 127.0.0.1 --port 8765
+```
 
-- missing/expired/insufficient OAuth token;
-- authority revision or spreadsheet-state drift;
-- source permission/read failures;
-- incomplete canonical bindings;
-- `authority_state` other than `CURRENT`;
-- any indication that a credential was serialized into output.
+Do not call file transport live. The receipt proves the preceding live producer
+read as of its capture. Only after review/readback persist the bounded result and
+exact GitHub/CI references in existing ACEB Ingestion Queue Q0023 and the canonical
+project-control audit record. A receipt alone does not approve scientific claims.
 
-Resolve the specific operational defect, recheck live pins, and rerun from the beginning. Do not loosen the producer contract to make the gate pass.
+Missing/expired/insufficient authorization, inaccessible source, malformed content,
+pin drift, non-CURRENT state, provenance failure, credential leakage and output
+differences remain fail-closed outcomes. Missing runtime authorization remains an
+external gate; record it honestly and continue unrelated executable project work.

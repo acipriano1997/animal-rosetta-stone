@@ -16,15 +16,17 @@
       "generated bundles",
       "CI artifacts",
       "command-line arguments"
-    ]
+    ],
+    "transport_protection": "Canonical API redirects are rejected before Authorization can be forwarded. Request errors omit raw provider reason/payload and exception chains."
   },
   "authority_policy": {
     "mode": "FAIL_CLOSED_ON_PIN_DRIFT",
     "google_docs": "Exact document ID, native Google Doc MIME type, title, drive_revision_id from current Drive revision history, and observed_modified_time must match WORKBENCH-CANONICAL-SOURCES-v0.2 before and after content extraction. Docs API revisionId is ephemeral, never a persistent pin.",
-    "aceb": "exact spreadsheet ID, title, and observed modifiedTime must match the producer source manifest",
+    "aceb": "Exact spreadsheet ID, native Google Sheet MIME type, title and observed modifiedTime must match the producer source manifest.",
     "effect_of_drift": "No bundle is emitted until the source manifest and compatibility tests are reviewed.",
-    "event_corpora": "D0018 and D0020 exact spreadsheet ID, title, and observed modifiedTime must match the producer source manifest",
-    "legacy_manifest": "Version v0.1 and legacy revision_id fields are rejected; fixture migration is explicit."
+    "event_corpora": "D0018/D0020 exact spreadsheet ID, native Google Sheet MIME type, title and observed modifiedTime must match the producer source manifest.",
+    "legacy_manifest": "Version v0.1 and legacy revision_id fields are rejected; fixture migration is explicit.",
+    "whole_read_window": "Before returning a CURRENT bundle, recheck all document durable Drive pins and all spreadsheet identities/types/titles/modifiedTime after all content, event, provenance and rights/missingness reads."
   },
   "projection_rules": [
     "Question, hypotheses, datasets, comparison-gate states, and claim-propagation rules are projected from ACEB rows.",
@@ -40,5 +42,6 @@
   ],
   "live_verification_boundary": "CI verifies producer behavior against synthetic Workspace responses only. Live authenticated Drive/ACEB execution is a separate operational gate.",
   "scientific_effect": "NONE",
-  "biological_evidence": false
+  "biological_evidence": false,
+  "verification_export": "Optional --verify-live executes the same runtime-bearer REST producer twice on a clean committed checkout. It compares every field except captured_at_utc and snapshot.snapshot_id/captured_date; scans credential-bearing keys and actual token values; writes mode-0600 atomic captures and a bounded exact-commit/hash receipt only after passing. Unused output paths prevent stale receipt reuse. It does not create a new authentication path or automatically close canonical project state."
 }

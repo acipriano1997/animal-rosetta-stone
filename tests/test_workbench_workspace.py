@@ -1,4 +1,6 @@
 from urllib.parse import parse_qs, urlparse
+from urllib.error import HTTPError, URLError
+import traceback
 
 import pytest
 
@@ -60,3 +62,35 @@ def test_revision_pagination_cycle_fails_closed():
     reader, _ = _reader([page, page])
     with pytest.raises(GoogleWorkspaceReadError, match="pagination"):
         reader.drive_head_revision("doc")
+
+
+@pytest.mark.parametrize("failure", ["http", "transport", "json", "decode"])
+def test_failed_reads_do_not_leak_credentials_even_in_tracebacks(failure):
+    token = "synthetic-failure-token-not-a-credential"
+    reader = GoogleWorkspaceRESTReader(token)
+    class Response:
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+        def read(self):
+            return b"\xff" if failure == "decode" else token.encode()
+    class Opener:
+        def open(self, request, **kwargs):
+            assert request.get_header("Authorization") == "Bearer " + token
+            if failure == "http":
+                raise HTTPError(request.full_url, 401, token, {}, None)
+            if failure == "transport":
+                raise URLError(token)
+            return Response()
+    reader._opener = Opener()
+    with pytest.raises(GoogleWorkspaceReadError) as caught:
+        reader.drive_metadata("file")
+    assert token not in "".join(traceback.format_exception(caught.value))
+
+
+def test_redirect_rejected_before_authorization_can_be_forwarded():
+    from ars_workbench.workspace import _RejectRedirects
+    from urllib.request import Request
+    request = Request("https://www.googleapis.com/drive/v3/files/doc",
+                      headers={"Authorization": "Bearer synthetic-not-a-credential"})
+    with pytest.raises(GoogleWorkspaceReadError, match="redirect rejected"):
+        _RejectRedirects().redirect_request(request, None, 302, "Found", {}, "https://other.invalid/")

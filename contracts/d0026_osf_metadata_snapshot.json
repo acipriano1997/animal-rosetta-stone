@@ -1,0 +1,128 @@
+{
+  "dataset_id": "D0026",
+  "study_id": "S0091",
+  "captured_at_utc": "2026-10-14T18:37:18.508350+00:00",
+  "source": "OSF API via publication-linked view-only route",
+  "node_id": "wes3f",
+  "node_title": "An updated vocal repertoire of wild adult bonobos (Pan paniscus)",
+  "node_modified_at": "2025-03-10T09:23:45.586524",
+  "node_public": false,
+  "license_id": "563c1cf88c5e4a3877f9e965",
+  "license_name": "No license",
+  "license_is_reuse_permission": false,
+  "children_count": 0,
+  "storage_provider_count": 1,
+  "root_folders": [
+    "/data/",
+    "/analysis/"
+  ],
+  "file_count": 5,
+  "files": [
+    {
+      "file_id": "6745e1e1b9010d48c7fb4f77",
+      "path": "/analysis/0_acoustic_parameter extraction.R",
+      "size_bytes": 2418,
+      "current_version": 1,
+      "provider_reported_hashes": {
+        "md5": "cb9c13bd2709fd71193ea541663454e8",
+        "sha256": "948832a8bfeedee2c5e20e4e33522bfece8ca11c480c87c152ef5f5d11490f26"
+      },
+      "locally_verified_hashes": false,
+      "modified_at": "2024-11-26T14:57:37.960305",
+      "versions": [
+        {
+          "version": "1",
+          "created_at": "2024-11-26T14:57:37.960305",
+          "size_bytes": 2418,
+          "metadata_url": "https://api.osf.io/v2/files/6745e1e1b9010d48c7fb4f77/versions/1/?view_only=53206fc8d6a047cc9be409da4b4a816a"
+        }
+      ]
+    },
+    {
+      "file_id": "67ceaf58293a3ed5fbfd737d",
+      "path": "/analysis/1_Bonobo_vocrep_randomForest.R",
+      "size_bytes": 2594,
+      "current_version": 1,
+      "provider_reported_hashes": {
+        "md5": "deb3a7087ea747b0b772e421866096f4",
+        "sha256": "365e2b2a33ecf6be838f90e1ae5162df5a1322aa5322ad29f7324d7f6b9ad933"
+      },
+      "locally_verified_hashes": false,
+      "modified_at": "2025-03-10T09:22:32.208362",
+      "versions": [
+        {
+          "version": "1",
+          "created_at": "2025-03-10T09:22:32.208362",
+          "size_bytes": 2594,
+          "metadata_url": "https://api.osf.io/v2/files/67ceaf58293a3ed5fbfd737d/versions/1/?view_only=53206fc8d6a047cc9be409da4b4a816a"
+        }
+      ]
+    },
+    {
+      "file_id": "67ceaf643bf5ff813a040f77",
+      "path": "/analysis/2_vocrep_t-SNE.R",
+      "size_bytes": 2694,
+      "current_version": 1,
+      "provider_reported_hashes": {
+        "md5": "6cd94e0d9e2f37da51a6e185ae137f5a",
+        "sha256": "d8e1645025679e2d692223697b56544d12a1cea8cc7768dfdafc8d93693402d1"
+      },
+      "locally_verified_hashes": false,
+      "modified_at": "2025-03-10T09:22:44.888401",
+      "versions": [
+        {
+          "version": "1",
+          "created_at": "2025-03-10T09:22:44.888401",
+          "size_bytes": 2694,
+          "metadata_url": "https://api.osf.io/v2/files/67ceaf643bf5ff813a040f77/versions/1/?view_only=53206fc8d6a047cc9be409da4b4a816a"
+        }
+      ]
+    },
+    {
+      "file_id": "67ceaf96fadc61f442bb3407",
+      "path": "/data/1_Bonobo_vocrep_randomForest.xlsx",
+      "size_bytes": 629380,
+      "current_version": 1,
+      "provider_reported_hashes": {
+        "md5": "5e6c0efec96acdae06c8eed62638c71e",
+        "sha256": "af8c831ecb33ae1f135511ca40dbd70f27315a52493f6d375a0a288ac127d2f6"
+      },
+      "locally_verified_hashes": false,
+      "modified_at": "2025-03-10T09:23:34.615351",
+      "versions": [
+        {
+          "version": "1",
+          "created_at": "2025-03-10T09:23:34.615351",
+          "size_bytes": 629380,
+          "metadata_url": "https://api.osf.io/v2/files/67ceaf96fadc61f442bb3407/versions/1/?view_only=53206fc8d6a047cc9be409da4b4a816a"
+        }
+      ]
+    },
+    {
+      "file_id": "67ceafa1f741140c690411f7",
+      "path": "/data/2_Bonobo_vocrep_tSNE.xlsx",
+      "size_bytes": 629008,
+      "current_version": 1,
+      "provider_reported_hashes": {
+        "md5": "cfe269b7a61c977c880b3a470de885db",
+        "sha256": "3567d6e6348b3102ce4c34135d19f3c8fd7465a44a7ebae014875fe166a212df"
+      },
+      "locally_verified_hashes": false,
+      "modified_at": "2025-03-10T09:23:45.216811",
+      "versions": [
+        {
+          "version": "1",
+          "created_at": "2025-03-10T09:23:45.216811",
+          "size_bytes": 629008,
+          "metadata_url": "https://api.osf.io/v2/files/67ceafa1f741140c690411f7/versions/1/?view_only=53206fc8d6a047cc9be409da4b4a816a"
+        }
+      ]
+    }
+  ],
+  "publication_version_equivalence": "UNCONFIRMED",
+  "source_bytes_downloaded": false,
+  "schema_and_runtime_audit": "HELD_UNTIL_RIGHTS_AND_PUBLICATION_VERSION_RESOLUTION",
+  "scientific_role": "ACOUSTIC_PRODUCTION_TAXONOMY_ONLY",
+  "biological_evidence": false,
+  "scientific_effect": "NONE"
+}

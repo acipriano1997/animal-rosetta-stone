@@ -1,0 +1,67 @@
+{
+  "case_id": "NBDC-0002",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Domestic_catfight.webm",
+  "source_page_revision": 1208756405,
+  "download_url": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Domestic_catfight.webm",
+  "creator": "Panini!",
+  "source_date": "2024-02-21",
+  "rights": "CC0 1.0",
+  "acquisition_date": "2026-10-14",
+  "source_identity_check": "PASS_SHA1_AND_EXACT_SIZE",
+  "source_camera_original_equivalence": "NOT_ASSERTED_PUBLISHER_WEBM_ONLY",
+  "ffmpeg_version": "7.1 (imageio-ffmpeg 0.6.0)",
+  "transformation": "Full duration, no crop/rescale/frame-rate change; strip global/stream metadata and chapters; H.264 CRF18 preset fast yuv420p; natural audio AAC192k or no audio; faststart MP4. Lossy playback derivatives, not source-equivalent bytes.",
+  "technical_inspection": "All video/audio bytes decoded; 1146 video frames in each capture; contact sheet sampled at 4-second intervals visually inspected for technical legibility only. Not a blind behavioral pass or complete framing audit.",
+  "coder_exposure": "EXPOSED_TO_SOURCE_TITLE_DESCRIPTION_AND_FULL_CLIP",
+  "blind_pass_executed": false,
+  "prospective_predictions_frozen": false,
+  "contamination_challenge_executed": false,
+  "adjudication": "NOT_STARTED",
+  "maturity": "CANDIDATE_HELD_EXPOSURE_CLEAN_EVALUATION",
+  "candidate_channels": [
+    "video_only",
+    "natural_audio_video"
+  ],
+  "speech_masked_variant_created": false,
+  "clip_bounds_and_prediction_cut": "UNFROZEN_MUST_BE_FIXED_BEFORE_BLIND_EVALUATION",
+  "scientific_effect": "NONE",
+  "biological_evidence": false,
+  "artifacts": [
+    {
+      "filename": "source.webm",
+      "size_bytes": 135150326,
+      "sha1": "0cf77811f2e5e9d304b9a632185ed603971fcd88",
+      "sha256": "b6925f989d8a3d11cc74268de43ff5552a5d1125481c2da3294de6c9dd568ff8",
+      "decoded_video_frames": 1146,
+      "has_audio": true,
+      "video_stream": "vp9 (Profile 0), yuv420p(tv, bt709, progressive), 1920x1080, SAR 1:1 DAR 16:9, 30 fps, 30 tbr, 1k tbn (default)"
+    },
+    {
+      "filename": "NBDC-0002_video_only.mp4",
+      "size_bytes": 89872737,
+      "sha1": "9f7a405b81493f8c87c916d157ed8435ab625721",
+      "sha256": "cb9752f134c44acd1737975223233c06ea32e8a60cde79120cdd863d22e5076f",
+      "decoded_video_frames": 1146,
+      "has_audio": false,
+      "video_stream": "h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 18818 kb/s, 30 fps, 30 tbr, 15360 tbn (default)",
+      "drive_file_id": "1meW2IFLYKitS8JjKfrz2FJVKsXYRJ9Xh"
+    },
+    {
+      "filename": "NBDC-0002_natural_audio.mp4",
+      "size_bytes": 90822102,
+      "sha1": "e487e80ba8a18e78968ebf264f9047954da75cf3",
+      "sha256": "2c61426a09ab21209fced9daca89c1a194420242be0587f70146237858d58a5e",
+      "decoded_video_frames": 1146,
+      "has_audio": true,
+      "video_stream": "h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1920x1080 [SAR 1:1 DAR 16:9], 18818 kb/s, 30 fps, 30 tbr, 15360 tbn (default)",
+      "drive_file_id": "1lK4gJSMb6rxc7vsWLIDwGQnuwVyTTsUR"
+    }
+  ],
+  "source_archival": {
+    "status": "LOCAL_EXACT_PUBLISHER_COPY_PLUS_PINNED_PUBLIC_URL",
+    "canonical_drive_upload": "BLOCKED_CONNECTOR_104857600_BYTE_LIMIT",
+    "source_size_bytes": 135150326,
+    "source_local_path": "build/nbdc/NBDC-0002/source.webm",
+    "original_stored_in_drive": false
+  }
+}

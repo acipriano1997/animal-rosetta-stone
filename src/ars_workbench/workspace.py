@@ -5,11 +5,18 @@ from datetime import datetime
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 
 class GoogleWorkspaceReadError(RuntimeError):
     """Raised when a read-only Google Workspace request cannot be trusted."""
+
+
+class _RejectRedirects(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        # urllib's default redirect handler can forward Authorization to a new
+        # host. Canonical Google API reads must succeed at their intended URL.
+        raise GoogleWorkspaceReadError("Google Workspace redirect rejected")
 
 
 class GoogleWorkspaceRESTReader:
@@ -36,6 +43,7 @@ class GoogleWorkspaceRESTReader:
         self._docs_base = docs_base.rstrip("/")
         self._sheets_base = sheets_base.rstrip("/")
         self._timeout = timeout
+        self._opener = build_opener(_RejectRedirects())
 
     def _get_json(self, url: str) -> dict[str, Any]:
         request = Request(
@@ -47,27 +55,29 @@ class GoogleWorkspaceRESTReader:
             },
         )
         try:
-            with urlopen(request, timeout=self._timeout) as response:
+            with self._opener.open(request, timeout=self._timeout) as response:
                 payload = response.read().decode("utf-8")
+        except GoogleWorkspaceReadError:
+            raise
         except HTTPError as exc:
             raise GoogleWorkspaceReadError(
                 f"Google Workspace read failed with HTTP {exc.code}"
-            ) from exc
+            ) from None
         except URLError as exc:
             raise GoogleWorkspaceReadError(
-                f"Google Workspace read failed: {exc.reason}"
-            ) from exc
+                "Google Workspace transport failed"
+            ) from None
         except Exception as exc:
             raise GoogleWorkspaceReadError(
                 f"Google Workspace read failed: {type(exc).__name__}"
-            ) from exc
+            ) from None
 
         try:
             obj = json.loads(payload)
         except json.JSONDecodeError as exc:
             raise GoogleWorkspaceReadError(
                 "Google Workspace response was not valid JSON"
-            ) from exc
+            ) from None
         if not isinstance(obj, dict):
             raise GoogleWorkspaceReadError(
                 "Google Workspace response must be a JSON object"

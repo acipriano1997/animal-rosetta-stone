@@ -1,0 +1,43 @@
+{
+  "verification": "Full canonical connector-response projection compatibility",
+  "transport": "OFFLINE_REPLAY_OF_AUTHENTICATED_CONNECTOR_RESPONSES",
+  "live_rest_producer_gate": "NOT_PASSED_RUNTIME_BEARER_AUTHORIZATION_UNAVAILABLE",
+  "authority_state_during_reads": "MATCHED_PINS",
+  "event_count": 4259,
+  "event_inventory": {
+    "D0018": {
+      "canonical_total": 36,
+      "available_in_bundle": 36,
+      "coverage": "FULL_CANONICAL_EVENT_ROWS",
+      "authority": "Animal Rosetta Stone \u2014 Chimpanzee RQ0001 Event Corpus v0.1",
+      "spreadsheet_id": "1FebOEu5FDjsp5WPsq4b-Ux7ThSL0TfBjg30uINyWibA",
+      "event_sheet": "Events",
+      "observed_modified_time": "2026-09-29T16:40:42.641Z"
+    },
+    "D0020": {
+      "canonical_total": 4223,
+      "available_in_bundle": 4223,
+      "coverage": "FULL_CANONICAL_EVENT_ROWS",
+      "authority": "Animal Rosetta Stone \u2014 Chimpanzee RQ0001 Wild Gesture Exchange Corpus v0.1",
+      "spreadsheet_id": "1ztyGFty1T0eHbxluT4vCyDD8NfM-kcoQZoHbjyqgVqw",
+      "event_sheet": "Interaction Events",
+      "observed_modified_time": "2026-09-29T18:52:08.960Z"
+    }
+  },
+  "evidence_count": 5,
+  "deterministic_projection": "PASS_CAPTURE_METADATA_EXCLUDED",
+  "comparison_readiness": "COMPARISON_READY_BOUNDED",
+  "d0019_states": [
+    "CLOSED",
+    "CLOSED"
+  ],
+  "scientific_effect": "NONE",
+  "biological_evidence": false,
+  "source_response_sha256": "e02e68e51165f94d71aa8b1748a04c5b14cc92a13f71b2be59cfd63c9646ff5c",
+  "execution_base_sha": "4977656cf50ff4eb2d2ca8b5e5eca7dc05ba36b2",
+  "capture_date": "2026-10-14",
+  "manifest_sha256": "764b1672110c7d0025b79e45b7d451b0464975de14d456bdb6fc67fe56b126f2",
+  "producer_code_sha256": "0e858b1447e17d0b7d44c34b4aaced5ccd322768a2d192a48377b59542ea9ffe",
+  "private_source_responses": "build/authority-response-review.json; ignored, mode 0600, not published",
+  "post_read_authority_metadata_recheck": "PASS_ALL_TEN_IDENTITIES_TITLES_NATIVE_TYPES_MODIFICATION_TIMES"
+}
