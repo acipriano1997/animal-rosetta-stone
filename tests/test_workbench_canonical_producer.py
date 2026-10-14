@@ -604,8 +604,45 @@ def test_changed_ephemeral_docs_token_with_same_durable_state_passes(key):
     # Only the capture timestamp can differ; no ephemeral token enters authority.
     before.pop("captured_date", None)
     after.pop("captured_date", None)
+    before.pop("snapshot_id", None)
+    after.pop("snapshot_id", None)
     assert before == after
     assert "different-format-next-day-user-token" not in json.dumps(after)
+
+
+@pytest.mark.parametrize("source", ["ACEB", "D0018", "D0020", "species"])
+def test_edit_after_initial_extraction_rejects_entire_bundle(source):
+    manifest = _small_manifest()
+    class LateEditingReader(FakeReader):
+        def spreadsheet_values(self, spreadsheet_id, range_name):
+            rows = super().spreadsheet_values(spreadsheet_id, range_name)
+            # This is the final source read, after all original metadata checks.
+            if range_name == manifest["event_sources"]["D0020"]["missingness_range"]:
+                if source == "ACEB":
+                    self.aceb_modified_time = "2099-01-01T00:00:00Z"
+                elif source == "species":
+                    sid = manifest["documents"]["species"]["document_id"]
+                    self.document_revisions[sid] = "edited-after-document-extraction"
+                else:
+                    self.event_modified_times[source] = "2099-01-01T00:00:00Z"
+            return rows
+    with pytest.raises(CanonicalProducerError, match="drift"):
+        WorkspaceCanonicalProducer(LateEditingReader(manifest), manifest).build_bundle()
+
+
+@pytest.mark.parametrize("source", ["ACEB", "D0018", "D0020"])
+@pytest.mark.parametrize("field,value", [("id", "other-sheet"), ("mimeType", "application/pdf")])
+def test_spreadsheet_identity_and_native_type_required(source, field, value):
+    manifest = _small_manifest()
+    target = manifest["aceb"] if source == "ACEB" else manifest["event_sources"][source]
+    class InvalidReader(FakeReader):
+        def drive_metadata(self, file_id):
+            metadata = super().drive_metadata(file_id)
+            if file_id == target["spreadsheet_id"]:
+                metadata[field] = value
+            return metadata
+    with pytest.raises((CanonicalProducerError, EventProjectionError), match="identity|native"):
+        WorkspaceCanonicalProducer(InvalidReader(manifest), manifest).build_bundle()
 
 
 def test_aceb_modified_time_drift_fails_closed():

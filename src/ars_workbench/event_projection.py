@@ -192,6 +192,10 @@ def build_event_projection(
     for dataset_id in ("D0018", "D0020"):
         spec = manifest["event_sources"][dataset_id]
         metadata = reader.drive_metadata(spec["spreadsheet_id"])
+        if metadata.get("id") != spec["spreadsheet_id"]:
+            raise EventProjectionError(f"{dataset_id} event authority identity drift")
+        if metadata.get("mimeType") != "application/vnd.google-apps.spreadsheet":
+            raise EventProjectionError(f"{dataset_id} event authority is not a native Google Sheet")
         if metadata.get("name") != spec["title"]:
             raise EventProjectionError(f"{dataset_id} event authority title drift")
         if metadata.get("modifiedTime") != spec["observed_modified_time"]:

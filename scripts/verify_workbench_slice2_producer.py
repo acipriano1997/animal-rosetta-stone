@@ -233,12 +233,14 @@ class VerificationReader:
         if file_id == self.m["aceb"]["spreadsheet_id"]:
             return {
                 "id":file_id,"name":self.m["aceb"]["title"],
+                "mimeType":"application/vnd.google-apps.spreadsheet",
                 "modifiedTime":self.m["aceb"]["observed_modified_time"],
             }
         for spec in self.m["event_sources"].values():
             if file_id == spec["spreadsheet_id"]:
                 return {
                     "id":file_id,"name":spec["title"],
+                    "mimeType":"application/vnd.google-apps.spreadsheet",
                     "modifiedTime":spec["observed_modified_time"],
                 }
         raise KeyError(file_id)
