@@ -34,9 +34,9 @@ def main() -> None:
         "d0025_metadata_only": d0025["availability"] == "GATED_METADATA_ONLY" and not any(r["dataset_id"] == "D0025" for r in store.run_list()),
         "zero_synthetic_segregated": all(v["class"] == "ZERO_SYNTHETIC" and not v["biological_evidence"] for v in store.software_verification_list()),
         "no_semantic_authority_in_corpora": all(d["semantic_authority"] == "NONE" for d in s["datasets"]),
-        "comparison_gate_not_promoted": s["species"]["comparison_readiness"]["overall"] == "NOT_COMPARISON_READY" and s["species"]["comparison_readiness"]["CRG-C"] == "PASS",
-        "crg_d_controls": s["species"]["comparison_readiness"]["controlling_criterion"] == "CRG-D" and s["species"]["comparison_readiness"]["CRG-D"] == "PARTIAL",
-        "bonobo_deferred": s["species"]["comparison_readiness"]["bonobo_activation"] == "DEFERRED",
+        "comparison_gate_bounded_ready": s["species"]["comparison_readiness"]["overall"] == "COMPARISON_READY_BOUNDED" and s["species"]["comparison_readiness"]["CRG-C"] == "PASS",
+        "crg_d_closed": s["species"]["comparison_readiness"]["controlling_criterion"] is None and s["species"]["comparison_readiness"]["CRG-D"] == "PASS",
+        "bonobo_active_comparator": s["species"]["comparison_readiness"]["bonobo_activation"] == "ACTIVE_COMPARATOR",
     }
     receipt = {
         "slice": "Rosetta Research Workbench Phase I Slice 1",
