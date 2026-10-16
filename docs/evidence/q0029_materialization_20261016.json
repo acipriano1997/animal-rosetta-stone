@@ -1,0 +1,1179 @@
+{
+  "admission_ready": false,
+  "archive_members_extracted": false,
+  "contract_id": "Q0029-PROVIDER-MATERIALIZATION-v0.1",
+  "d0031_d0033_dependence_gate": {
+    "allowed_future_dispositions": [
+      "EXACT_DUPLICATION",
+      "PARTIAL_OVERLAP",
+      "POSITIVE_EVIDENCE_OF_INDEPENDENCE",
+      "HELD_INSUFFICIENT_KEYS"
+    ],
+    "crosswalk_semantic_keys_required": [
+      "interaction identifier",
+      "recording or interaction date",
+      "dyad identifier or canonical unordered dyad",
+      "interactant identities"
+    ],
+    "current_evidence_weighting_state": "NON_INDEPENDENT",
+    "default_if_keys_insufficient": "HELD_INSUFFICIENT_KEYS",
+    "default_replication_weighting_if_unresolved": "NON_INDEPENDENT",
+    "exact_row_identity": "UNRESOLVED",
+    "independent_replication_credit": false
+  },
+  "datasets": {
+    "D0031": {
+      "bytes_materialized": true,
+      "dataset_id": "D0031",
+      "failures": [],
+      "files": [
+        {
+          "declared_size_bytes": 27153,
+          "exists": true,
+          "failures": [],
+          "provider_hash_available": true,
+          "provider_hashes_verified": {
+            "sha256": "a9ad25ca506eff8aefa1a1f87ec5abe93832470829afbe30e5c171cd43808e34"
+          },
+          "relative_path": "repair_df.csv",
+          "role": "data",
+          "sha256": "a9ad25ca506eff8aefa1a1f87ec5abe93832470829afbe30e5c171cd43808e34",
+          "size_bytes": 27153,
+          "source_url": "https://data.mendeley.com/public-files/datasets/dkrwf5z9vr/files/95f9f8e9-e0cc-4f85-9080-8f333f681139/file_downloaded"
+        },
+        {
+          "declared_size_bytes": 12883,
+          "exists": true,
+          "failures": [],
+          "provider_hash_available": true,
+          "provider_hashes_verified": {
+            "sha256": "9dadfbdf6652d738880959c3702cbb65fef11992101a097eecba8e2932f106ef"
+          },
+          "relative_path": "repair.R",
+          "role": "code",
+          "sha256": "9dadfbdf6652d738880959c3702cbb65fef11992101a097eecba8e2932f106ef",
+          "size_bytes": 12883,
+          "source_url": "https://data.mendeley.com/public-files/datasets/dkrwf5z9vr/files/62bf78e2-3809-44da-9011-efa578d5bd3d/file_downloaded"
+        },
+        {
+          "declared_size_bytes": 133892543,
+          "exists": true,
+          "failures": [],
+          "provider_hash_available": true,
+          "provider_hashes_verified": {
+            "sha256": "7d31e0be7d8910452431045c581d21f5dc15eb3ecab990e1b00f7cc649c56434"
+          },
+          "relative_path": "Video S1.mp4",
+          "role": "example_media",
+          "sha256": "7d31e0be7d8910452431045c581d21f5dc15eb3ecab990e1b00f7cc649c56434",
+          "size_bytes": 133892543,
+          "source_url": "https://data.mendeley.com/public-files/datasets/dkrwf5z9vr/files/d7b9598a-fe45-4ae3-9244-787bd573b953/file_downloaded"
+        },
+        {
+          "declared_size_bytes": 81180248,
+          "exists": true,
+          "failures": [],
+          "provider_hash_available": true,
+          "provider_hashes_verified": {
+            "sha256": "815d0f9226da6b031753aa0d9bfdd8ab147dfde493dc9b44acba54b213a0ce9a"
+          },
+          "relative_path": "Video S2.mp4",
+          "role": "example_media",
+          "sha256": "815d0f9226da6b031753aa0d9bfdd8ab147dfde493dc9b44acba54b213a0ce9a",
+          "size_bytes": 81180248,
+          "source_url": "https://data.mendeley.com/public-files/datasets/dkrwf5z9vr/files/3b5d6dfa-3383-433e-b131-407c45e378ed/file_downloaded"
+        }
+      ],
+      "mode": "PROVIDER_MANIFEST_BOUND",
+      "state": "LOCAL_PROVIDER_BYTES_HASHED",
+      "unregistered_local_files": []
+    },
+    "D0032": {
+      "bytes_materialized": true,
+      "dataset_id": "D0032",
+      "failures": [],
+      "files": [
+        {
+          "archive_extracted": false,
+          "display_label": "Online Resource 11",
+          "exists": true,
+          "failures": [],
+          "filename": "265_2026_3796_MOESM11_ESM.zip",
+          "provider_hash_available": false,
+          "provider_hashes_verified": {},
+          "provider_object": "MOESM11",
+          "publication_role": "Contains ESM 11: SAV data, SPV output and resource DOCX.",
+          "sha256": "3ca9a8ddae8dff8a4493b0c9e6aceb12c852f462ecf44f4f9f213ea0516aa0ac",
+          "size_bytes": 98383,
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM11_ESM.zip",
+          "zip_member_count": 3,
+          "zip_members": [
+            {
+              "compressed_size": 56598,
+              "crc32": "cea0a717",
+              "is_dir": false,
+              "name": "ESM 11/ESM_11.sav",
+              "uncompressed_size": 454408
+            },
+            {
+              "compressed_size": 31933,
+              "crc32": "adf5eece",
+              "is_dir": false,
+              "name": "ESM 11/ESM_11.spv",
+              "uncompressed_size": 33767
+            },
+            {
+              "compressed_size": 9474,
+              "crc32": "9b06f33a",
+              "is_dir": false,
+              "name": "ESM 11/Online Resource 11.docx",
+              "uncompressed_size": 12176
+            }
+          ]
+        },
+        {
+          "archive_extracted": false,
+          "display_label": "Online Resource 12",
+          "exists": true,
+          "failures": [],
+          "filename": "265_2026_3796_MOESM12_ESM.zip",
+          "provider_hash_available": false,
+          "provider_hashes_verified": {},
+          "provider_object": "MOESM12",
+          "publication_role": "Contains ESM 12: SAV data, three SPV outputs and resource DOCX; not an OR16 context archive.",
+          "sha256": "9f3c439312a890845fb4154681fc2d7fbf20bcf5469d88b4174cd92a3dd71665",
+          "size_bytes": 402382,
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM12_ESM.zip",
+          "zip_member_count": 5,
+          "zip_members": [
+            {
+              "compressed_size": 23308,
+              "crc32": "9dc45f48",
+              "is_dir": false,
+              "name": "ESM 12/ESM_12.sav",
+              "uncompressed_size": 146815
+            },
+            {
+              "compressed_size": 63910,
+              "crc32": "69e14789",
+              "is_dir": false,
+              "name": "ESM 12/ESM_12_1.spv",
+              "uncompressed_size": 70043
+            },
+            {
+              "compressed_size": 234687,
+              "crc32": "5dd9b156",
+              "is_dir": false,
+              "name": "ESM 12/ESM_12_2.spv",
+              "uncompressed_size": 265177
+            },
+            {
+              "compressed_size": 70367,
+              "crc32": "8fc3f1ea",
+              "is_dir": false,
+              "name": "ESM 12/ESM_12_3.spv",
+              "uncompressed_size": 78830
+            },
+            {
+              "compressed_size": 9500,
+              "crc32": "e1ff5d91",
+              "is_dir": false,
+              "name": "ESM 12/Online Resource 12.docx",
+              "uncompressed_size": 12200
+            }
+          ]
+        },
+        {
+          "archive_extracted": false,
+          "display_label": "Online Resource 13",
+          "exists": true,
+          "failures": [],
+          "filename": "265_2026_3796_MOESM13_ESM.zip",
+          "provider_hash_available": false,
+          "provider_hashes_verified": {},
+          "provider_object": "MOESM13",
+          "publication_role": "Contains ESM 13: SAV data, SPV output and resource DOCX; not an OR16 joint-activity archive.",
+          "sha256": "3f85ceccc330fc70acda52a0125fe8a76e29776a4ca3b3207a8318db247ce263",
+          "size_bytes": 74716,
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM13_ESM.zip",
+          "zip_member_count": 3,
+          "zip_members": [
+            {
+              "compressed_size": 12711,
+              "crc32": "968c9cae",
+              "is_dir": false,
+              "name": "ESM 13/ESM_13.sav",
+              "uncompressed_size": 37840
+            },
+            {
+              "compressed_size": 52118,
+              "crc32": "01673a15",
+              "is_dir": false,
+              "name": "ESM 13/ESM_13.spv",
+              "uncompressed_size": 56820
+            },
+            {
+              "compressed_size": 9509,
+              "crc32": "668c5f2e",
+              "is_dir": false,
+              "name": "ESM 13/Online Resource 13.docx",
+              "uncompressed_size": 12216
+            }
+          ]
+        },
+        {
+          "archive_extracted": false,
+          "display_label": "Online Resource 14",
+          "exists": true,
+          "failures": [],
+          "filename": "265_2026_3796_MOESM14_ESM.zip",
+          "provider_hash_available": false,
+          "provider_hashes_verified": {},
+          "provider_object": "MOESM14",
+          "publication_role": "Contains ESM 14: SAV data, SPV output and resource DOCX; byte-identical to MOESM19.",
+          "sha256": "2b3453684368341ea12603b497e00ac650eef453ba5cad992fe03f9f3fde530a",
+          "size_bytes": 69016,
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM14_ESM.zip",
+          "zip_member_count": 3,
+          "zip_members": [
+            {
+              "compressed_size": 8735,
+              "crc32": "03194aa5",
+              "is_dir": false,
+              "name": "ESM 14/ESM_14.sav",
+              "uncompressed_size": 23821
+            },
+            {
+              "compressed_size": 50385,
+              "crc32": "deede64b",
+              "is_dir": false,
+              "name": "ESM 14/ESM_14.spv",
+              "uncompressed_size": 56056
+            },
+            {
+              "compressed_size": 9518,
+              "crc32": "547d32c5",
+              "is_dir": false,
+              "name": "ESM 14/Online Resource 14.docx",
+              "uncompressed_size": 12229
+            }
+          ]
+        },
+        {
+          "archive_extracted": false,
+          "display_label": "Online Resource 15",
+          "exists": true,
+          "failures": [],
+          "filename": "265_2026_3796_MOESM15_ESM.zip",
+          "provider_hash_available": false,
+          "provider_hashes_verified": {},
+          "provider_object": "MOESM15",
+          "publication_role": "Contains ESM 15: context, function and response specificity XLSX files plus resource DOCX; byte-identical to MOESM20.",
+          "sha256": "2abd9221a1ca31ec8ac4bb720fb896815726446d1d8a67a64419da81774b2f5c",
+          "size_bytes": 48581,
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM15_ESM.zip",
+          "zip_member_count": 4,
+          "zip_members": [
+            {
+              "compressed_size": 14282,
+              "crc32": "4b4ef441",
+              "is_dir": false,
+              "name": "ESM 15/ESM_15 Context specificity.xlsx",
+              "uncompressed_size": 19666
+            },
+            {
+              "compressed_size": 15929,
+              "crc32": "9cd3bd70",
+              "is_dir": false,
+              "name": "ESM 15/ESM_15 Function specificity.xlsx",
+              "uncompressed_size": 18990
+            },
+            {
+              "compressed_size": 8216,
+              "crc32": "d7df3584",
+              "is_dir": false,
+              "name": "ESM 15/ESM_15 Response specificity.xlsx",
+              "uncompressed_size": 10690
+            },
+            {
+              "compressed_size": 9536,
+              "crc32": "e3b8a40e",
+              "is_dir": false,
+              "name": "ESM 15/Online Resource 15.docx",
+              "uncompressed_size": 12243
+            }
+          ]
+        },
+        {
+          "archive_extracted": false,
+          "display_label": "Online Resource 16 bundled network resources",
+          "exists": true,
+          "failures": [],
+          "filename": "265_2026_3796_MOESM16_ESM.zip",
+          "provider_hash_available": false,
+          "provider_hashes_verified": {},
+          "provider_object": "MOESM16",
+          "publication_role": "Contains seven nested ZIP members named MRQAP ATTRIBUTES, FUNCTION, OVERALL RATE, KAPPA BODILY VISUAL, JOINT ACTIVITY, CONTEXT and CENTRALITY. Nested contents have not been extracted or inspected.",
+          "sha256": "fc0524a942899f0db576fa50dbb159cb01a986c785fa807ed091e1692e08f806",
+          "size_bytes": 96948,
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM16_ESM.zip",
+          "zip_member_count": 7,
+          "zip_members": [
+            {
+              "compressed_size": 10850,
+              "crc32": "05f7ab3f",
+              "is_dir": false,
+              "name": "ESM_16 MRQAP ATTRIBUTES.zip",
+              "uncompressed_size": 13057
+            },
+            {
+              "compressed_size": 14785,
+              "crc32": "09a09709",
+              "is_dir": false,
+              "name": "ESM_16 FUNCTION.zip",
+              "uncompressed_size": 25753
+            },
+            {
+              "compressed_size": 11449,
+              "crc32": "3abf9dfd",
+              "is_dir": false,
+              "name": "ESM_16 OVERALL RATE.zip",
+              "uncompressed_size": 12444
+            },
+            {
+              "compressed_size": 10525,
+              "crc32": "a087c396",
+              "is_dir": false,
+              "name": "ESM_16 KAPPA BODILY VISUAL.zip",
+              "uncompressed_size": 11450
+            },
+            {
+              "compressed_size": 13121,
+              "crc32": "9049112e",
+              "is_dir": false,
+              "name": "ESM_16 JOINT ACTIVITY.zip",
+              "uncompressed_size": 20023
+            },
+            {
+              "compressed_size": 10346,
+              "crc32": "462451da",
+              "is_dir": false,
+              "name": "ESM_16 CONTEXT.zip",
+              "uncompressed_size": 10890
+            },
+            {
+              "compressed_size": 24992,
+              "crc32": "56a6e02e",
+              "is_dir": false,
+              "name": "ESM_16 CENTRALITY.zip",
+              "uncompressed_size": 25704
+            }
+          ]
+        },
+        {
+          "archive_extracted": false,
+          "display_label": "Online Resource 16 centrality",
+          "exists": true,
+          "failures": [],
+          "filename": "265_2026_3796_MOESM17_ESM.zip",
+          "provider_hash_available": false,
+          "provider_hashes_verified": {},
+          "provider_object": "MOESM17",
+          "publication_role": "Contains CENTRALITY XLSX, resource DOCX and UCINET text logs.",
+          "sha256": "7f0a71c5e5e7fdb2e14885255b4e5928f7fb79a369498990fbeae55a754a600c",
+          "size_bytes": 25704,
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM17_ESM.zip",
+          "zip_member_count": 8,
+          "zip_members": [
+            {
+              "compressed_size": 7918,
+              "crc32": "918bdb95",
+              "is_dir": false,
+              "name": "CENTRALITY/ESM_16 centrality data.xlsx",
+              "uncompressed_size": 10368
+            },
+            {
+              "compressed_size": 9583,
+              "crc32": "f90e332f",
+              "is_dir": false,
+              "name": "CENTRALITY/Online Resource 16 CENTRALITY.docx",
+              "uncompressed_size": 12288
+            },
+            {
+              "compressed_size": 1182,
+              "crc32": "c4b00c45",
+              "is_dir": false,
+              "name": "CENTRALITY/ucinetlog47.txt",
+              "uncompressed_size": 3634
+            },
+            {
+              "compressed_size": 1183,
+              "crc32": "3d6dd6c0",
+              "is_dir": false,
+              "name": "CENTRALITY/ucinetlog48.txt",
+              "uncompressed_size": 3634
+            },
+            {
+              "compressed_size": 1182,
+              "crc32": "380d8ca1",
+              "is_dir": false,
+              "name": "CENTRALITY/ucinetlog49.txt",
+              "uncompressed_size": 3638
+            },
+            {
+              "compressed_size": 1179,
+              "crc32": "c50e2467",
+              "is_dir": false,
+              "name": "CENTRALITY/ucinetlog50.txt",
+              "uncompressed_size": 3642
+            },
+            {
+              "compressed_size": 1185,
+              "crc32": "9659f503",
+              "is_dir": false,
+              "name": "CENTRALITY/ucinetlog51.txt",
+              "uncompressed_size": 3648
+            },
+            {
+              "compressed_size": 1184,
+              "crc32": "b275592d",
+              "is_dir": false,
+              "name": "CENTRALITY/ucinetlog57.txt",
+              "uncompressed_size": 3644
+            }
+          ]
+        },
+        {
+          "archive_extracted": false,
+          "display_label": "Online Resource 16 kappa values",
+          "exists": true,
+          "failures": [],
+          "filename": "265_2026_3796_MOESM18_ESM.zip",
+          "provider_hash_available": false,
+          "provider_hashes_verified": {},
+          "provider_object": "MOESM18",
+          "publication_role": "Contains KAPPA BODILY VISUAL UCINET files and resource DOCX.",
+          "sha256": "f0a5552e520152b0fffe73de36731bb430545f7fbda59451f7bb3c5ab29187f7",
+          "size_bytes": 11450,
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM18_ESM.zip",
+          "zip_member_count": 5,
+          "zip_members": [
+            {
+              "compressed_size": 360,
+              "crc32": "e43540c2",
+              "is_dir": false,
+              "name": "KAPPA BODILY VISUAL/bodily visual kappa list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 116,
+              "crc32": "a8d23ccf",
+              "is_dir": false,
+              "name": "KAPPA BODILY VISUAL/bodily visual kappa list.##h",
+              "uncompressed_size": 223
+            },
+            {
+              "compressed_size": 360,
+              "crc32": "e43540c2",
+              "is_dir": false,
+              "name": "KAPPA BODILY VISUAL/bodily visual kappa matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 120,
+              "crc32": "baa8bacf",
+              "is_dir": false,
+              "name": "KAPPA BODILY VISUAL/bodily visual kappa matrix.##h",
+              "uncompressed_size": 227
+            },
+            {
+              "compressed_size": 9588,
+              "crc32": "16cf2716",
+              "is_dir": false,
+              "name": "KAPPA BODILY VISUAL/Online Resource 16 KAPPA VALUES.docx",
+              "uncompressed_size": 12290
+            }
+          ]
+        },
+        {
+          "archive_extracted": false,
+          "display_label": "Online Resource 14 duplicate provider object",
+          "exists": true,
+          "failures": [],
+          "filename": "265_2026_3796_MOESM19_ESM.zip",
+          "provider_hash_available": false,
+          "provider_hashes_verified": {},
+          "provider_object": "MOESM19",
+          "publication_role": "Contains ESM 14; exact ZIP bytes duplicate MOESM14. Do not count as independent data.",
+          "sha256": "2b3453684368341ea12603b497e00ac650eef453ba5cad992fe03f9f3fde530a",
+          "size_bytes": 69016,
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM19_ESM.zip",
+          "zip_member_count": 3,
+          "zip_members": [
+            {
+              "compressed_size": 8735,
+              "crc32": "03194aa5",
+              "is_dir": false,
+              "name": "ESM 14/ESM_14.sav",
+              "uncompressed_size": 23821
+            },
+            {
+              "compressed_size": 50385,
+              "crc32": "deede64b",
+              "is_dir": false,
+              "name": "ESM 14/ESM_14.spv",
+              "uncompressed_size": 56056
+            },
+            {
+              "compressed_size": 9518,
+              "crc32": "547d32c5",
+              "is_dir": false,
+              "name": "ESM 14/Online Resource 14.docx",
+              "uncompressed_size": 12229
+            }
+          ]
+        },
+        {
+          "archive_extracted": false,
+          "display_label": "Online Resource 15 duplicate provider object",
+          "exists": true,
+          "failures": [],
+          "filename": "265_2026_3796_MOESM20_ESM.zip",
+          "provider_hash_available": false,
+          "provider_hashes_verified": {},
+          "provider_object": "MOESM20",
+          "publication_role": "Contains ESM 15; exact ZIP bytes duplicate MOESM15. Do not count as independent data.",
+          "sha256": "2abd9221a1ca31ec8ac4bb720fb896815726446d1d8a67a64419da81774b2f5c",
+          "size_bytes": 48581,
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM20_ESM.zip",
+          "zip_member_count": 4,
+          "zip_members": [
+            {
+              "compressed_size": 14282,
+              "crc32": "4b4ef441",
+              "is_dir": false,
+              "name": "ESM 15/ESM_15 Context specificity.xlsx",
+              "uncompressed_size": 19666
+            },
+            {
+              "compressed_size": 15929,
+              "crc32": "9cd3bd70",
+              "is_dir": false,
+              "name": "ESM 15/ESM_15 Function specificity.xlsx",
+              "uncompressed_size": 18990
+            },
+            {
+              "compressed_size": 8216,
+              "crc32": "d7df3584",
+              "is_dir": false,
+              "name": "ESM 15/ESM_15 Response specificity.xlsx",
+              "uncompressed_size": 10690
+            },
+            {
+              "compressed_size": 9536,
+              "crc32": "e3b8a40e",
+              "is_dir": false,
+              "name": "ESM 15/Online Resource 15.docx",
+              "uncompressed_size": 12243
+            }
+          ]
+        },
+        {
+          "archive_extracted": false,
+          "display_label": "Online Resource 16 function",
+          "exists": true,
+          "failures": [],
+          "filename": "265_2026_3796_MOESM21_ESM.zip",
+          "provider_hash_available": false,
+          "provider_hashes_verified": {},
+          "provider_object": "MOESM21",
+          "publication_role": "Contains FUNCTION UCINET files, resource DOCX and text log.",
+          "sha256": "96795d0e8bb16b9cd096a01f8e16e4de105cccc688916d846793ed22a0f9a334",
+          "size_bytes": 25753,
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM21_ESM.zip",
+          "zip_member_count": 58,
+          "zip_members": [
+            {
+              "compressed_size": 65,
+              "crc32": "2a070e17",
+              "is_dir": false,
+              "name": "FUNCTION/copulation gesture 10 m list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "13244179",
+              "is_dir": false,
+              "name": "FUNCTION/copulation gesture 10 m list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 65,
+              "crc32": "2a070e17",
+              "is_dir": false,
+              "name": "FUNCTION/copulation gesture 10 m matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 82,
+              "crc32": "06a1b2c6",
+              "is_dir": false,
+              "name": "FUNCTION/copulation gesture 10 m matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 16,
+              "crc32": "7964d2be",
+              "is_dir": false,
+              "name": "FUNCTION/gesture food sharing 10 m list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "902f3a8b",
+              "is_dir": false,
+              "name": "FUNCTION/gesture food sharing 10 m list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 16,
+              "crc32": "7964d2be",
+              "is_dir": false,
+              "name": "FUNCTION/gesture food sharing 10 m matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 83,
+              "crc32": "1c994cf0",
+              "is_dir": false,
+              "name": "FUNCTION/gesture food sharing 10 m matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 34,
+              "crc32": "1d88d568",
+              "is_dir": false,
+              "name": "FUNCTION/gesture threat to dominate 10 m CORRECTION list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 74,
+              "crc32": "fa885130",
+              "is_dir": false,
+              "name": "FUNCTION/gesture threat to dominate 10 m CORRECTION list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 34,
+              "crc32": "1d88d568",
+              "is_dir": false,
+              "name": "FUNCTION/gesture threat to dominate 10 m CORRECTION matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 81,
+              "crc32": "ca44fcd2",
+              "is_dir": false,
+              "name": "FUNCTION/gesture threat to dominate 10 m CORRECTION matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 75,
+              "crc32": "9237505a",
+              "is_dir": false,
+              "name": "FUNCTION/gesture to give groom 10 M list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "ccbed9e4",
+              "is_dir": false,
+              "name": "FUNCTION/gesture to give groom 10 M list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 75,
+              "crc32": "9237505a",
+              "is_dir": false,
+              "name": "FUNCTION/gesture to give groom 10 M matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 82,
+              "crc32": "9c0aa76a",
+              "is_dir": false,
+              "name": "FUNCTION/gesture to give groom 10 M matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 45,
+              "crc32": "df98e226",
+              "is_dir": false,
+              "name": "FUNCTION/gesture to mutually groom 10 M list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "ccbed9e4",
+              "is_dir": false,
+              "name": "FUNCTION/gesture to mutually groom 10 M list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 45,
+              "crc32": "df98e226",
+              "is_dir": false,
+              "name": "FUNCTION/gesture to mutually groom 10 M matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 82,
+              "crc32": "9c0aa76a",
+              "is_dir": false,
+              "name": "FUNCTION/gesture to mutually groom 10 M matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 112,
+              "crc32": "e78c2524",
+              "is_dir": false,
+              "name": "FUNCTION/gesture to receive groom 10 M list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "ccbed9e4",
+              "is_dir": false,
+              "name": "FUNCTION/gesture to receive groom 10 M list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 112,
+              "crc32": "e78c2524",
+              "is_dir": false,
+              "name": "FUNCTION/gesture to receive groom 10 M matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 82,
+              "crc32": "9c0aa76a",
+              "is_dir": false,
+              "name": "FUNCTION/gesture to receive groom 10 M matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 20,
+              "crc32": "9902ac9c",
+              "is_dir": false,
+              "name": "FUNCTION/give reassurance 10 m list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "13244179",
+              "is_dir": false,
+              "name": "FUNCTION/give reassurance 10 m list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 20,
+              "crc32": "9902ac9c",
+              "is_dir": false,
+              "name": "FUNCTION/give reassurance 10 m matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 119,
+              "crc32": "4e0874a4",
+              "is_dir": false,
+              "name": "FUNCTION/give reassurance 10 m matrix.##h",
+              "uncompressed_size": 231
+            },
+            {
+              "compressed_size": 9589,
+              "crc32": "4e1d68c1",
+              "is_dir": false,
+              "name": "FUNCTION/Online Resource 16 FUNCTION.docx",
+              "uncompressed_size": 12290
+            },
+            {
+              "compressed_size": 66,
+              "crc32": "bbd75552",
+              "is_dir": false,
+              "name": "FUNCTION/other threat 10 m list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "13244179",
+              "is_dir": false,
+              "name": "FUNCTION/other threat 10 m list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 66,
+              "crc32": "bbd75552",
+              "is_dir": false,
+              "name": "FUNCTION/other threat 10 m matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 82,
+              "crc32": "06a1b2c6",
+              "is_dir": false,
+              "name": "FUNCTION/other threat 10 m matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 81,
+              "crc32": "327c8f49",
+              "is_dir": false,
+              "name": "FUNCTION/panthoot with AUDITORY LONG RANGE CHORUS gesture only at all audience 10 m list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "53036329",
+              "is_dir": false,
+              "name": "FUNCTION/panthoot with AUDITORY LONG RANGE CHORUS gesture only at all audience 10 m list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 81,
+              "crc32": "327c8f49",
+              "is_dir": false,
+              "name": "FUNCTION/panthoot with AUDITORY LONG RANGE CHORUS gesture only at all audience 10 m matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 83,
+              "crc32": "87e55465",
+              "is_dir": false,
+              "name": "FUNCTION/panthoot with AUDITORY LONG RANGE CHORUS gesture only at all audience 10 m matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 60,
+              "crc32": "99f9f6f5",
+              "is_dir": false,
+              "name": "FUNCTION/panthoot with AUDITORY LONG RANGE SOLO gesture only at all audience 10 m list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "53036329",
+              "is_dir": false,
+              "name": "FUNCTION/panthoot with AUDITORY LONG RANGE SOLO gesture only at all audience 10 m list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 60,
+              "crc32": "99f9f6f5",
+              "is_dir": false,
+              "name": "FUNCTION/panthoot with AUDITORY LONG RANGE SOLO gesture only at all audience 10 m matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 83,
+              "crc32": "87e55465",
+              "is_dir": false,
+              "name": "FUNCTION/panthoot with AUDITORY LONG RANGE SOLO gesture only at all audience 10 m matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 50,
+              "crc32": "83a6ed92",
+              "is_dir": false,
+              "name": "FUNCTION/panthoot with VISUAL gesture only at all audience 10 m list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "f52096f4",
+              "is_dir": false,
+              "name": "FUNCTION/panthoot with VISUAL gesture only at all audience 10 m list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 50,
+              "crc32": "83a6ed92",
+              "is_dir": false,
+              "name": "FUNCTION/panthoot with VISUAL gesture only at all audience 10 m matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 83,
+              "crc32": "e6cfad47",
+              "is_dir": false,
+              "name": "FUNCTION/panthoot with VISUAL gesture only at all audience 10 m matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 16,
+              "crc32": "d80e3ce7",
+              "is_dir": false,
+              "name": "FUNCTION/play gesture 10 M list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "ccbed9e4",
+              "is_dir": false,
+              "name": "FUNCTION/play gesture 10 M list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 16,
+              "crc32": "d80e3ce7",
+              "is_dir": false,
+              "name": "FUNCTION/play gesture 10 M matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 82,
+              "crc32": "9c0aa76a",
+              "is_dir": false,
+              "name": "FUNCTION/play gesture 10 M matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 136,
+              "crc32": "576dee3a",
+              "is_dir": false,
+              "name": "FUNCTION/seek reassurance 10 m list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "13244179",
+              "is_dir": false,
+              "name": "FUNCTION/seek reassurance 10 m list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 136,
+              "crc32": "576dee3a",
+              "is_dir": false,
+              "name": "FUNCTION/seek reassurance 10 m matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 82,
+              "crc32": "06a1b2c6",
+              "is_dir": false,
+              "name": "FUNCTION/seek reassurance 10 m matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 22,
+              "crc32": "873c1199",
+              "is_dir": false,
+              "name": "FUNCTION/travel 10 m list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "13244179",
+              "is_dir": false,
+              "name": "FUNCTION/travel 10 m list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 22,
+              "crc32": "873c1199",
+              "is_dir": false,
+              "name": "FUNCTION/travel 10 m matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 82,
+              "crc32": "06a1b2c6",
+              "is_dir": false,
+              "name": "FUNCTION/travel 10 m matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 1934,
+              "crc32": "9faa6888",
+              "is_dir": false,
+              "name": "FUNCTION/ucinetlog23.txt",
+              "uncompressed_size": 17778
+            }
+          ]
+        },
+        {
+          "archive_extracted": false,
+          "display_label": "Online Resource 16 MRQAP attributes",
+          "exists": true,
+          "failures": [],
+          "filename": "265_2026_3796_MOESM22_ESM.zip",
+          "provider_hash_available": false,
+          "provider_hashes_verified": {},
+          "provider_object": "MOESM22",
+          "publication_role": "Contains MRQAP ATTRIBUTES UCINET files and resource DOCX.",
+          "sha256": "62fd677e3b0e07f98d47981368e34d8e9ca4e54eab27ed67d57239dd71707207",
+          "size_bytes": 13057,
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM22_ESM.zip",
+          "zip_member_count": 15,
+          "zip_members": [
+            {
+              "compressed_size": 52,
+              "crc32": "24949258",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/age difference 5 year cohort list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 74,
+              "crc32": "3da54e4b",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/age difference 5 year cohort list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 52,
+              "crc32": "24949258",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/age difference 5 year cohort matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 81,
+              "crc32": "0460f547",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/age difference 5 year cohort matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 31,
+              "crc32": "60d9715e",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/focal sex 3-sameSex.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 76,
+              "crc32": "b3c5814f",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/focal sex 3-sameSex.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 12,
+              "crc32": "9f5809b5",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/focal sex 3-sameSex-density.##d",
+              "uncompressed_size": 12
+            },
+            {
+              "compressed_size": 104,
+              "crc32": "b4e353ca",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/focal sex 3-sameSex-density.##h",
+              "uncompressed_size": 128
+            },
+            {
+              "compressed_size": 29,
+              "crc32": "c9da6cad",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/kinship matrix binary.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 114,
+              "crc32": "f5d436fb",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/kinship matrix binary.##h",
+              "uncompressed_size": 217
+            },
+            {
+              "compressed_size": 36,
+              "crc32": "9a8a5554",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/oestrous similiarity list.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 74,
+              "crc32": "da5863cd",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/oestrous similiarity list.##h",
+              "uncompressed_size": 170
+            },
+            {
+              "compressed_size": 36,
+              "crc32": "9a8a5554",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/oestrous similiarity matrix.##d",
+              "uncompressed_size": 576
+            },
+            {
+              "compressed_size": 81,
+              "crc32": "af98d10a",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/oestrous similiarity matrix.##h",
+              "uncompressed_size": 177
+            },
+            {
+              "compressed_size": 9593,
+              "crc32": "bc950efe",
+              "is_dir": false,
+              "name": "MRQAP ATTRIBUTES/Online Resource 16 MRQAP ATTRIBUTES.docx",
+              "uncompressed_size": 12295
+            }
+          ]
+        }
+      ],
+      "mode": "FIXED_PROVIDER_OBJECTS",
+      "state": "LOCAL_PROVIDER_BYTES_HASHED",
+      "unregistered_local_files": []
+    },
+    "D0033": {
+      "bytes_materialized": true,
+      "dataset_id": "D0033",
+      "failures": [],
+      "files": [
+        {
+          "declared_size_bytes": 444526,
+          "exists": true,
+          "failures": [],
+          "provider_hash_available": true,
+          "provider_hashes_verified": {
+            "md5": "a925be87a9b592e794ba0eeab1790406"
+          },
+          "relative_path": "TT_social.xlsx",
+          "role": "data",
+          "sha256": "1cbafc00066c2e860b453715ae5f202fc2fb299404947efe5de17c9e5bc80bca",
+          "size_bytes": 444526,
+          "source_url": "https://ndownloader.figshare.com/files/51994778"
+        }
+      ],
+      "mode": "PROVIDER_MANIFEST_BOUND",
+      "state": "LOCAL_PROVIDER_BYTES_HASHED",
+      "unregistered_local_files": []
+    }
+  },
+  "failures": [],
+  "materialization_complete": true,
+  "pending_scientific_admission_requirements": [
+    "applicable file-level rights resolved",
+    "schema and identifier mapping complete",
+    "runtime/code inventory complete where applicable",
+    "D0031/D0033 exact-duplication versus partial-overlap crosswalk complete or explicitly held",
+    "existing CRA-011/CRA-012/CRA-013 evidence ceilings preserved"
+  ],
+  "phase": "PROVIDER_BYTE_MATERIALIZATION_ONLY",
+  "queue_id": "Q0029",
+  "replication_credit_change": "NONE",
+  "scientific_effect": "NONE",
+  "source_rows_inspected": false,
+  "state": "LOCAL_PROVIDER_BYTES_HASHED",
+  "captured_date_utc": "2026-10-16",
+  "verified_against_git_main": "f6cbe7d4c2bfc836f7e05b3077666d3da70592ae",
+  "archive_audit_scope": "TOP_LEVEL_CENTRAL_DIRECTORIES_ONLY; nested archives not opened; no payload extraction",
+  "rights_observations": {
+    "D0031": "Provider API explicitly CC BY 4.0, including a third-party-content caveat. Separate media/embedded rights review remains open.",
+    "D0032": "Supplement file-level terms unresolved; article licence not projected.",
+    "D0033": "Figshare item v1 explicitly CC BY 4.0; TT_social.xlsx only; provider MD5 locally verified."
+  }
+}
