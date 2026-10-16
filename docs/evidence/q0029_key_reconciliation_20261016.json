@@ -1,0 +1,96 @@
+{
+  "scope": "STRUCTURAL_PROVENANCE_KEY_AND_COVARIATE_RECONCILIATION_ONLY",
+  "starting_main": "e72c8a4a3c54d08410f5fcd96274ba25e70df37c",
+  "input_hashes_reverified": true,
+  "alias_findings": [
+    {
+      "source_dyad_ids": [
+        "437",
+        "450"
+      ],
+      "source_interaction_ids": [
+        "193",
+        "47"
+      ],
+      "source_row_count": 14,
+      "communities": [
+        "WE"
+      ],
+      "D0031_rows_for_pair": 0,
+      "shared_interaction_ids_affected": 0,
+      "source_author_resolution": "UNRESOLVED_NO_MERGE_OR_REPAIR"
+    }
+  ],
+  "shared_rows": 377,
+  "shared_interactions": 144,
+  "rows_matching_interaction_source_dyad_unordered_identity": 377,
+  "rows_matching_community": 377,
+  "event_codes": {
+    "neg": 219,
+    "rep": 77,
+    "sub": 74,
+    "mod": 7
+  },
+  "source_methods": {
+    "site": "Ngogo, central and western communities, Kibale National Park, Uganda",
+    "collection_window": "September 2021 to June 2022",
+    "collection_days": 160,
+    "observation_hours": 1064,
+    "sample": "42 males; 311 coded grooming interactions; 157 source dyad IDs",
+    "D0031_results_analysis_subset": "144 interactions contain 158 redoings and 219 negotiations",
+    "individual_interaction_dates": "NOT_AVAILABLE_IN_INSPECTED_DEPOSITS_OR_SUPPLEMENTS",
+    "codebook_scope": "2026 Table S2 and 2025 Table S1 define forms/actions; article methods explain analytical units. Neither supplies an event-date ledger, source-ID alias correction or complete shared covariate reconstruction.",
+    "runtime_version": "R 4.4.2 reported in both articles; not an environment lock or executed runtime proof"
+  },
+  "affscore_comparison": {
+    "exact_matching_rows": 12,
+    "nonmatching_rows": 365,
+    "matching_rows_after_D0031_4dp_rounding": 12,
+    "maximum_absolute_difference": "8.594155681",
+    "disposition": "SOURCE_SPECIFIC_COVARIATE_NOT_INTERCHANGEABLE",
+    "source_basis": "Both methods call the construct DSI but describe different normalizations; no raw scan/grooming-frequency reconstruction or causal explanation of numeric differences performed."
+  },
+  "overall_disposition": "HELD_INSUFFICIENT_KEYS",
+  "key_level_result": "144_INTERACTION_SUBSET_LINKAGE_VERIFIED",
+  "exact_row_equality": "UNRESOLVED_DIFFERENT_ANALYTICAL_UNITS",
+  "evidence_weighting": "NON_INDEPENDENT",
+  "independent_replication_credit": false,
+  "admission_ready": false,
+  "scientific_effect": "NONE",
+  "raw_rows_republished": false,
+  "source_code_executed": false,
+  "source_provenance": [
+    {
+      "filename": "D0031_article.xml",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13634390/fullTextXML",
+      "role": "2026 article full text; STAR Methods; results; resources",
+      "retrieved_date": "2026-10-16",
+      "size_bytes": 167134,
+      "sha256": "3b4e2d992b66e0ef89193f365f17df1593f700a9f25634f1d001cd8148626430"
+    },
+    {
+      "filename": "D0033_article.xml",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11933235/fullTextXML",
+      "role": "2025 article full text; methods; social-bond normalization",
+      "retrieved_date": "2026-10-16",
+      "size_bytes": 126734,
+      "sha256": "f9a763af36a00e7aa4bfa56d76e0c9575ce1c6f8dbf38ca5149ce74620c3945e"
+    },
+    {
+      "filename": "D0031_supplement.pdf",
+      "url": "https://ars.els-cdn.com/content/image/1-s2.0-S2589004226028749-mmc1.pdf",
+      "role": "Figures S1-S4; Tables S1-S6; Table S2 form/behavior definitions",
+      "retrieved_date": "2026-10-16",
+      "size_bytes": 1800263,
+      "sha256": "a89b173f347377f678547dbf3b4c9789306dafc58ea8d541624fd82d7364df85"
+    },
+    {
+      "filename": "D0033_supplement.docx",
+      "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs10071-025-01940-7/MediaObjects/10071_2025_1940_MOESM1_ESM.docx",
+      "role": "Companion supplement; Table S1 form/action definitions; model specifications",
+      "retrieved_date": "2026-10-16",
+      "size_bytes": 32562488,
+      "sha256": "31a2399c525492402d2f6a5eb729c596a22aec2f79d0a50da80948acd539a12c"
+    }
+  ]
+}
