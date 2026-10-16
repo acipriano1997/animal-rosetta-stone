@@ -156,6 +156,7 @@
       "landing_page": "https://doi.org/10.6084/m9.figshare.28302725.v1",
       "provider_manifest_endpoint": "https://api.figshare.com/v2/articles/28302725",
       "local_mode": "PROVIDER_MANIFEST_BOUND",
+      "provider_manifest_filename": "provider_metadata.json",
       "article_license": "CC BY 4.0",
       "rights_state": "FIGSHARE_ITEM_FILE_LICENSE_PENDING_ARTICLE_LICENSE_NOT_AUTOMATICALLY_PROJECTED",
       "required_post_materialization_audits": [
