@@ -57,87 +57,87 @@
       "provider_objects": [
         {
           "provider_object": "MOESM11",
-          "display_label": "Supplementary Material 11",
+          "display_label": "Online Resource 11",
           "filename": "265_2026_3796_MOESM11_ESM.zip",
           "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM11_ESM.zip",
-          "publication_role": "Online Resource 11; first dyadic-overlap GLMM data"
+          "publication_role": "Contains ESM 11: SAV data, SPV output and resource DOCX."
         },
         {
           "provider_object": "MOESM12",
-          "display_label": "Supplementary Material 16 context",
+          "display_label": "Online Resource 12",
           "filename": "265_2026_3796_MOESM12_ESM.zip",
           "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM12_ESM.zip",
-          "publication_role": "Online Resource 16 context matrix/resource"
+          "publication_role": "Contains ESM 12: SAV data, three SPV outputs and resource DOCX; not an OR16 context archive."
         },
         {
           "provider_object": "MOESM13",
-          "display_label": "Supplementary Material 16 joint activity",
+          "display_label": "Online Resource 13",
           "filename": "265_2026_3796_MOESM13_ESM.zip",
           "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM13_ESM.zip",
-          "publication_role": "Online Resource 16 joint-activity matrix/resource"
+          "publication_role": "Contains ESM 13: SAV data, SPV output and resource DOCX; not an OR16 joint-activity archive."
         },
         {
           "provider_object": "MOESM14",
-          "display_label": "Supplementary Material 12",
+          "display_label": "Online Resource 14",
           "filename": "265_2026_3796_MOESM14_ESM.zip",
           "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM14_ESM.zip",
-          "publication_role": "Online Resource 12; primary-context/response data and results"
+          "publication_role": "Contains ESM 14: SAV data, SPV output and resource DOCX; byte-identical to MOESM19."
         },
         {
           "provider_object": "MOESM15",
-          "display_label": "Supplementary Material 13",
+          "display_label": "Online Resource 15",
           "filename": "265_2026_3796_MOESM15_ESM.zip",
           "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM15_ESM.zip",
-          "publication_role": "Online Resource 13; homogeneous-versus-heterogeneous gesture data"
+          "publication_role": "Contains ESM 15: context, function and response specificity XLSX files plus resource DOCX; byte-identical to MOESM20."
         },
         {
           "provider_object": "MOESM16",
-          "display_label": "Supplementary Material 16 overall rate",
+          "display_label": "Online Resource 16 bundled network resources",
           "filename": "265_2026_3796_MOESM16_ESM.zip",
           "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM16_ESM.zip",
-          "publication_role": "Online Resource 16 overall-rate network matrix/resource"
+          "publication_role": "Contains seven nested ZIP members named MRQAP ATTRIBUTES, FUNCTION, OVERALL RATE, KAPPA BODILY VISUAL, JOINT ACTIVITY, CONTEXT and CENTRALITY. Nested contents have not been extracted or inspected."
         },
         {
           "provider_object": "MOESM17",
-          "display_label": "Supplementary Material 16 centrality",
+          "display_label": "Online Resource 16 centrality",
           "filename": "265_2026_3796_MOESM17_ESM.zip",
           "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM17_ESM.zip",
-          "publication_role": "Online Resource 16 centrality matrix/resource"
+          "publication_role": "Contains CENTRALITY XLSX, resource DOCX and UCINET text logs."
         },
         {
           "provider_object": "MOESM18",
-          "display_label": "Supplementary Material 16 kappa value",
+          "display_label": "Online Resource 16 kappa values",
           "filename": "265_2026_3796_MOESM18_ESM.zip",
           "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM18_ESM.zip",
-          "publication_role": "Online Resource 16 kappa-value matrix/resource"
+          "publication_role": "Contains KAPPA BODILY VISUAL UCINET files and resource DOCX."
         },
         {
           "provider_object": "MOESM19",
-          "display_label": "Supplementary Material 14",
+          "display_label": "Online Resource 14 duplicate provider object",
           "filename": "265_2026_3796_MOESM19_ESM.zip",
           "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM19_ESM.zip",
-          "publication_role": "Online Resource 14; primary-context GLMM data"
+          "publication_role": "Contains ESM 14; exact ZIP bytes duplicate MOESM14. Do not count as independent data."
         },
         {
           "provider_object": "MOESM20",
-          "display_label": "Supplementary Material 15",
+          "display_label": "Online Resource 15 duplicate provider object",
           "filename": "265_2026_3796_MOESM20_ESM.zip",
           "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM20_ESM.zip",
-          "publication_role": "Online Resource 15 supplementary analysis resource"
+          "publication_role": "Contains ESM 15; exact ZIP bytes duplicate MOESM15. Do not count as independent data."
         },
         {
           "provider_object": "MOESM21",
-          "display_label": "Supplementary Material 16 function",
+          "display_label": "Online Resource 16 function",
           "filename": "265_2026_3796_MOESM21_ESM.zip",
           "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM21_ESM.zip",
-          "publication_role": "Online Resource 16 function matrix/resource"
+          "publication_role": "Contains FUNCTION UCINET files, resource DOCX and text log."
         },
         {
           "provider_object": "MOESM22",
-          "display_label": "Supplementary Material 16 MRQP attributes",
+          "display_label": "Online Resource 16 MRQAP attributes",
           "filename": "265_2026_3796_MOESM22_ESM.zip",
           "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM22_ESM.zip",
-          "publication_role": "Online Resource 16 MRQAP attributes/network resource"
+          "publication_role": "Contains MRQAP ATTRIBUTES UCINET files and resource DOCX."
         }
       ],
       "required_post_materialization_audits": [
@@ -146,7 +146,9 @@
         "internal schema and identifier mapping",
         "file-level rights review",
         "observational/associative evidence ceiling preservation"
-      ]
+      ],
+      "provider_mapping_basis": "2026-10-16 local SHA-256 and top-level ZIP central directories only; provider labels do not establish schema or scientific role.",
+      "archive_content_gate": "CENTRAL_DIRECTORY_ONLY__NO_EXTRACTION__NESTED_ARCHIVE_SAFETY_NOT_YET_ASSESSED"
     },
     "D0033": {
       "title": "Kolff & Pika 2025 Ngogo Grooming Turn-Taking Figshare Data",
