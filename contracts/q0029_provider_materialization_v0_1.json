@@ -1,0 +1,207 @@
+{
+  "contract_id": "Q0029-PROVIDER-MATERIALIZATION-v0.1",
+  "queue_id": "Q0029",
+  "created_date": "2026-10-16",
+  "purpose": "Freeze a deterministic, fail-closed handoff for later binary-capable materialization of D0031, D0032 and D0033 without treating transport failure as scientific uncertainty.",
+  "authority": {
+    "aceb_spreadsheet_id": "1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ",
+    "aceb_queue_state": "D0031_D0033_NONINDEPENDENT_FOR_EVIDENCE_WEIGHTING_EXACT_ROW_IDENTITY_PENDING__D0032_AND_PROVIDER_BYTES_MATERIALIZATION_BLOCKED_CURRENT_RUNTIME",
+    "git_base_sha": "21bb8d140dd272982c099ced3409af654c6134aa"
+  },
+  "governance": {
+    "download_policy": "This contract does not authorize a new network path. Execute only in a runtime already approved and technically capable of retrieving the provider bytes.",
+    "raw_bytes_in_git": false,
+    "raw_rows_in_receipt": false,
+    "archive_members_extracted_by_verifier": false,
+    "scientific_effect_of_materialization": "NONE",
+    "replication_credit_change": "NONE",
+    "semantic_promotion": "PROHIBITED",
+    "receiver_evidence_promotion": "PROHIBITED",
+    "cross_species_claim_promotion": "PROHIBITED"
+  },
+  "datasets": {
+    "D0031": {
+      "title": "Kolff & Pika 2026 Chimpanzee Grooming Repair/Progressivity Data & Code",
+      "provider": "Mendeley Data",
+      "source_identity": "10.17632/dkrwf5z9vr.1",
+      "version": "1",
+      "landing_page": "https://data.mendeley.com/datasets/dkrwf5z9vr/1",
+      "provider_manifest_endpoint": "https://data.mendeley.com/public-api/datasets/dkrwf5z9vr/files?folder_id=root&version=1",
+      "local_mode": "PROVIDER_MANIFEST_BOUND",
+      "provider_manifest_filename": "provider_metadata.json",
+      "provider_dataset_license": "CC BY 4.0",
+      "rights_state": "DATASET_LEVEL_CC_BY_4_0_PINNED_FILE_LEVEL_MEDIA_SCOPE_REVIEW_REQUIRED",
+      "file_roles_expected": [
+        "data",
+        "code",
+        "example_media_or_supplementary_media"
+      ],
+      "required_post_materialization_audits": [
+        "provider file inventory and local SHA-256",
+        "provider checksum comparison wherever provider checksum metadata exist",
+        "schema and identifier mapping",
+        "analysis language/package/runtime inventory",
+        "file-level and embedded-media rights review",
+        "D0031-to-D0033 interaction/date/dyad/interactant crosswalk"
+      ]
+    },
+    "D0032": {
+      "title": "Roberts et al. 2026 Chimpanzee Self-Relevance / Gesture-Repertoire Supplementary Data",
+      "provider": "Springer Nature",
+      "source_identity": "10.1007/s00265-026-03796-4",
+      "version": "version of record 2026-09-05",
+      "landing_page": "https://link.springer.com/article/10.1007/s00265-026-03796-4",
+      "local_mode": "FIXED_PROVIDER_OBJECTS",
+      "article_license": "CC BY-NC-ND 4.0",
+      "rights_state": "SUPPLEMENT_FILE_LEVEL_TERMS_PENDING_ARTICLE_LICENSE_NOT_AUTOMATICALLY_PROJECTED",
+      "provider_objects": [
+        {
+          "provider_object": "MOESM11",
+          "display_label": "Supplementary Material 11",
+          "filename": "265_2026_3796_MOESM11_ESM.zip",
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM11_ESM.zip",
+          "publication_role": "Online Resource 11; first dyadic-overlap GLMM data"
+        },
+        {
+          "provider_object": "MOESM12",
+          "display_label": "Supplementary Material 16 context",
+          "filename": "265_2026_3796_MOESM12_ESM.zip",
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM12_ESM.zip",
+          "publication_role": "Online Resource 16 context matrix/resource"
+        },
+        {
+          "provider_object": "MOESM13",
+          "display_label": "Supplementary Material 16 joint activity",
+          "filename": "265_2026_3796_MOESM13_ESM.zip",
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM13_ESM.zip",
+          "publication_role": "Online Resource 16 joint-activity matrix/resource"
+        },
+        {
+          "provider_object": "MOESM14",
+          "display_label": "Supplementary Material 12",
+          "filename": "265_2026_3796_MOESM14_ESM.zip",
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM14_ESM.zip",
+          "publication_role": "Online Resource 12; primary-context/response data and results"
+        },
+        {
+          "provider_object": "MOESM15",
+          "display_label": "Supplementary Material 13",
+          "filename": "265_2026_3796_MOESM15_ESM.zip",
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM15_ESM.zip",
+          "publication_role": "Online Resource 13; homogeneous-versus-heterogeneous gesture data"
+        },
+        {
+          "provider_object": "MOESM16",
+          "display_label": "Supplementary Material 16 overall rate",
+          "filename": "265_2026_3796_MOESM16_ESM.zip",
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM16_ESM.zip",
+          "publication_role": "Online Resource 16 overall-rate network matrix/resource"
+        },
+        {
+          "provider_object": "MOESM17",
+          "display_label": "Supplementary Material 16 centrality",
+          "filename": "265_2026_3796_MOESM17_ESM.zip",
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM17_ESM.zip",
+          "publication_role": "Online Resource 16 centrality matrix/resource"
+        },
+        {
+          "provider_object": "MOESM18",
+          "display_label": "Supplementary Material 16 kappa value",
+          "filename": "265_2026_3796_MOESM18_ESM.zip",
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM18_ESM.zip",
+          "publication_role": "Online Resource 16 kappa-value matrix/resource"
+        },
+        {
+          "provider_object": "MOESM19",
+          "display_label": "Supplementary Material 14",
+          "filename": "265_2026_3796_MOESM19_ESM.zip",
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM19_ESM.zip",
+          "publication_role": "Online Resource 14; primary-context GLMM data"
+        },
+        {
+          "provider_object": "MOESM20",
+          "display_label": "Supplementary Material 15",
+          "filename": "265_2026_3796_MOESM20_ESM.zip",
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM20_ESM.zip",
+          "publication_role": "Online Resource 15 supplementary analysis resource"
+        },
+        {
+          "provider_object": "MOESM21",
+          "display_label": "Supplementary Material 16 function",
+          "filename": "265_2026_3796_MOESM21_ESM.zip",
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM21_ESM.zip",
+          "publication_role": "Online Resource 16 function matrix/resource"
+        },
+        {
+          "provider_object": "MOESM22",
+          "display_label": "Supplementary Material 16 MRQP attributes",
+          "filename": "265_2026_3796_MOESM22_ESM.zip",
+          "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1007%2Fs00265-026-03796-4/MediaObjects/265_2026_3796_MOESM22_ESM.zip",
+          "publication_role": "Online Resource 16 MRQAP attributes/network resource"
+        }
+      ],
+      "required_post_materialization_audits": [
+        "local SHA-256 for every provider ZIP",
+        "ZIP central-directory safety and internal filename inventory without extraction",
+        "internal schema and identifier mapping",
+        "file-level rights review",
+        "observational/associative evidence ceiling preservation"
+      ]
+    },
+    "D0033": {
+      "title": "Kolff & Pika 2025 Ngogo Grooming Turn-Taking Figshare Data",
+      "provider": "Figshare",
+      "source_identity": "10.6084/m9.figshare.28302725.v1",
+      "version": "1",
+      "landing_page": "https://doi.org/10.6084/m9.figshare.28302725.v1",
+      "provider_manifest_endpoint": "https://api.figshare.com/v2/articles/28302725",
+      "local_mode": "PROVIDER_MANIFEST_BOUND",
+      "provider_manifest_filename": "provider_metadata.json",
+      "article_license": "CC BY 4.0",
+      "rights_state": "FIGSHARE_ITEM_FILE_LICENSE_PENDING_ARTICLE_LICENSE_NOT_AUTOMATICALLY_PROJECTED",
+      "required_post_materialization_audits": [
+        "provider item/file licence capture",
+        "provider file inventory and local SHA-256",
+        "provider checksum comparison wherever provider checksum metadata exist",
+        "schema and identifier mapping",
+        "analysis code/runtime inventory if code is deposited",
+        "D0031-to-D0033 interaction/date/dyad/interactant crosswalk"
+      ]
+    }
+  },
+  "d0031_d0033_dependence_gate": {
+    "current_evidence_weighting_state": "NON_INDEPENDENT",
+    "independent_replication_credit": false,
+    "exact_row_identity": "UNRESOLVED",
+    "crosswalk_semantic_keys_required": [
+      "interaction identifier",
+      "recording or interaction date",
+      "dyad identifier or canonical unordered dyad",
+      "interactant identities"
+    ],
+    "allowed_future_dispositions": [
+      "EXACT_DUPLICATION",
+      "PARTIAL_OVERLAP",
+      "POSITIVE_EVIDENCE_OF_INDEPENDENCE",
+      "HELD_INSUFFICIENT_KEYS"
+    ],
+    "default_if_keys_insufficient": "HELD_INSUFFICIENT_KEYS",
+    "default_replication_weighting_if_unresolved": "NON_INDEPENDENT"
+  },
+  "completion_gate": {
+    "materialization_phase_can_complete_when": [
+      "D0031 provider manifest and all declared provider files are locally present and SHA-256 inventoried",
+      "all twelve fixed D0032 provider ZIP objects are locally present and SHA-256 inventoried",
+      "D0033 provider manifest and all declared provider files are locally present and SHA-256 inventoried",
+      "all ZIP central directories pass traversal/absolute-path safety checks"
+    ],
+    "scientific_admission_still_requires": [
+      "applicable file-level rights resolved",
+      "schema and identifier mapping complete",
+      "runtime/code inventory complete where applicable",
+      "D0031/D0033 exact-duplication versus partial-overlap crosswalk complete or explicitly held",
+      "existing CRA-011/CRA-012/CRA-013 evidence ceilings preserved"
+    ],
+    "materialization_alone_sets_admission_ready": false
+  }
+}
