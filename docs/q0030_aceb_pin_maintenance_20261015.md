@@ -8,7 +8,7 @@ Verified authority facts at preparation time:
 
 - ACEB: `Animal Rosetta Stone — Experimental Evidence Bank v1.0`
 - Spreadsheet ID: `1OXXnv9Q5Gse3D-r9EZNSR9H8FXugiHyRqndF3pv9czQ`
-- Current Drive `modifiedTime`: `2026-10-15T23:54:30.638Z`
+- Current Drive `modifiedTime`: `2026-10-15T23:57:56.888Z`
 - Prior manifest pin: `2026-10-14T18:44:27.107Z`
 - Base canonical main before maintenance: `d68c796b737f2a3caf085ec96777bae7a5cf73eb`
 
