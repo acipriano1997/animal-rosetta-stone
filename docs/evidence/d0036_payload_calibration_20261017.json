@@ -1,0 +1,394 @@
+{
+  "receipt_id": "D0036-PAYLOAD-CALIBRATION-20261017",
+  "dataset_id": "D0036",
+  "study_id": "S0106",
+  "experiment_ids": [
+    "E0094",
+    "E0095"
+  ],
+  "disposition": "REAL_PAYLOAD_REPRESENTABILITY_PASS__REANALYSIS_HELD",
+  "gdm_version": "v1.14",
+  "schema_extension_required": false,
+  "source": {
+    "doi": "10.6084/m9.figshare.28764965.v1",
+    "version": 1,
+    "file_id": 53547134,
+    "file_name": "Alarm pheromone_Data.xlsx",
+    "bytes": 44443,
+    "provider_api": "https://api.figshare.com/v2/articles/28764965/versions/1",
+    "download_url": "https://ndownloader.figshare.com/files/53547134",
+    "provider_md5": "f3cef5e2bcd1718fb3e44a851b49a348",
+    "local_md5": "f3cef5e2bcd1718fb3e44a851b49a348",
+    "local_sha256": "db31cda214c893f3da8b910668b98babb37922c1fe9dcf1128964125556b24ed",
+    "provider_digest_match": true,
+    "license": "CC BY 4.0",
+    "attribution": "Córdoba-Aguilar, Alex; Cruz-López, Leopoldo (2025). Supporting database for the alarm pheromone paper. Figshare. https://doi.org/10.6084/m9.figshare.28764965.v1",
+    "archived_file_id": "1LpIOYTyDowPGvYl00saNNhYhOcgXFZcN",
+    "archived_original_bytes": true,
+    "archive_redownload_sha256_match": true
+  },
+  "source_inventory": [
+    {
+      "sheet": "Behavioural acts",
+      "records": 300,
+      "measurement_columns": 8,
+      "groups": [
+        {
+          "source_codes": [
+            "F",
+            "F"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            "NoAgi_F",
+            "F"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            "Empty",
+            "F"
+          ],
+          "records": 50
+        },
+        {
+          "source_codes": [
+            "F",
+            "M"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            "NoAgi_F",
+            "M"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            "Empty",
+            "M"
+          ],
+          "records": 50
+        },
+        {
+          "source_codes": [
+            "M",
+            "M"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            "NoAgi_M",
+            "M"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            "M",
+            "F"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            "NoAgi_M",
+            "F"
+          ],
+          "records": 25
+        }
+      ],
+      "source_NA_counts": {
+        "1": 0,
+        "2": 0,
+        "3": 110,
+        "4": 267,
+        "5": 202,
+        "6": 206,
+        "7": 108,
+        "8": 0
+      },
+      "blank_cells": []
+    },
+    {
+      "sheet": "Behavioural acts_isobutyric",
+      "records": 300,
+      "measurement_columns": 8,
+      "groups": [
+        {
+          "source_codes": [
+            10,
+            "F"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            "Empty",
+            "F"
+          ],
+          "records": 75
+        },
+        {
+          "source_codes": [
+            10,
+            "M"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            "Empty",
+            "M"
+          ],
+          "records": 75
+        },
+        {
+          "source_codes": [
+            50,
+            "F"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            50,
+            "M"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            100,
+            "F"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            100,
+            "M"
+          ],
+          "records": 25
+        }
+      ],
+      "source_NA_counts": {
+        "1": 0,
+        "2": 0,
+        "3": 154,
+        "4": 300,
+        "5": 151,
+        "6": 141,
+        "7": 150,
+        "8": 0
+      },
+      "blank_cells": [
+        "C112"
+      ]
+    },
+    {
+      "sheet": "Behavioural acts_propanoic",
+      "records": 300,
+      "measurement_columns": 8,
+      "groups": [
+        {
+          "source_codes": [
+            0.5,
+            "F"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            "Empty",
+            "F"
+          ],
+          "records": 75
+        },
+        {
+          "source_codes": [
+            0.5,
+            "M"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            "Empty",
+            "M"
+          ],
+          "records": 75
+        },
+        {
+          "source_codes": [
+            1,
+            "F"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            1,
+            "M"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            1.5,
+            "F"
+          ],
+          "records": 25
+        },
+        {
+          "source_codes": [
+            1.5,
+            "M"
+          ],
+          "records": 25
+        }
+      ],
+      "source_NA_counts": {
+        "1": 0,
+        "2": 0,
+        "3": 167,
+        "4": 291,
+        "5": 151,
+        "6": 181,
+        "7": 150,
+        "8": 0
+      },
+      "blank_cells": []
+    },
+    {
+      "sheet": "EAG",
+      "records": 88,
+      "measurement_columns": 3,
+      "groups": [
+        {
+          "source_codes": [
+            "M",
+            0.1
+          ],
+          "records": 12
+        },
+        {
+          "source_codes": [
+            "M",
+            1
+          ],
+          "records": 12
+        },
+        {
+          "source_codes": [
+            "M",
+            10
+          ],
+          "records": 12
+        },
+        {
+          "source_codes": [
+            "DCM",
+            0
+          ],
+          "records": 22
+        },
+        {
+          "source_codes": [
+            "F",
+            0.1
+          ],
+          "records": 10
+        },
+        {
+          "source_codes": [
+            "F",
+            1
+          ],
+          "records": 10
+        },
+        {
+          "source_codes": [
+            "F",
+            10
+          ],
+          "records": 10
+        }
+      ],
+      "source_NA_counts": {
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "blank_cells": []
+    }
+  ],
+  "source_record_count": 988,
+  "independent_biological_unit_count": null,
+  "gdm_mapping": {
+    "provenance_record": "PRV0055",
+    "intervention_count": 7,
+    "annotation_count": 33,
+    "rigor_count": 2,
+    "source_rows": 7,
+    "additional_true_blank_cell": "'Behavioural acts_isobutyric'!C112",
+    "tables": [
+      "Stimuli & Interventions",
+      "Annotations & Measurements",
+      "Experimental Rigor & Bias",
+      "Lineage & FAIR"
+    ],
+    "interaction_events_created": 0,
+    "signal_tokens_created": 0,
+    "individuals_inferred": 0,
+    "existing_gdm_fields_sufficient": true
+  },
+  "missingness": {
+    "source_NA": "No response, explicitly defined in workbook",
+    "source_NA_preserved": true,
+    "undefined_nonresponse_duration": "NOT_APPLICABLE; literal NA retained, no numeric zero substitution",
+    "true_blank": "NOT_RECORDED; not recoded as nonresponse"
+  },
+  "reanalysis_holds": [
+    "No individual IDs or day/block/order keys",
+    "Do not link separate behavioral-duration and avoidance-distance assays using row position",
+    "Synthetic behavioral sheets code Empty where paper describes DCM controls; exact linkage unresolved",
+    "EAG Sex column contains DCM control labels; antenna/exposure/subject linkage absent",
+    "EAG source records do not directly recover the six-male/six-female design",
+    "Behavioral duration/time units not explicit in workbook; no unit conversion inferred"
+  ],
+  "provider_holds": {
+    "D0037": {
+      "version": 429568,
+      "file_id": 4640875,
+      "file_name": "dataset_8_lab_g_rondoni_playback_experiment.csv",
+      "bytes": 17143,
+      "sha256": "de4df63f99ae29dd9821df3e7a15b7c97ab555e3b712971e29b676b9cf9a2451",
+      "api_download_status": 401,
+      "public_file_stream_status": 403,
+      "bytes_acquired": false
+    },
+    "D0043": {
+      "version": 309318,
+      "file_ids": [
+        3376157,
+        3376158,
+        3376159
+      ],
+      "api_download_status": 401,
+      "public_file_stream_status": 403,
+      "bytes_acquired": false
+    }
+  },
+  "broader_gate": "NOT_MET__CHEMICAL_AND_VISUAL_REAL_PAYLOAD_PASSES__ELECTRICAL_SUBSTRATE_HELD",
+  "source_analysis_executed": false,
+  "independent_reanalysis_claimed": false,
+  "scientific_claim_promotion": false,
+  "species_activation": false
+}
