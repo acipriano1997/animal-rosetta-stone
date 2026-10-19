@@ -4,6 +4,19 @@ Animal Rosetta Stone (ARS) is an open, evidence-grounded research project for st
 
 This repository is the **canonical executable authority** for ARS code, tests, CI, executable fixtures, runtime manifests, and exact-head verification evidence. Google Drive remains the human-readable semantic authority for scientific method, research questions, preregistrations, evidence governance, claim ceilings, schedules, and accepted project documentation.
 
+## Research scope and current scientific main path
+
+ARS is a **scientific research program**, not a promise of a universal animal translator and not primarily a software product. Its goal is to describe, compare, test and, where receiver-facing or causal evidence permits, cautiously decipher situated animal communication. It accepts null, mixed, contrary and non-generalizing results as legitimate scientific outcomes. Translation-like glosses are conditional downstream summaries, not an initial target or semantic authority.
+
+The canonical [Scope, Feasibility & Research Program Doctrine](https://docs.google.com/document/d/18_YGxDm6yhkPfuMjpAg0mAhJ62Y-JHTyWpLQ3yOMA98/edit) owns scientific scope and sequencing; this README describes executable implementation rather than redefining that research doctrine. The program stages are Foundation → Evidence Bank → Comparative Engine → Hypothesis Engine → Experiments → potentially Translation, with evidence-gated parallel work:
+
+- **First-species pilot:** chimpanzee RQ0001 is frozen `COMPARISON_READY_BOUNDED`, not a species-wide semantic-decoding success.
+- **Co-equal near-term scientific paths:** Bonobo RQ0005 close-comparator source admission and a *fixed ten-case* D0034–D0043 Cross-Modal Generalization Calibration. The latter tests GDM representability and scientific guardrails across contrasting modalities, not universal decoding or an authority to activate more species.
+- **Current source ceiling (2026-10-19):** ACEB Q0031 retains only bounded real-provider GDM mapping PASS for D0036 chemical and D0042 visual. D0037 electrical and D0043 substrate Exp1 were parsed from founder-uploaded source-looking rows and preserved in private raw-byte archives with readback hashes; **independent Dryad provider-file identity and canonical GDM admission remain held**. Cross-modal generalization is `NOT_MET`.
+- **Independent support lanes:** NBDC exposure-clean prospective benchmark, Pippo single-subject naturalistic longitudinal corpus, Bonobo research correspondence, welfare, literature/media observation-bias review, reproducibility and rights-bounded open-science publication. None automatically promotes species-general or semantic claims.
+
+Cross-modal calibration must record a bounded `PASS`, `MIXED`, `HELD` or `FAIL` with limits; an unqualified success is **not** a mandatory prerequisite for useful science or selecting the next discriminating species question. Any full species activation still needs evidence, rights, welfare, operational feasibility and a defensible calibration disposition. No source-data download, CI pass or attractive demonstration by itself establishes biological generality.
+
 ## Current executable scope
 
 The first executable slice is the chimpanzee receiver-corpus harness and hardened `PR0006` receiver-modality reanalysis path. It includes:
@@ -54,7 +67,7 @@ export ARS_WORKBENCH_CANONICAL_SOURCE=/secure/local/path/workbench-canonical.jso
 ars-workbench --host 127.0.0.1 --port 8765
 ```
 
-The token should be supplied by an approved local secret manager or OAuth flow, not typed into the command line, committed, written to Drive documentation, or placed in CI artifacts. Full Slice 2 remains open until the authenticated producer is exercised against the live pinned authorities and that exact-head result is recorded.
+The token should be supplied by an approved local secret manager or OAuth flow, not typed into the command line, committed, written to Drive documentation, or placed in CI artifacts. The separate live-authenticated Phase I producer gate **CLOSED PASS on 2026-10-15**: clean repository SHA `d68c796b737f2a3caf085ec96777bae7a5cf73eb`, authority state `CURRENT`, deterministic rerun PASS, full D0018/D0020 canonical event coverage, adapter/provenance PASS and no embedded credentials. Subsequent legitimate ACEB updates require exact durable-pin refresh, not recertification of the completed historical gate.
 
 For the final operational gate, use `--verify-live` on a clean committed checkout
 and unused output paths. It executes the same REST producer twice, checks every
@@ -87,7 +100,7 @@ The Slice 5 fallback fixture now mirrors the frozen chimp pilot’s bounded comp
 
 The producer and Slice 2B verifier retain the historical `EMPIRICAL_EXECUTION_HELD` / null-disposition regression alongside CLOSED/MIXED. Unknown or conflicting closure facts fail closed. Closure earns no replicated H0001 support, semantic meaning, translation, causal claim or species-wide compositionality. ZERO_SYNTHETIC remains non-biological; D0020 goal anonymization/unreleased gesture form and bounded null interpretation remain intact; empty contradiction/disagreement registries remain registry state only; media placeholders remain no-bytes/no-preview. The static snapshot and test response fixture are presentation/software inputs, not new scientific authorities.
 
-Slice 5 completion does not satisfy the separate Slice 2 live-auth gate. Full canonical operational verification still requires one authenticated producer execution against the pinned live Drive/ACEB authorities.
+Slice 5 software verification alone did not satisfy the separate Slice 2 live-auth gate at that earlier checkpoint. The required real authenticated producer execution was subsequently performed and recorded as `PHASE1_COMPLETE_LIVE_AUTHENTICATED_PRODUCER_PASS_2026-10-15`. This did not create biological evidence or confer semantic authority.
 
 The initial 2026-10-09 reconciliation repeatedly encountered changing opaque Docs API revision tokens for RUN-002, harness verification, Species Activation Record and RUN-001 even while Drive file modification times were unchanged. This exposed a persistent-pin contract error: [Google documents](https://developers.google.com/workspace/docs/api/reference/rest/v1/documents#Document) that Docs revision tokens are opaque, user-specific, guaranteed valid for only 24 hours and may change for internal reasons.
 
@@ -100,8 +113,7 @@ projection and D0018/D0020 event-corpus pins remain unchanged. Full connector
 responses project all 36 D0018 and 4,223 D0020 events, five bounded claims and the
 CLOSED/MIXED comparison state deterministically through the existing producer.
 `contracts/workbench_connector_response_compatibility_receipt.json` explicitly
-records this as an offline response-compatibility replay. Runtime bearer
-authorization remains unavailable; it does not close the authenticated REST gate.
+records this as an offline response-compatibility replay. Runtime bearer authorization was unavailable **at this historical offline-compatibility checkpoint**. The separate 2026-10-15 locally authenticated producer receipt later closed the live gate, without changing scientific evidence or the `ZERO_SYNTHETIC` firewall.
 
 ### Presentation language
 
