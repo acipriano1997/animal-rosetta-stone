@@ -45,3 +45,11 @@ The cited source is [Heesen et al., 2022, *Philosophical Transactions B*](https:
 - Bonobo D0026 OSF `wes3f` has its own separate no-license and publication-equivalence gate.
 - Chimpanzee comparison, frozen ten-case cross-modal evaluation, NBDC, Pippo and public release continue under their existing authorities.
 - Software CI for this note only verifies repository integration; it cannot certify the historical audit or animal behavior.
+
+## Correction after founder-local object inspection (2026-10-19)
+
+The founder supplied **positive original local Git evidence**. In `$HOME/Projects/animal-rosetta-stone`, exact commit `1553c60c4ec222c8305dbee02d098d8c1688515e` exists on local branch `ars/d0029-source-history-v0.1`, with parent `e8d6fb80f3b150fe51e31a69cdb4ea8dbd116c84` and subject `Audit D0029 v4 RDC-006 timing and dependence gate` (authored/committed October 13). `git diff-tree --no-commit-id --name-status -r SHA` explicitly reports additions of the expected report, crosswalk, audit script and test; `git ls-tree -r --name-only SHA` independently lists these four and the four earlier D0029 source-history artifacts. **The original audit files are in the local historical Git tree.**
+
+The previous local `git cat-file -e "$sha:$path"` probe reported missing files, contradicting both later tree inspections. This is now treated as a **false-negative probe of undetermined cause**, NOT evidence that the original commit lacks those paths. Do not speculate about shell expansion or data corruption without a controlled test.
+
+The original **contents have not yet been independently extracted, reviewed, hashed or tested** during this handoff. They are not presently reachable on GitHub `main`; the initial negative remote-only report therefore remains historically accurate for the remote but is superseded for **local availability**. The next step is a read-only exact-commit archive of the eight D0029 audit/source-history paths, followed by inspection for raw/unauthorized material and reproducibility. Restore only reviewed source-free artifacts on a fresh current-main PR, with no cherry-picked old README or unconditional source/claim promotion. Retain the R0013/RDC-006 timing, matching and exclusion scientific holds.
