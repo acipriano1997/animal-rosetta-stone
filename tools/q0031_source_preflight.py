@@ -169,7 +169,13 @@ def main():
         report["synthetic_pipeline_sanity"] = selftest()
     encoded = json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False)
     if args.output:
-        Path(args.output).write_text(encoded + "\n", encoding="utf-8")
+        try:
+            # Create reports exclusively; never overwrite any existing file,
+            # including input source paths or symlink/hardlink aliases.
+            with Path(args.output).open("x", encoding="utf-8") as out:
+                out.write(encoded + "\n")
+        except FileExistsError:
+            raise QAError("report output already exists; refusing to overwrite any file") from None
     print(encoded)
 
 if __name__ == "__main__":
