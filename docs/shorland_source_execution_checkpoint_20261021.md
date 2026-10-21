@@ -35,9 +35,15 @@ validate the source design, exclusions, stimulus identity, response/offset
 construction, caller balance, receiver inference or biological claims. It is not
 the full interactive package's validated reproduction, nor a new confirmatory run.
 
+After that replay, all three unmodified publisher assets were preserved in the
+verified personal `04.1 — Raw Data — Immutable` folder. Metadata readback confirmed
+the intended parent and `shared=false`; complete streaming reads matched every
+size/hash above. The private archive manifest retains exact file IDs and source
+endpoints. This closes private preservation, not scientific admission or public
+redistribution. Local originals remain intact.
+
 Next gate: source-specific rights/embedded-exception and original-stimulus review,
-private personal-Drive immutable archive with full-byte readback, and an explicit
-bounded admission proposal under existing ACEB owners. The candidate does not
+then an explicit bounded admission proposal under existing ACEB owners. The candidate does not
 receive invented Source/Study/Dataset identifiers or expand the frozen calibration
 tranche. Any RQ0005 secondary receiver/context challenge needs its own justified
 dependence units and plan. Sequence order, compositionality, semantic translation
