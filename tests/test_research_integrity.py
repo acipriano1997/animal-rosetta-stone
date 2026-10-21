@@ -131,8 +131,26 @@ def test_batch_timeout_is_held(tmp_path):
 
 def test_batch_missing_node_cannot_pass(tmp_path, monkeypatch):
     monkeypatch.setattr(batch.shutil, "which", lambda _: None)
-    monkeypatch.setattr(batch, "code_state", lambda: {"head": "test"})
+    monkeypatch.setattr(batch, "code_state", lambda: {"head": "test", "status": ""})
     monkeypatch.setattr(batch, "execute", lambda *a, **kw: {"exit_code": 0, "timeout": False})
     out = tmp_path / "batch"
     assert batch.main(["--out-dir", str(out)]) == 2
     assert json.loads((out / "receipt.json").read_text())["status"] == "HELD"
+
+
+def test_batch_drops_live_authority_and_credentials_and_binds_commit(tmp_path, monkeypatch):
+    monkeypatch.setenv("ARS_WORKBENCH_CANONICAL_SOURCE", "https://example.invalid/live")
+    monkeypatch.setenv("ARS_GOOGLE_OAUTH_ACCESS_TOKEN", "synthetic-test-secret")
+    monkeypatch.setenv("GITHUB_SHA", "wrong-head")
+    monkeypatch.setattr(batch.shutil, "which", lambda _: "/test/node")
+    monkeypatch.setattr(batch, "code_state", lambda: {"head": "expected-head", "status": ""})
+    captured = []
+    def fake_execute(command, env, log, timeout, cwd):
+        assert "ARS_WORKBENCH_CANONICAL_SOURCE" not in env
+        assert "ARS_GOOGLE_OAUTH_ACCESS_TOKEN" not in env
+        assert env["GITHUB_SHA"] == "expected-head"
+        captured.append(cwd)
+        return {"exit_code": 0, "timeout": False}
+    monkeypatch.setattr(batch, "execute", fake_execute)
+    assert batch.main(["--out-dir", str(tmp_path / "batch")]) == 0
+    assert captured[-1] == tmp_path / "batch/sandbox"

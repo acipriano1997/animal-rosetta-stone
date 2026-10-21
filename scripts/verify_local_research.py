@@ -74,7 +74,7 @@ def main(argv=None):
     env["PYTHONUNBUFFERED"] = "1"
     # Child diagnostics cannot accidentally inherit project bearer credentials.
     for key in list(env):
-        if any(s in key.upper() for s in ("TOKEN", "SECRET", "PASSWORD", "CREDENTIAL")):
+        if key.startswith("ARS_") or any(s in key.upper() for s in ("TOKEN", "SECRET", "PASSWORD", "CREDENTIAL")):
             env.pop(key)
     node = args.node.resolve() if args.node else shutil.which("node")
     if node:
@@ -82,6 +82,7 @@ def main(argv=None):
     receipt = {"contract": "ARS-OFFLINE-VERIFICATION-v1", "status": "RUNNING", "started_utc": stamp,
                "scientific_effect": "NONE", "live_drive_verification": "NOT_PERFORMED",
                "python": sys.version, "start": code_state(), "checks": []}
+    env["GITHUB_SHA"] = receipt["start"]["head"] if not receipt["start"]["status"] else "LOCAL_UNCOMMITTED"
     write_private(out / "started.json", receipt)
     # Legacy verifiers use relative build/ outputs. Give them a fresh sandbox,
     # with only the required contract inputs, preserving previous receipts.
