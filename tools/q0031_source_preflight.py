@@ -3,8 +3,10 @@
 
 Standard library only. Hashes full bytes, checks preserved source grain and
 high-risk missingness/encoding assumptions. Emits aggregate JSON, never rows.
-All three files are founder-uploaded candidate copies and remain HELD until
-independent Dryad-v3/v12 file-specific immutable checksum matching.
+All three files are archived founder-uploaded source copies. Canonical ACEB
+registered immutable Dryad-v3/v12 file-specific SHA-256 matches on 2026-10-20.
+This standalone local preflight does NOT independently re-attest Dryad's API,
+rights, GDM admission, analysis or the Q0031 scientific generalization gate.
 """
 import argparse
 import csv
@@ -121,7 +123,8 @@ def source_bytes(path, key):
     sha = hashlib.sha256(data).hexdigest()
     check(len(data) == size and sha == expected_sha,
           f"{key} private archived copy no longer matches frozen founder-upload fingerprint")
-    return data, {"size_bytes": len(data), "sha256": sha, "fingerprint_status": "MATCH_LOCAL_FOUNDER_UPLOAD_NOT_PROVIDER"}
+    return data, {"size_bytes": len(data), "sha256": sha, "fingerprint_status": "MATCH_FROZEN_ARCHIVED_COPY_SHA256",
+                  "provider_identity": "REGISTERED_IN_CANONICAL_ACEB_NOT_RECHECKED_BY_THIS_RUN"}
 
 def selftest():
     small = b"trial_id,total_time_min,treatment\n1,1,control\n1,2,female\n"
@@ -155,9 +158,9 @@ def main():
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
     report = {"project": "Animal Rosetta Stone",
-              "scope": "frozen founder-uploaded source-looking bytes only; NOT source-authoritative Dryad verification",
+              "scope": "frozen private source copies only; provider SHA-256 equality registered by canonical ACEB 2026-10-20; NOT re-attested by this run",
               "version": "Q0031-source-preflight-v0.1",
-              "provider_file_digest_status": "HELD_NOT_OBTAINED",
+              "provider_file_digest_status": "CANONICAL_ACEB_VERIFIED_2026-10-20_NOT_RECHECKED_HERE",
               "q0031_cross_modal_generalization": "NOT_MET",
               "no_scientific_or_gdm_admission": True}
     for key, path, fn in (("spider", args.spider, spider),
