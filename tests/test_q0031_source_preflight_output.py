@@ -47,9 +47,10 @@ class ExclusiveOutputTests(unittest.TestCase):
         dst = self.root / "new-receipt.json"
         output = self.run_report(dst)
         self.assertEqual(json.loads(dst.read_text()), output)
-        self.assertEqual(output["provider_file_digest_status"], "HELD_NOT_OBTAINED")
+        self.assertEqual(output["provider_file_digest_status"], "CANONICAL_ACEB_VERIFIED_2026-10-20_NOT_RECHECKED_HERE")
         self.assertEqual(output["q0031_cross_modal_generalization"], "NOT_MET")
         self.assertTrue(output["no_scientific_or_gdm_admission"])
+        self.assertEqual(output["q0031_cross_modal_generalization"], "NOT_MET")
         self.assertNotIn(self.expected.decode().strip(), dst.read_text())
 
     def test_existing_report_cannot_be_overwritten(self):
