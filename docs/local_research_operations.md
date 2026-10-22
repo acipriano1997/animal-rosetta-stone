@@ -20,6 +20,8 @@ Timeouts terminate the check's process group. A `started.json` without a final
 `receipt.json` is an interrupted attempt, never a completed verification. A dirty
 checkout remains labeled by its start/finish state; offline PASS is not a clean
 commit, authenticated Drive verification, scientific admission or deployment.
+Timeout and interruption flags always stop the batch with HELD, including when
+the terminated check's shutdown handler exits with code zero.
 
 ## Byte inventory and transfer verification
 

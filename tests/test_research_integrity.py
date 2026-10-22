@@ -129,6 +129,23 @@ def test_batch_timeout_is_held(tmp_path):
     assert result["exit_code"] != 0
 
 
+@pytest.mark.parametrize("stop_flag", ["timeout", "interrupted"])
+def test_batch_stopped_check_with_zero_exit_cannot_pass(tmp_path, monkeypatch, stop_flag):
+    monkeypatch.setattr(batch.shutil, "which", lambda _: "/test/node")
+    monkeypatch.setattr(batch, "code_state", lambda: {"head": "test", "status": ""})
+    calls = []
+    def stopped_check(*args, **kwargs):
+        calls.append(args[0])
+        return {"exit_code": 0, "timeout": False, stop_flag: True}
+    monkeypatch.setattr(batch, "execute", stopped_check)
+    out = tmp_path / "batch"
+    assert batch.main(["--out-dir", str(out)]) == 2
+    receipt = json.loads((out / "receipt.json").read_text())
+    assert receipt["status"] == "HELD"
+    assert len(calls) == 1
+    assert receipt["checks"][0][stop_flag] is True
+
+
 def test_batch_missing_node_cannot_pass(tmp_path, monkeypatch):
     monkeypatch.setattr(batch.shutil, "which", lambda _: None)
     monkeypatch.setattr(batch, "code_state", lambda: {"head": "test", "status": ""})

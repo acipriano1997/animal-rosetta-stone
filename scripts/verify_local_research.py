@@ -57,6 +57,12 @@ def execute(command, env, log, timeout, cwd=ROOT):
                     "interrupted": isinstance(error, KeyboardInterrupt)}
 
 
+def check_passed(result):
+    # Termination handlers may exit zero even when a check did not finish.
+    return (result.get("exit_code") == 0 and not result.get("timeout")
+            and not result.get("interrupted") and not result.get("error"))
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out-dir", type=Path)
@@ -113,13 +119,13 @@ def main(argv=None):
         except OSError as error:
             result = {"exit_code": None, "error": type(error).__name__}
         receipt["checks"].append({"command": command, "log": log.name, **result})
-        print(f"{label}: {'PASS' if result['exit_code'] == 0 else 'HELD'}", flush=True)
+        print(f"{label}: {'PASS' if check_passed(result) else 'HELD'}", flush=True)
         write_private(out / f"check-{i:02d}.json", receipt["checks"][-1])
-        if result["exit_code"] != 0:
+        if not check_passed(result):
             break
     receipt["finish"] = code_state()
     receipt["code_unchanged"] = receipt["start"] == receipt["finish"]
-    receipt["status"] = "PASS" if preflight and len(receipt["checks"]) == len(commands) and all(c["exit_code"] == 0 for c in receipt["checks"]) and receipt["code_unchanged"] else "HELD"
+    receipt["status"] = "PASS" if preflight and len(receipt["checks"]) == len(commands) and all(check_passed(c) for c in receipt["checks"]) and receipt["code_unchanged"] else "HELD"
     receipt["finished_utc"] = dt.datetime.now(dt.timezone.utc).isoformat()
     receipt["limits"] = "Offline executable checks only. No source admission, media observation, rights grant, live pin refresh or deployment. started.json without receipt.json means interrupted, never PASS."
     write_private(out / "receipt.json", receipt)
