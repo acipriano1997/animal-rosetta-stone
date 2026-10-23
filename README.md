@@ -12,7 +12,7 @@ The canonical [Scope, Feasibility & Research Program Doctrine](https://docs.goog
 
 - **First-species pilot:** chimpanzee RQ0001 is frozen `COMPARISON_READY_BOUNDED`, not a species-wide semantic-decoding success.
 - **Co-equal near-term scientific paths:** Bonobo RQ0005 close-comparator source admission and a *fixed ten-case* D0034–D0043 Cross-Modal Generalization Calibration. The latter tests GDM representability and scientific guardrails across contrasting modalities, not universal decoding or an authority to activate more species.
-- **Current source ceiling (2026-10-19):** ACEB Q0031 retains only bounded real-provider GDM mapping PASS for D0036 chemical and D0042 visual. D0037 electrical and D0043 substrate Exp1 were parsed from founder-uploaded source-looking rows and preserved in private raw-byte archives with readback hashes; **independent Dryad provider-file identity and canonical GDM admission remain held**. Cross-modal generalization is `NOT_MET`.
+- **Current source ceiling (personal ACEB readback 2026-10-21):** Q0031 records bounded real-provider GDM mapping PASS for D0036 chemical, D0042 visual, D0037 **playback only**, and D0043 **Experiment 1 only**. Independent immutable Dryad file SHA-256 matches for D0037 dataset8 playback, dataset7 PSD, and D0043 Exp1 were recorded October 20, together with minimal playback/Exp1 GDM exemplars. D0037 script6-to-PSD derivation, source GLMM/physical calibration, and D0043 Exp2/Exp3 admission remain unverified. Cross-modal generalization is `NOT_MET`; provider identity and representation do not validate scientific inference.
 - **Independent support lanes:** NBDC exposure-clean prospective benchmark, Pippo single-subject naturalistic longitudinal corpus, Bonobo research correspondence, welfare, literature/media observation-bias review, reproducibility and rights-bounded open-science publication. None automatically promotes species-general or semantic claims.
 
 Cross-modal calibration must record a bounded `PASS`, `MIXED`, `HELD` or `FAIL` with limits; an unqualified success is **not** a mandatory prerequisite for useful science or selecting the next discriminating species question. Any full species activation still needs evidence, rights, welfare, operational feasibility and a defensible calibration disposition. No source-data download, CI pass or attractive demonstration by itself establishes biological generality.
@@ -137,6 +137,13 @@ Cross-navigation is identifier-based only: dataset → events/runs, event → da
 `contracts/canonical_bindings.json` pins Drive/ACEB bindings used by executable research paths. `contracts/workbench_canonical_read_contract.json` defines the Workbench adapter envelope and fail-closed transport semantics. `src/ars_workbench/data/workbench_canonical_sources.json` pins the current Workbench producer, event, evidence and rights authorities. `contracts/workbench_canonical_producer_contract.json`, `contracts/workbench_event_explorer_contract.json`, `contracts/workbench_evidence_navigation_contract.json`, and `contracts/workbench_slice5_firewall_contract.json` own the producer and Slice 3–5 executable boundaries. If Drive semantic authority changes, code is stale until reconciled; code never silently redefines the scientific rules.
 
 ## Verification
+
+For one non-destructive offline batch with private logs, isolated legacy build
+outputs and a final commit-bound receipt, use
+`python scripts/verify_local_research.py` (Node 22+ on PATH or `--node /path/to/node`).
+Read-only byte inventories and transfer checks are documented in
+[local research operations](docs/local_research_operations.md). These tools do
+not install dependencies, publish source data or change scientific authority.
 
 Use Python 3.13 and Node.js 22+ on `PATH`. Presentation JavaScript tests use Node's built-in modules, with no npm packages, browser, translation service or sockets.
 
