@@ -1,5 +1,36 @@
 # Q0030 ACEB freshness maintenance — 2026-10-22
 
+## Current same-day reconciliation
+
+A second complete personal-Drive read observed ACEB modification time
+`2026-10-22T23:16:36.775Z`. This supersedes the earlier same-day checkpoint below.
+The manifest now pins that value; the original main-branch value and the first
+candidate value both reject the current responses with ACEB modified-time drift.
+
+Read all nine manifest-selected ACEB ranges, all seven documents and their full
+Drive revision listings, and both event/provenance/missingness corpora. D0020 was
+read as four contiguous chunks covering rows 1–4300. All ten authorities matched
+identity, title, native type and modification time before and after extraction;
+all seven document head revisions matched their pins before and after reading.
+Only ACEB modification time changed relative to the manifest. No semantic source
+was edited by this maintenance.
+
+The refreshed projection passes the unchanged producer and adapter: 4,259 events,
+five evidence items and frozen `COMPARISON_READY_BOUNDED` state. Two projections
+match deterministically, and the complete projection equals the historical
+October 15 authenticated bundle after excluding only capture metadata. Empty
+connector cells retain the earlier null-to-empty-string replay normalization.
+
+Private current source responses and exact-head replay receipts are retained in
+the local `ars-main-path-20261022` execution directory, outside Git. Prospective
+replay preceded the pin edit; final validation must identify the committed head
+and assert that the actual manifest equals the replayed candidate. This remains
+offline connector-response replay, not a new runtime-bearer REST certification.
+Later authority edits require another reconciliation. Merge remains subject to
+independent review; this receipt grants no scientific admission or deployment.
+
+## Earlier same-day checkpoint — historical
+
 The Workbench producer's ACEB pin is behind legitimate registry updates.
 Personal-Drive connector metadata before and after a complete bounded read
 identified the native Evidence Bank with modification time
