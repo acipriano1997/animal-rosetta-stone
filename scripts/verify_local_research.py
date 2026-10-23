@@ -80,7 +80,9 @@ def main(argv=None):
     env["PYTHONUNBUFFERED"] = "1"
     # Child diagnostics cannot accidentally inherit project bearer credentials.
     for key in list(env):
-        if key.startswith("ARS_") or any(s in key.upper() for s in ("TOKEN", "SECRET", "PASSWORD", "CREDENTIAL")):
+        if key.upper().startswith("ARS_") or any(s in key.upper() for s in (
+                "TOKEN", "SECRET", "PASSWORD", "CREDENTIAL", "API_KEY",
+                "ACCESS_KEY", "PRIVATE_KEY", "AUTHORIZATION")):
             env.pop(key)
     node = args.node.resolve() if args.node else shutil.which("node")
     if node:

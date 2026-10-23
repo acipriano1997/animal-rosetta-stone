@@ -158,6 +158,10 @@ def test_batch_missing_node_cannot_pass(tmp_path, monkeypatch):
 def test_batch_drops_live_authority_and_credentials_and_binds_commit(tmp_path, monkeypatch):
     monkeypatch.setenv("ARS_WORKBENCH_CANONICAL_SOURCE", "https://example.invalid/live")
     monkeypatch.setenv("ARS_GOOGLE_OAUTH_ACCESS_TOKEN", "synthetic-test-secret")
+    credential_names = ["OPENAI_API_KEY", "AWS_ACCESS_KEY_ID", "SIGNING_PRIVATE_KEY",
+                        "HTTP_AUTHORIZATION", "service_api_key"]
+    for key in credential_names:
+        monkeypatch.setenv(key, "synthetic-test-credential")
     monkeypatch.setenv("GITHUB_SHA", "wrong-head")
     monkeypatch.setattr(batch.shutil, "which", lambda _: "/test/node")
     monkeypatch.setattr(batch, "code_state", lambda: {"head": "expected-head", "status": ""})
@@ -165,6 +169,7 @@ def test_batch_drops_live_authority_and_credentials_and_binds_commit(tmp_path, m
     def fake_execute(command, env, log, timeout, cwd):
         assert "ARS_WORKBENCH_CANONICAL_SOURCE" not in env
         assert "ARS_GOOGLE_OAUTH_ACCESS_TOKEN" not in env
+        assert all(key not in env for key in credential_names)
         assert env["GITHUB_SHA"] == "expected-head"
         captured.append(cwd)
         return {"exit_code": 0, "timeout": False}

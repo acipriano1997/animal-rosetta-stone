@@ -22,6 +22,10 @@ checkout remains labeled by its start/finish state; offline PASS is not a clean
 commit, authenticated Drive verification, scientific admission or deployment.
 Timeout and interruption flags always stop the batch with HELD, including when
 the terminated check's shutdown handler exits with code zero.
+Child environments also exclude API/access/private keys and authorization headers
+(case insensitive), alongside token/secret/password/credential variables and ARS
+configuration. This environment-name filter does not revoke filesystem access or
+network access and is not a security sandbox.
 
 ## Byte inventory and transfer verification
 
