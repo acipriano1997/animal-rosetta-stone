@@ -1,6 +1,31 @@
 # Q0030 ACEB freshness maintenance — 2026-10-22
 
-## Current same-day reconciliation
+## October 23 reconciliation
+
+Fresh personal-Drive reads observed ACEB modification time
+`2026-10-23T15:15:25.169Z`. The October 22 candidate now rejects these responses
+with ACEB modified-time drift, as do the two older pins. The manifest pins the
+new value; producer logic and every other authority pin remain unchanged.
+
+Read all nine selected ACEB ranges, all seven documents and complete Drive
+revision listings before/after, and both full event/provenance/missingness
+corpora. D0020 was read in four contiguous chunks covering rows 1–4300. All ten
+authorities retained their identity, title, native type and modification time
+across the read. All seven durable document head revisions match their pins.
+
+Prospective replay through the unchanged producer/adapter projects 4,259 events
+and five evidence items deterministically. The complete scientific projection
+matches the historical October 15 authenticated bundle after excluding only
+capture metadata. Private connector responses and replay evidence are retained
+outside Git in `ars-main-path-20261023`. Final exact-head verification must
+confirm that the committed manifest equals the replayed candidate.
+
+This is offline replay of current authenticated connector responses, not a new
+runtime-bearer REST certification. No scientific source, rights, claim ceiling
+or Q0031 disposition changes. Later authority edits require fresh reconciliation;
+independent review and approved integration remain required.
+
+## October 22 reconciliation — historical
 
 A second complete personal-Drive read observed ACEB modification time
 `2026-10-22T23:16:36.775Z`. This supersedes the earlier same-day checkpoint below.
