@@ -6,6 +6,11 @@ production research bytes stay in the ignored cache and must not be uploaded.
 """
 from __future__ import annotations
 
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 from collections import Counter
 import csv
@@ -463,7 +468,7 @@ def main():
                    "rdc006_empirical_admission": False, "confirmatory_rq0005_run": "NOT_STARTED"}
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
+    write_private(out, receipt)
     print(json.dumps({"outcome": receipt["outcome"], "state": receipt["state"], "output": str(out)}))
     if receipt["outcome"] == "C":
         raise SystemExit(1)

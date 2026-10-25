@@ -1,6 +1,11 @@
 """RDC-004 H3: inventory only candidate Group-2 raw labels, never Group-1 outcomes."""
 from __future__ import annotations
 
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 import hashlib
 from io import BytesIO
@@ -199,7 +204,7 @@ def main() -> None:
         }
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(receipt, indent=2) + "\n")
+    write_private(out, receipt)
     print(json.dumps({
         "state": receipt["state"], "group1_outcomes_accessed": False,
         "rdc004_mapping_approved": False, "pr0005_executed": False, "output": str(out)

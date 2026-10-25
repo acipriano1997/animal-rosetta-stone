@@ -1,6 +1,11 @@
 """Outcome-blind D0019 split-key audit; never read REACT or model on Group 1."""
 from __future__ import annotations
 
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 from collections import Counter
 import hashlib
@@ -180,7 +185,7 @@ def main() -> None:
         }
     output = Path(args.out)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(receipt, indent=2) + "\n")
+    write_private(output, receipt)
     print(json.dumps({
         "state": receipt["state"],
         "candidates": receipt.get("partition_audit", {}).get("partition_candidates_by_published_sizes", []),

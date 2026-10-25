@@ -1,6 +1,11 @@
 """D0025 H2: locate candidate headers within opening workbook rows only."""
 from __future__ import annotations
 
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 import hashlib
 import io
@@ -180,7 +185,7 @@ def main() -> None:
                   "pr0006_executed": False, "crg_c_credit": "UNMET"}
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(result, indent=2) + "\n")
+    write_private(out, result)
     print(json.dumps({"state": result["state"], "workbooks": len(result.get("workbooks", [])),
                       "source_rows_examined": False, "output": str(out)}))
 

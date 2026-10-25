@@ -1,6 +1,11 @@
 """Outcome-blind-to-frequency D0019 split-support audit for PR0005."""
 from __future__ import annotations
 
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 import hashlib
 from io import BytesIO
@@ -252,7 +257,7 @@ def main():
                  "group1_holdout_opened":False,"group1_outcomes_accessed":False,
                  "rdc004_empirical_admission":False,"pr0005_executed":False}
     out=Path(args.out);out.parent.mkdir(parents=True,exist_ok=True)
-    out.write_text(json.dumps(receipt,indent=2)+"\n")
+    write_private(out, receipt)
     print(json.dumps({
         "state":receipt["state"],
         "eligible_rows":receipt.get("split_support",{}).get("eligible_rows"),

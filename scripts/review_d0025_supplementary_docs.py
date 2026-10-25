@@ -1,5 +1,10 @@
 """Inspect D0025 supplementary document structure and bounded codebook cues only."""
 from __future__ import annotations
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 from collections import Counter
 import hashlib
@@ -129,7 +134,7 @@ def main():
         }
     target = Path(args.out)
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(json.dumps(result, indent=2) + "\n")
+    write_private(target, result)
     print(json.dumps({"state": result["state"], "documents": len(result.get("documents", [])),
                       "codebook_approved": False, "output": str(target)}))
 

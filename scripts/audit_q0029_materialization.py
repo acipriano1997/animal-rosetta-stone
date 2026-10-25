@@ -6,6 +6,11 @@ extracting archive members, and preserves all scientific/rights gates as separat
 """
 from __future__ import annotations
 
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 import hashlib
 import json
@@ -279,7 +284,7 @@ def main() -> None:
     receipt = audit_materialization(Path(args.root), contract)
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
+    write_private(out, receipt)
     print(json.dumps({
         "contract_id": receipt["contract_id"],
         "state": receipt["state"],

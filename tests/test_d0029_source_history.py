@@ -199,9 +199,13 @@ def test_offline_cli_does_not_use_network_and_incomplete_cache_fails_closed(tmp_
     monkeypatch.setattr(probe, "urlopen", lambda *a, **k: pytest.fail("offline replay used network"))
     probe.main()
     assert json.loads(output.read_text())["outcome"] == "A"
+    completed_receipt = output.read_bytes()
+    incomplete_output = tmp_path / "incomplete-receipt.json"
+    monkeypatch.setattr("sys.argv", ["probe", "--cache", str(tmp_path), "--out", str(incomplete_output)])
     (tmp_path / "123/source.zip").unlink()
     with pytest.raises(SystemExit) as error:
         probe.main()
     assert error.value.code == 1
-    receipt = json.loads(output.read_text())
+    receipt = json.loads(incomplete_output.read_text())
+    assert output.read_bytes() == completed_receipt
     assert receipt["outcome"] == "C" and "123" in receipt["error"]

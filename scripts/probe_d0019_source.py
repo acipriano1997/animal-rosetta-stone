@@ -1,6 +1,11 @@
 """D0019 Figshare v1 source provenance and header-only inspection; never fit models."""
 from __future__ import annotations
 
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 import hashlib
 import json
@@ -184,7 +189,7 @@ def main() -> None:
         }
     output = Path(args.out)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(receipt, indent=2) + "\n")
+    write_private(output, receipt)
     print(json.dumps({
         "state": receipt["state"], "file_count": len(receipt.get("files", [])),
         "event_rows_inspected": False, "pr0005_executed": False
