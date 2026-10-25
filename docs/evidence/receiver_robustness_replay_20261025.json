@@ -1,0 +1,155 @@
+{
+  "D0037": {
+    "absent_nuisance_fields": [
+      "actual_trial_order",
+      "session_id",
+      "timestamps",
+      "pre_stimulus_state",
+      "delivered_waveform_calibration"
+    ],
+    "biological_fish": 13,
+    "fish_with_seven_repeated_layout_blocks": 13,
+    "jeffreys": {
+      "M2_vs_M0_fish_improved_log_loss": 11,
+      "M2_vs_M0_fish_worse_log_loss": 2,
+      "M2_vs_M0_mean_log_loss_improvement": 0.21615804183635326,
+      "alpha_per_binary_outcome": 0.5,
+      "held_out_subjects": 13,
+      "interval_or_confirmatory_pvalue": "NOT_ASSERTED_FOLD_OVERLAP_POSTHOC_SELECTION_AND_SITE_DEPENDENCE",
+      "leave_one_evaluation_fish_out_improvement_range": [
+        0.20366553918347174,
+        0.23731575327401278
+      ],
+      "loss_aggregation": "EQUAL_MEAN_OVER_BIOLOGICAL_FISH",
+      "models": {
+        "M0": {
+          "brier_loss": 0.12246335702530135,
+          "log_loss": 0.4119916966406499
+        },
+        "M1": {
+          "brier_loss": 0.07791768316807274,
+          "log_loss": 0.22986086284906712
+        },
+        "M2": {
+          "brier_loss": 0.060286602612825556,
+          "log_loss": 0.1958336548042966
+        },
+        "M3": {
+          "brier_loss": 0.06036802051137197,
+          "log_loss": 0.19417583871015923
+        }
+      }
+    },
+    "laplace": {
+      "M2_vs_M0_fish_improved_log_loss": 11,
+      "M2_vs_M0_fish_worse_log_loss": 2,
+      "M2_vs_M0_mean_log_loss_improvement": 0.21768165875156445,
+      "alpha_per_binary_outcome": 1.0,
+      "held_out_subjects": 13,
+      "interval_or_confirmatory_pvalue": "NOT_ASSERTED_FOLD_OVERLAP_POSTHOC_SELECTION_AND_SITE_DEPENDENCE",
+      "leave_one_evaluation_fish_out_improvement_range": [
+        0.20537678847036975,
+        0.23888651118177026
+      ],
+      "loss_aggregation": "EQUAL_MEAN_OVER_BIOLOGICAL_FISH",
+      "models": {
+        "M0": {
+          "brier_loss": 0.1224624593611338,
+          "log_loss": 0.41197041750460284
+        },
+        "M1": {
+          "brier_loss": 0.07789971242100789,
+          "log_loss": 0.22848840013436075
+        },
+        "M2": {
+          "brier_loss": 0.06024817529568003,
+          "log_loss": 0.19428875875303842
+        },
+        "M3": {
+          "brier_loss": 0.06039562307429108,
+          "log_loss": 0.19592509641070888
+        }
+      }
+    },
+    "layout_is_actual_presentation_order": "UNKNOWN_NOT_A_PREDICTOR",
+    "limits": "Retrospective post-data model comparison; overlapping training folds, common site and physical/order confounds remain. No population transfer or semantic decoding.",
+    "paired_condition_contrast": {
+      "assumptions": "INDEPENDENT_UNITS_EQUIPROBABLE_NONZERO_SIGNS_NOT_VALIDATED_HERE",
+      "mean_unmanipulated_minus_manipulated_probability": 0.5054945054945055,
+      "negative": 0,
+      "positive": 13,
+      "ties": 0,
+      "two_sided_sign_p": 0.000244140625
+    },
+    "raw_response_tokens": {
+      "no": 547,
+      "yes": 89,
+      "yes ": 1
+    },
+    "rows": 637,
+    "yes_by_condition": {
+      "b_brev_natural": 0,
+      "b_brev_super": 2,
+      "g_ron_natural": 0,
+      "g_ron_super": 0,
+      "manipulated_eel": 21,
+      "silence": 0,
+      "unmanipulated_eel": 67
+    }
+  },
+  "D0043": {
+    "complete": {
+      "assumptions": "INDEPENDENT_UNITS_EQUIPROBABLE_NONZERO_SIGNS_NOT_VALIDATED_HERE",
+      "exact_sign_flip_assignments": 262144,
+      "exact_sign_flip_exceedances": 22,
+      "exact_two_sided_sign_flip_p": 8.392333984375e-05,
+      "mean_female_minus_control_minutes": 9.75740740788889,
+      "negative": 1,
+      "paired_t": 5.285896790280768,
+      "pairs": 18,
+      "positive": 17,
+      "sign_flip_assumptions": "SIGN_EXCHANGEABILITY_AND_APPROPRIATE_UNIT_INDEPENDENCE_NOT_VALIDATED_HERE",
+      "sign_flip_comparison": "EXACT_RATIONAL_SOURCE_DECIMALS_NO_FLOAT_TIE_TOLERANCE",
+      "ties": 0,
+      "two_sided_sign_p": 0.00014495849609375
+    },
+    "exception_total_minutes": [
+      33.28333333
+    ],
+    "excluding_time_budget_exceptions_posthoc": {
+      "assumptions": "INDEPENDENT_UNITS_EQUIPROBABLE_NONZERO_SIGNS_NOT_VALIDATED_HERE",
+      "exact_sign_flip_assignments": 131072,
+      "exact_sign_flip_exceedances": 18,
+      "exact_two_sided_sign_flip_p": 0.0001373291015625,
+      "mean_female_minus_control_minutes": 10.118627451294117,
+      "negative": 1,
+      "paired_t": 5.2699689067440305,
+      "pairs": 17,
+      "positive": 16,
+      "sign_flip_assumptions": "SIGN_EXCHANGEABILITY_AND_APPROPRIATE_UNIT_INDEPENDENCE_NOT_VALIDATED_HERE",
+      "sign_flip_comparison": "EXACT_RATIONAL_SOURCE_DECIMALS_NO_FLOAT_TIE_TOLERANCE",
+      "ties": 0,
+      "two_sided_sign_p": 0.000274658203125
+    },
+    "limits": "Source pair IDs preserved; repeated female donor identities absent. Sign-flip/sign tests are exploratory conditional diagnostics, not independent donor replication, mechanism isolation or semantic evidence.",
+    "measurement_status": "R0015_OPEN_TIME_BUDGET_SEMANTICS",
+    "nominal_30_minute_budget_exception_count": 1,
+    "rows": 36
+  },
+  "confirmatory": false,
+  "fingerprints": {
+    "playback": {
+      "sha256": "de4df63f99ae29dd9821df3e7a15b7c97ab555e3b712971e29b676b9cf9a2451",
+      "size_bytes": 17143
+    },
+    "spider": {
+      "sha256": "0f63efedad824c58c2e3645f09067d01dc07b3eb28be0668fdb83adfa1d702ab",
+      "size_bytes": 774
+    }
+  },
+  "method": "ARS-RETROSPECTIVE-RECEIVER-REPLAY-v1",
+  "q0031": "NOT_MET",
+  "scientific_promotion": "NONE",
+  "source_identity": "MATCH_FROZEN_ARCHIVE_PROVIDER_VERIFICATION_REMAINS_CANONICAL_ACEB",
+  "status": "EXECUTED_EXPLORATORY_REPLAY"
+}
