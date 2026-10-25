@@ -1,0 +1,103 @@
+{
+  "author_csv_inputs_packaged_in_xlsx": false,
+  "bonobo_raw": {
+    "columns": [
+      "Goal",
+      "Gesture",
+      "Recipient"
+    ],
+    "deduplication_performed": false,
+    "distinct_gesture_labels": 48,
+    "distinct_outcome_labels": 16,
+    "distinct_values_in_identity_column": 62,
+    "gesture_labels_with_edge_whitespace": 7,
+    "identity_column_role": "Recipient",
+    "repeated_reduced_triples_beyond_first": 1765,
+    "rows": 2463,
+    "unknown_outcome_rows": 3
+  },
+  "canonical_owner": "ACEB_R0014",
+  "chimp_raw": {
+    "columns": [
+      "function",
+      "gesture 66",
+      "signaller"
+    ],
+    "deduplication_performed": false,
+    "distinct_gesture_labels": 51,
+    "distinct_outcome_labels": 11,
+    "distinct_values_in_identity_column": 55,
+    "gesture_labels_with_edge_whitespace": 0,
+    "identity_column_role": "signaller",
+    "repeated_reduced_triples_beyond_first": 1312,
+    "rows": 1883,
+    "unknown_outcome_rows": 0
+  },
+  "contract": "ARS-S0002-DEPOSIT-AUDIT-v1",
+  "deposited_matrices": {
+    "bonobo_ones": 58,
+    "cells": 242,
+    "chimp_ones": 64,
+    "fixed_ones_affine_identity_verified": true,
+    "gesture_rows": 22,
+    "permutation_test_executed": false,
+    "shared_ones": 31,
+    "shared_zeros": 151,
+    "total_matches": 182
+  },
+  "difference_is_not_an_observed_play_exclusion_count": true,
+  "fingerprint_scope": "LOCALLY_OBSERVED_PUBLISHER_BYTES_NOT_PROVIDER_SUPPLIED_CHECKSUMS",
+  "fingerprints": {
+    "code": {
+      "doi": "10.1371/journal.pbio.2004825.s001",
+      "sha256": "9298e872b72ebb17426ded1b0c798623f485622ae0da585c162f72e99cec4111",
+      "size_bytes": 16385
+    },
+    "table": {
+      "doi": "10.1371/journal.pbio.2004825.s003",
+      "sha256": "caa482168262d81cc8f2f3e8333f1f20712397ef12931f94929f91852a78450f",
+      "size_bytes": 18591
+    },
+    "workbook": {
+      "doi": "10.1371/journal.pbio.2004825.s002",
+      "sha256": "cf2c80aa4a8c9e461b70f3cf305af35cf73f0887c11f3d0de21ccaee56518103",
+      "size_bytes": 79710
+    }
+  },
+  "limits": "Reduced ASO tables cannot identify unconditional response rates, independent sequences, causal effects or receptive transfer. The 142-row difference has no source exclusion mapping. No source rows, individual names or animal-language translations are emitted.",
+  "matrix_blank_policy": "ZERO_AS_IN_RELEASED_R_NOT_BIOLOGICAL_ABSENCE",
+  "matrix_column_alignment": "SAME_ORDER_CASE_ONLY_DIFFERENCE_STOP_BEHAVIOUR",
+  "missing_fields": [
+    "full_attempt_denominator",
+    "play_flag",
+    "recipient_response_status",
+    "sequence_or_bout_id",
+    "timestamps",
+    "bonobo_signaller_id",
+    "exclusion_ledger"
+  ],
+  "published_s1_table": {
+    "gesture_outcome_entries": 74,
+    "gesture_types": 33,
+    "outcome_types": 14,
+    "row_level_exclusion_ledger_present": false,
+    "sum_instances": 2321
+  },
+  "r0014_disposition": "OPEN_SOURCE_SAMPLE_FLOW_NOT_RECONCILED_NO_CLAIM_PROMOTION",
+  "raw_minus_published_table_instances": 142,
+  "receiver_attempt_success_estimand": "NOT_IDENTIFIABLE_FROM_DEPOSIT",
+  "scientific_effect": "NONE_NO_CLAIM_PROMOTION",
+  "source_code_after_foot_present_removal": {
+    "bonobo_ones": 58,
+    "cells": 231,
+    "chimp_ones": 63,
+    "fixed_ones_affine_identity_verified": true,
+    "gesture_rows": 21,
+    "permutation_test_executed": false,
+    "shared_ones": 31,
+    "shared_zeros": 141,
+    "total_matches": 172
+  },
+  "source_code_executed": false,
+  "status": "EXECUTED_BOUNDED_SOURCE_AUDIT"
+}
