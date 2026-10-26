@@ -1,6 +1,11 @@
 """Outcome-blind D0019 Group-2 identity/dyad audit for RDC-004."""
 from __future__ import annotations
 
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 import hashlib
 from io import BytesIO
@@ -225,7 +230,7 @@ def main():
                  "group1_outcomes_accessed":False,"rdc004_empirical_admission":False,
                  "pr0005_executed":False}
     out=Path(args.out);out.parent.mkdir(parents=True,exist_ok=True)
-    out.write_text(json.dumps(receipt,indent=2)+"\n")
+    write_private(out, receipt)
     print(json.dumps({"state":receipt["state"],"group1_outcomes_accessed":False,
                       "pr0005_executed":False,"output":str(out)}))
 

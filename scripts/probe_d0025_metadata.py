@@ -1,6 +1,11 @@
 """Read-only public metadata probe for D0025. Never download data or assign rights."""
 from __future__ import annotations
 
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 from datetime import datetime, timezone
 import json
@@ -115,7 +120,7 @@ def main() -> None:
     receipt = probe()
     dest = Path(args.out)
     dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(json.dumps(receipt, indent=2) + "\n")
+    write_private(dest, receipt)
     print(json.dumps({
         "article": receipt["article"]["state"],
         "supplement_collection": receipt["supplement_collection"]["state"],

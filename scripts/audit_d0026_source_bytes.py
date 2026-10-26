@@ -7,6 +7,11 @@ resolve rights, publication-version equivalence, schema/runtime audit, or scient
 """
 from __future__ import annotations
 
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 import hashlib
 import json
@@ -178,7 +183,7 @@ def main() -> None:
     receipt = audit_source_bytes(Path(args.root), snapshot)
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
+    write_private(out, receipt)
     print(json.dumps({
         "dataset_id": receipt["dataset_id"],
         "state": receipt["state"],

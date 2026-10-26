@@ -6,6 +6,11 @@ matches. No GDM/ACEB writes or biological claim promotion.
 """
 from __future__ import annotations
 
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 import collections
 import csv
@@ -178,7 +183,7 @@ def main() -> None:
     args = ap.parse_args()
     receipt = audit_playback_csv(args.csv, provider_sha256=args.provider_sha256)
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
+    write_private(args.out, receipt)
     print(json.dumps({k: receipt[k] for k in ("dataset_id", "state", "source_rows_inspected", "provider_byte_identity_verified", "admission_ready", "scientific_effect")}, sort_keys=True))
     raise SystemExit(0 if not receipt["failures"] else 2)
 

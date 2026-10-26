@@ -1,0 +1,233 @@
+{
+  "Matrix": "1.7.6",
+  "R": "R version 4.6.1 (2026-06-24)",
+  "derived_fields_verified": [
+    "nolooktime=tottime-looktime",
+    "logtottime=log1p(tottime)",
+    "explore=peer OR probe"
+  ],
+  "historical_R_3_4_3_lme4_1_1_15": "NOT_AVAILABLE_NOT_TESTED",
+  "historical_version_review": {
+    "R_3_4_3_family_R_sha256": "29f59cd2c3d054728786af1b882a0a6e4725a1918b7b9c056ebfad992f788fcb",
+    "historical_runtime_equivalence": "HELD",
+    "isolated_build": "lme4 1.1-15 failed compilation against existing R 4.6.1/RcppEigen stack (Eigen CholmodDecomposition API). Existing library unchanged.",
+    "lme4_1_1_15_archive_sha256": "7d9fd6309aae9cfa691236b3841a60f88ec70110faf2c1dabcbdff18e1ce8669",
+    "static_result": "Historical lme4 calls family$initialize; historical R binomial converts two-column response to proportions with zero at n=0 and multiplies prior weights by n. Consistent with current zero-trial interpretation; NOT historical runtime reproduction."
+  },
+  "limits": "Frozen source formulas; default optimizer versus bobyqa is optimizer sensitivity, not software-version equivalence. Zero-time removal changes exploration opportunity estimand. No causal caller-training identification, call-order test, independent replication or scientific admission.",
+  "lme4": "2.0.6",
+  "models": {
+    "expectation": {
+      "comparison": {
+        "chisq": 4.197866945213377,
+        "df": 3,
+        "p": 0.2408755312086065
+      },
+      "full": {
+        "convergence": {
+          "lme4": [],
+          "opt": 0
+        },
+        "finite_internal_responses": true,
+        "fixed_effects": {
+          "(Intercept)": -2.889801782024298,
+          "conditionEXP": -0.6482181643394125,
+          "conditionEXP:locationPINK": -0.1308494610634066,
+          "demoexposure": 1.0356469352548427,
+          "locationPINK": 0.10280043451169124
+        },
+        "logLik": -436.481669499882,
+        "model_frame_rows": 114,
+        "nobs": 114,
+        "positive_prior_weight_rows": 73,
+        "prior_weight_sum": 15593,
+        "singular": false,
+        "zero_prior_weight_rows": 41,
+        "zero_time_conditional_loglik_sum": 0
+      },
+      "null": {
+        "convergence": {
+          "lme4": [],
+          "opt": 0
+        },
+        "finite_internal_responses": true,
+        "fixed_effects": {
+          "(Intercept)": -3.202286099592472,
+          "demoexposure": 1.0491599033938364
+        },
+        "logLik": -438.5806029724887,
+        "model_frame_rows": 114,
+        "nobs": 114,
+        "positive_prior_weight_rows": 73,
+        "prior_weight_sum": 15593,
+        "singular": false,
+        "zero_prior_weight_rows": 41,
+        "zero_time_conditional_loglik_sum": 0
+      },
+      "optimizer_comparison": {
+        "chisq": 4.1978669505145945,
+        "df": 3,
+        "p": 0.24087553067742246
+      },
+      "optimizer_max_fitted_difference": 1.1915432239217871e-06,
+      "positive_time_comparison": {
+        "chisq": 4.197866945205078,
+        "df": 3,
+        "p": 0.24087553120943817
+      },
+      "zero_time_removal_logLik_delta": [
+        -4.149569576838985e-12,
+        0
+      ],
+      "zero_time_removal_max_positive_fitted_delta": 6.313981559813442e-10
+    },
+    "exploration": {
+      "comparison": {
+        "chisq": 6.970613993894844,
+        "df": 3,
+        "p": 0.07284032585560532
+      },
+      "full": {
+        "convergence": {
+          "lme4": [],
+          "opt": 0
+        },
+        "finite_internal_responses": true,
+        "fixed_effects": {
+          "(Intercept)": -4.616863722806737,
+          "conditionEXP": 1.778148039867467,
+          "conditionEXP:locationPINK": -2.356006016942033,
+          "demoexposure": 0.9375524970462503,
+          "locationPINK": 0.12565247652725908
+        },
+        "logLik": -55.35836090626171,
+        "model_frame_rows": 114,
+        "nobs": 114,
+        "positive_prior_weight_rows": 114,
+        "prior_weight_sum": 114,
+        "singular": false,
+        "zero_prior_weight_rows": 0,
+        "zero_time_conditional_loglik_sum": -2.0666624739849397
+      },
+      "null": {
+        "convergence": {
+          "lme4": {
+            "messages": "boundary (singular) fit: see help('isSingular')"
+          },
+          "opt": 0
+        },
+        "finite_internal_responses": true,
+        "fixed_effects": {
+          "(Intercept)": -4.559128862625707,
+          "demoexposure": 1.0939423981596033
+        },
+        "logLik": -58.84366790320913,
+        "model_frame_rows": 114,
+        "nobs": 114,
+        "positive_prior_weight_rows": 114,
+        "prior_weight_sum": 114,
+        "singular": true,
+        "zero_prior_weight_rows": 0,
+        "zero_time_conditional_loglik_sum": -0.9207538968044269
+      },
+      "optimizer_comparison": {
+        "chisq": 6.970613994592526,
+        "df": 3,
+        "p": 0.0728403258330861
+      },
+      "optimizer_max_fitted_difference": 3.303343399596592e-06,
+      "positive_time_comparison": {
+        "error": "(maxstephalfit) PIRLS step-halvings failed to reduce deviance in pwrssUpdate"
+      },
+      "zero_time_removal_logLik_delta": null,
+      "zero_time_removal_max_positive_fitted_delta": null
+    }
+  },
+  "positive_time_rows": 73,
+  "rows": 114,
+  "scientific_admission": "UNCHANGED_HELD",
+  "sensitivity": {
+    "expectation:individual": {
+      "attempted": 10,
+      "chisq_range": [
+        4.182031374968119,
+        9.891959001481723
+      ],
+      "completed": 10,
+      "convergence_message_count": 0,
+      "errors": 0,
+      "full_singular_count": 0,
+      "null_singular_count": 0,
+      "p_range": [
+        0.019507205792925808,
+        0.24246705369133248
+      ]
+    },
+    "expectation:playbackID": {
+      "attempted": 12,
+      "chisq_range": [
+        3.0529243639489323,
+        17.657224255653887
+      ],
+      "completed": 12,
+      "convergence_message_count": 0,
+      "errors": 0,
+      "full_singular_count": 0,
+      "null_singular_count": 0,
+      "p_range": [
+        0.0005175664891408296,
+        0.38353704222554597
+      ]
+    },
+    "exploration:individual": {
+      "attempted": 10,
+      "chisq_range": [
+        3.204441673424512,
+        9.987604916671543
+      ],
+      "completed": 10,
+      "convergence_message_count": 6,
+      "errors": 0,
+      "full_singular_count": 6,
+      "null_singular_count": 5,
+      "p_range": [
+        0.01867179259446924,
+        0.36116554459967853
+      ]
+    },
+    "exploration:playbackID": {
+      "attempted": 12,
+      "chisq_range": [
+        4.440041307023435,
+        9.012579121499343
+      ],
+      "completed": 12,
+      "convergence_message_count": 8,
+      "errors": 0,
+      "full_singular_count": 7,
+      "null_singular_count": 8,
+      "p_range": [
+        0.029124106926644855,
+        0.21770122475074682
+      ]
+    }
+  },
+  "sessions": 12,
+  "shared_columns_equal": [
+    "playbackID",
+    "individual",
+    "condition",
+    "location",
+    "demoexposure",
+    "explore",
+    "tottime",
+    "looktime"
+  ],
+  "source_csv_sha256": "ca3de1351a6a4548fec86bc48130e71212f4b0f64e100e58e299afcd3b76cda8",
+  "source_package_sha256": "4a6c2b184d4c692be248b03591e3c44e9180901094d7a78ed8efa9b125b934c8",
+  "status": "SOURCE_SOFTWARE_REPRODUCTION_WITH_EXPLORATORY_SENSITIVITY",
+  "subject_session_units": 57,
+  "subjects": 10,
+  "warnings": [],
+  "zero_time_rows": 41
+}

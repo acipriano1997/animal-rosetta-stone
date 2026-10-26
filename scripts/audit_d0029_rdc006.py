@@ -5,6 +5,11 @@ within-file annotation chronology, never a normalized empirical analysis corpus.
 """
 from __future__ import annotations
 
+try:
+    from scripts.research_integrity import write_private
+except ModuleNotFoundError:
+    from research_integrity import write_private
+
 import argparse
 from collections import Counter, defaultdict
 from decimal import Decimal, InvalidOperation
@@ -723,7 +728,7 @@ def main():
                   'firewall': {'EMPIRICAL_CONFIRMATORY_RUN': 'NOT_STARTED', 'deposited_statistical_code_executed': False}}
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(result, indent=2, sort_keys=True, ensure_ascii=False) + '\n')
+    write_private(out, result)
     print(json.dumps({'state': result['state'], 'admission': result['admission']['granted'], 'output': str(out)}))
     if result.get('source_audit_complete') is False:
         raise SystemExit(1)
