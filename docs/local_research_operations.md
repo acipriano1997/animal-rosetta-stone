@@ -105,6 +105,15 @@ Q0031 remains NOT_MET. The two designs have no common biological estimand.
 
 ## Scientific and publication boundaries
 
+Shorland's source-model gate is executable with
+`scripts/reproduce_shorland_models.py --csv ORIGINAL_S019.csv --package ORIGINAL_S021.gz
+--rscript /existing/Rscript --library /existing/rlib --out-dir /private/new-run`.
+It requires the exact archived publisher bytes, reads only the trusted data member,
+and preserves model/fitted-value details privately. The October 26 extension of
+`docs/shorland_source_execution_checkpoint_20261021.md` distinguishes numerical
+concordance, zero likelihood weight, sensitivity failures and the still-held
+historical-runtime/stimulus gates. It grants no empirical or rights admission.
+
 Canonical personal Drive owns scientific state and source-specific reuse limits;
 GitHub owns executable verification. Keep objective observations, owner context,
 functional hypotheses and claim-admissible findings separate. Neither utility
